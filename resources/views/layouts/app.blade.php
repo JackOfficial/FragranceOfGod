@@ -31,15 +31,53 @@
     <!-- ================= CUSTOM CSS ================= -->
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
 
+    @stack('styles')
+
     <style>
-        /* ================= BRAND COLORS ================= */
+        /* ===================== BRAND COLORS ===================== */
         :root {
             --brand-gold: #ffcc00;
-            --brand-black: #111111;
+            --brand-black: #111;
             --brand-red: #d32f2f;
         }
 
-        /* ================= NGO HERO BANNER ================= */
+        /* ===================== NAVBAR ===================== */
+        .navbar {
+            background-color: var(--brand-gold);
+        }
+
+        .navbar .nav-link {
+            color: var(--brand-black);
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .navbar .nav-link:hover,
+        .navbar .nav-link.active {
+            color: var(--brand-red) !important;
+        }
+
+        .navbar .btn-donate {
+            background-color: var(--brand-black);
+            color: var(--brand-gold);
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .navbar .btn-donate:hover {
+            background-color: var(--brand-red);
+            color: #fff;
+        }
+
+        .navbar-toggler {
+            border-color: var(--brand-black);
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(17,17,17)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/ %3E%3C/svg%3E");
+        }
+
+        /* ===================== NGO HERO ===================== */
         .ngo-hero {
             min-height: 88vh;
             background-image: url("../img/hero-banner.jpg");
@@ -70,7 +108,7 @@
 
         .ngo-hero-badge {
             display: inline-block;
-            background: var(--brand-gold);
+            background: rgba(255, 255, 255, 0.9);
             color: var(--brand-black);
             padding: 8px 18px;
             font-size: 0.85rem;
@@ -83,7 +121,6 @@
             font-size: clamp(2.4rem, 5vw, 3.6rem);
             font-weight: 800;
             line-height: 1.2;
-            color: #fff;
         }
 
         .ngo-hero-text {
@@ -112,63 +149,30 @@
             }
         }
 
-        /* ================= NAVBAR ================= */
-        .navbar .nav-link.active {
-            font-weight: 700;
+        /* ===================== FOOTER ===================== */
+        .bg-dark {
+            background-color: var(--brand-black) !important;
+        }
+
+        .text-primary {
             color: var(--brand-gold) !important;
         }
 
-        .navbar .btn-donate {
+        .btn-primary {
             background-color: var(--brand-gold);
             color: var(--brand-black);
-            font-weight: 600;
+            border: none;
             transition: 0.3s;
         }
 
-        .navbar .btn-donate:hover {
-            background-color: var(--brand-black);
-            color: var(--brand-gold);
-        }
-
-        /* ================= FOOTER ================= */
-        .footer h4 {
-            color: var(--brand-gold);
-        }
-
-        .footer a {
-            color: var(--brand-gold);
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .footer a:hover {
-            color: var(--brand-red);
-        }
-
-        .footer .btn-social {
-            background-color: var(--brand-gold);
-            color: var(--brand-black);
-            transition: 0.3s;
-        }
-
-        .footer .btn-social:hover {
+        .btn-primary:hover {
             background-color: var(--brand-red);
             color: #fff;
         }
-
-        /* ================= TEXT COLORS ================= */
-        .text-gold {
-            color: var(--brand-gold) !important;
-        }
-
-        .text-red {
-            color: var(--brand-red) !important;
-        }
     </style>
-
-    @stack('styles')
 </head>
 <body>
+
 <!-- Topbar Start -->
 <div class="container-fluid py-2 border-bottom d-none d-lg-block">
     <div class="container">
@@ -195,10 +199,10 @@
 <!-- Topbar End -->
 
 <!-- Navbar Start -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+<nav class="navbar navbar-expand-lg">
     <div class="container">
         <a class="navbar-brand fw-bold" href="/">
-           <img src="{{ asset('frontend/img/Fog.png') }}" alt="Fragrance Of God Logo" style="width:150px; height:auto">
+            <img src="{{ asset('frontend/img/Fog.png') }}" alt="Fragrance Of God Logo" style="width:150px; height:auto">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
             <span class="navbar-toggler-icon"></span>
@@ -225,21 +229,25 @@
 </main>
 
 <!-- Footer Start -->
-<div class="container-fluid bg-dark text-light footer mt-5 py-5">
+<div class="container-fluid bg-dark text-light mt-5 py-5">
     <div class="container py-5">
         <div class="row g-5">
             <!-- Contact Info -->
             <div class="col-lg-3 col-md-6">
-                <h4 class="text-uppercase border-bottom border-5 border-secondary mb-4">Get In Touch</h4>
-                <p class="mb-4">Fragrance Of God NGO is committed to uplifting communities and transforming lives through education, health, and economic empowerment.</p>
-                <p class="mb-2"><i class="fa fa-map-marker-alt me-3 text-gold"></i>Kampala, Uganda</p>
-                <p class="mb-2"><i class="fa fa-envelope me-3 text-gold"></i>info@fragranceofgod.org</p>
-                <p class="mb-0"><i class="fa fa-phone-alt me-3 text-gold"></i>+256 751 231644</p>
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                    Get In Touch</h4>
+                <p class="mb-4">
+                    Fragrance Of God NGO is committed to uplifting communities and transforming lives through education, health, and economic empowerment.
+                </p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>Kampala, Uganda</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>info@fragranceofgod.org</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary me-3"></i>+256 751 231644</p>
             </div>
 
             <!-- Quick Links -->
             <div class="col-lg-3 col-md-6">
-                <h4 class="text-uppercase border-bottom border-5 border-secondary mb-4">Quick Links</h4>
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                    Quick Links</h4>
                 <div class="d-flex flex-column justify-content-start">
                     <a class="text-light mb-2" href="/"><i class="fa fa-angle-right me-2"></i>Home</a>
                     <a class="text-light mb-2" href="/about"><i class="fa fa-angle-right me-2"></i>About Us</a>
@@ -252,7 +260,8 @@
 
             <!-- Popular Links -->
             <div class="col-lg-3 col-md-6">
-                <h4 class="text-uppercase border-bottom border-5 border-secondary mb-4">Popular Links</h4>
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                    Popular Links</h4>
                 <div class="d-flex flex-column justify-content-start">
                     <a class="text-light mb-2" href="/donate"><i class="fa fa-angle-right me-2"></i>Donate</a>
                     <a class="text-light mb-2" href="/volunteer"><i class="fa fa-angle-right me-2"></i>Volunteer</a>
@@ -265,20 +274,21 @@
 
             <!-- Newsletter + Socials -->
             <div class="col-lg-3 col-md-6">
-                <h4 class="text-uppercase border-bottom border-5 border-secondary mb-4">Newsletter</h4>
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                    Newsletter</h4>
                 <form action="/subscribe" method="POST">
                     @csrf
                     <div class="input-group">
                         <input type="email" name="email" class="form-control p-3 border-0" placeholder="Your Email Address" required>
-                        <button class="btn btn-donate" type="submit">Sign Up</button>
+                        <button class="btn btn-primary" type="submit">Sign Up</button>
                     </div>
                 </form>
-                <h6 class="text-gold text-uppercase mt-4 mb-3">Follow Us</h6>
+                <h6 class="text-primary text-uppercase mt-4 mb-3">Follow Us</h6>
                 <div class="d-flex">
-                    <a class="btn btn-social btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-twitter"></i></a>
-                    <a class="btn btn-social btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-social btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-linkedin-in"></i></a>
-                    <a class="btn btn-social btn-lg-square rounded-circle" href="#"><i class="fab fa-instagram"></i></a>
+                    <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="#"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
         </div>
@@ -289,10 +299,10 @@
         <div class="container">
             <div class="row g-5">
                 <div class="col-md-6 text-center text-md-start">
-                    <p class="mb-md-0">&copy; <a class="text-gold" href="/">Fragrance Of God NGO</a>. All Rights Reserved.</p>
+                    <p class="mb-md-0">&copy; <a class="text-primary" href="/">Fragrance Of God NGO</a>. All Rights Reserved.</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
-                    <p class="mb-0">Designed by <a class="text-gold" href="#" target="_blank">Tonny Jack</a></p>
+                    <p class="mb-0">Designed by <a class="text-primary" href="#" target="_blank">Tonny Jack</a></p>
                 </div>
             </div>
         </div>
