@@ -1,0 +1,29 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/fantnsmp/autosparelink.fanterasafaris.com/
+    - /bin/cp -R * $DEPLOYPATH---
+deployment:
+  tasks:
+    # Set deploy path
+    - export DEPLOYPATH=/home/fantnsmp/autosparelink.fanterasafaris.com/
+
+    # Copy all files including hidden ones
+    - /bin/cp -R . $DEPLOYPATH
+
+    # Navigate to deploy path
+    - cd $DEPLOYPATH
+
+    # Install composer dependencies
+    - composer install --no-dev --optimize-autoloader
+
+    # Set permissions
+    - chmod -R 775 storage bootstrap/cache
+
+    # Cache config/routes/views
+    - php artisan config:cache
+    - php artisan route:cache
+    - php artisan view:cache
+
+    # (Optional) Run migrations if database exists
+    # - php artisan migrate --force
