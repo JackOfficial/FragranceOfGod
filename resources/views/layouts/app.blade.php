@@ -80,7 +80,7 @@
         /* ===================== NGO HERO ===================== */
         .ngo-hero {
             min-height: 88vh;
-            background-image: url("{{ asset('frontend/img/about.jpg') }}");
+            background-image: url("{{ asset('frontend/img/banner.jpg') }}");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
