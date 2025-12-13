@@ -20,7 +20,7 @@
     <meta property="og:image" content="@yield('og_image', asset('frontend/img/og-image.jpg'))">
 
     <!-- ================= FAVICON ================= -->
-    <link rel="icon" href="{{ asset('frontend/img/favicon.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('frontend/img/Fog.png') }}" type="image/png">
 
     <!-- ================= BOOTSTRAP 5 ================= -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -156,7 +156,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
     <div class="container">
         <a class="navbar-brand fw-bold" href="/">
-            Fragrance Of God
+           <img src="{{ asset('frontend/img/Fog.png') }}" alt="Fragrance Of God Logo" style="width:50px; height:auto">
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
