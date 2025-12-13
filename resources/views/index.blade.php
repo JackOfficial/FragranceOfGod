@@ -37,8 +37,6 @@
             </div>
         </div>
     </div>
-
-    <div class="ngo-hero-shape"></div>
 </section>
 
 <!-- ================= TRUST / STATS ================= -->
