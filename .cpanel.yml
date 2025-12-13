@@ -1,12 +1,12 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/fantnsmp/autosparelink.fanterasafaris.com/
+    - export DEPLOYPATH=/home/fragnhap/public_html
     - /bin/cp -R * $DEPLOYPATH---
 deployment:
   tasks:
     # Set deploy path
-    - export DEPLOYPATH=/home/fantnsmp/autosparelink.fanterasafaris.com/
+    - export DEPLOYPATH=/home/fragnhap/public_html
 
     # Copy all files including hidden ones
     - /bin/cp -R . $DEPLOYPATH
