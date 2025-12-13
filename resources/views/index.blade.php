@@ -68,7 +68,7 @@
     <div class="container">
         <div class="row align-items-center g-5">
             <div class="col-md-6">
-                <img src="{{ asset('frontend/img/about.jpg') }}" class="img-fluid rounded shadow" alt="About Fragrance Of God">
+                <img src="{{ asset('frontend/img/about us.jpg') }}" class="img-fluid rounded shadow" alt="About Fragrance Of God">
             </div>
             <div class="col-md-6">
                 <h2 class="fw-bold" style="color:#ffcc00;">Who We Are</h2>
