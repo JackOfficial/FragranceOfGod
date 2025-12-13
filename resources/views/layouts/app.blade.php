@@ -161,57 +161,88 @@
 </main>
 
 <!-- ================= FOOTER ================= -->
-<footer class="bg-dark text-light pt-5 mt-5">
-    <div class="container">
-        <div class="row g-4 pb-4">
-
-            <div class="col-md-4">
-                <h5 class="fw-bold">Fragrance Of God</h5>
-                <p class="small">
-                    A faith-based non-profit organization committed to spreading
-                    hope, love, and transformation through service and compassion.
+<!-- Footer Start -->
+<div class="container-fluid bg-dark text-light mt-5 py-5">
+    <div class="container py-5">
+        <div class="row g-5">
+            <!-- Contact Info -->
+            <div class="col-lg-3 col-md-6">
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                    Get In Touch</h4>
+                <p class="mb-4">
+                    Fragrance Of God NGO is committed to uplifting communities and transforming lives through education, health, and economic empowerment.
                 </p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>Kigali, Rwanda</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>info@hfro.org</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary me-3"></i>+250 788 123 456</p>
             </div>
 
-            <div class="col-md-2">
-                <h6 class="fw-bold">Quick Links</h6>
-                <ul class="list-unstyled small">
-                    <li><a href="/about" class="text-light text-decoration-none">About Us</a></li>
-                    <li><a href="/programs" class="text-light text-decoration-none">Programs</a></li>
-                    <li><a href="/events" class="text-light text-decoration-none">Events</a></li>
-                    <li><a href="/blogs" class="text-light text-decoration-none">Blog</a></li>
-                </ul>
-            </div>
-
-            <div class="col-md-3">
-                <h6 class="fw-bold">Get Involved</h6>
-                <ul class="list-unstyled small">
-                    <li><a href="/donate" class="text-light text-decoration-none">Donate</a></li>
-                    <li><a href="/volunteer" class="text-light text-decoration-none">Volunteer</a></li>
-                    <li><a href="/partner" class="text-light text-decoration-none">Partner With Us</a></li>
-                </ul>
-            </div>
-
-            <div class="col-md-3">
-                <h6 class="fw-bold">Contact</h6>
-                <p class="small mb-1">📍 Rwanda</p>
-                <p class="small mb-1">📧 info@fragranceofgod.org</p>
-                <p class="small">📞 +250 XXX XXX XXX</p>
-
-                <div class="mt-2">
-                    <a href="#" class="text-light me-3"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="text-light me-3"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-light"><i class="fab fa-youtube"></i></a>
+            <!-- Quick Links -->
+            <div class="col-lg-3 col-md-6">
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                    Quick Links</h4>
+                <div class="d-flex flex-column justify-content-start">
+                    <a class="text-light mb-2" href="/"><i class="fa fa-angle-right me-2"></i>Home</a>
+                    <a class="text-light mb-2" href="/about"><i class="fa fa-angle-right me-2"></i>About Us</a>
+                    <a class="text-light mb-2" href="/projects"><i class="fa fa-angle-right me-2"></i>Our Projects</a>
+                    <a class="text-light mb-2" href="/team"><i class="fa fa-angle-right me-2"></i>Meet The Team</a>
+                    <a class="text-light mb-2" href="/blog"><i class="fa fa-angle-right me-2"></i>Blog & Stories</a>
+                    <a class="text-light" href="/contact"><i class="fa fa-angle-right me-2"></i>Contact Us</a>
                 </div>
             </div>
 
-        </div>
+            <!-- Popular Links -->
+            <div class="col-lg-3 col-md-6">
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                    Popular Links</h4>
+                <div class="d-flex flex-column justify-content-start">
+                    <a class="text-light mb-2" href="/donate"><i class="fa fa-angle-right me-2"></i>Donate</a>
+                    <a class="text-light mb-2" href="/volunteer"><i class="fa fa-angle-right me-2"></i>Volunteer</a>
+                    <a class="text-light mb-2" href="/events"><i class="fa fa-angle-right me-2"></i>Events</a>
+                    <a class="text-light mb-2" href="/testimonials"><i class="fa fa-angle-right me-2"></i>Testimonials</a>
+                    <a class="text-light mb-2" href="/gallery"><i class="fa fa-angle-right me-2"></i>Gallery</a>
+                    <a class="text-light" href="/faq"><i class="fa fa-angle-right me-2"></i>FAQs</a>
+                </div>
+            </div>
 
-        <div class="border-top border-secondary pt-3 text-center small">
-            © {{ date('Y') }} Fragrance Of God. All Rights Reserved.
+            <!-- Newsletter + Socials -->
+            <div class="col-lg-3 col-md-6">
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                    Newsletter</h4>
+                <form action="/subscribe" method="POST">
+                    @csrf
+                    <div class="input-group">
+                        <input type="email" name="email" class="form-control p-3 border-0" placeholder="Your Email Address" required>
+                        <button class="btn btn-primary" type="submit">Sign Up</button>
+                    </div>
+                </form>
+                <h6 class="text-primary text-uppercase mt-4 mb-3">Follow Us</h6>
+                <div class="d-flex">
+                    <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
         </div>
     </div>
-</footer>
+
+    <!-- Bottom Bar -->
+    <div class="container-fluid bg-dark text-light border-top border-secondary py-4">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-md-0">&copy; <a class="text-primary" href="/">Fragrance Of God NGO</a>. All Rights Reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">Designed by <a class="text-primary" href="https://htmlcodex.com" target="_blank">HTML Codex</a>. Distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
+
 
 <!-- ================= SCRIPTS ================= -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
