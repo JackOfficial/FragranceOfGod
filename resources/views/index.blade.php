@@ -5,29 +5,45 @@
 @section('content')
 
 <!-- ================= HERO ================= -->
-<section class="py-5 bg-light">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-6">
-                <h1 class="fw-bold display-5">
-                    Spreading the Fragrance of God Through Love & Service
+<!-- ================= HERO SECTION ================= -->
+<section class="ngo-hero position-relative d-flex align-items-center">
+    <!-- Overlay -->
+    <div class="ngo-hero-overlay"></div>
+
+    <div class="container position-relative">
+        <div class="row">
+            <div class="col-lg-7 col-md-9">
+                <span class="ngo-hero-badge">
+                    Faith • Compassion • Service
+                </span>
+
+                <h1 class="ngo-hero-title mt-3">
+                    Spreading the Fragrance of God<br class="d-none d-md-block">
+                    Through Love in Action
                 </h1>
-                <p class="lead text-muted mt-3">
-                    Fragrance Of God is a faith-driven non-profit organization committed
-                    to restoring hope, dignity, and purpose through compassion,
-                    community service, and spiritual empowerment.
+
+                <p class="ngo-hero-text mt-4">
+                    Fragrance Of God is a faith-based non-profit organization committed
+                    to restoring hope, uplifting communities, and transforming lives
+                    through compassion, service, and spiritual empowerment.
                 </p>
-                <div class="mt-4">
-                    <a href="/donate" class="btn btn-primary btn-lg me-2">Donate Now</a>
-                    <a href="/about" class="btn btn-outline-dark btn-lg">Learn More</a>
+
+                <div class="d-flex flex-wrap gap-3 mt-4">
+                    <a href="{{ url('/donate') }}" class="btn btn-light btn-lg px-5">
+                        Support Our Mission
+                    </a>
+                    <a href="{{ url('/about') }}" class="btn btn-outline-light btn-lg px-5">
+                        Learn Our Story
+                    </a>
                 </div>
-            </div>
-            <div class="col-md-6 text-center">
-                <img src="{{ asset('frontend/img/hero.jpg') }}" class="img-fluid rounded shadow" alt="Fragrance Of God NGO">
             </div>
         </div>
     </div>
+
+    <!-- Bottom curve -->
+    <div class="ngo-hero-shape"></div>
 </section>
+
 
 <!-- ================= TRUST / STATS ================= -->
 <section class="py-4 border-top border-bottom">

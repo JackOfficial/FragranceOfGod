@@ -33,7 +33,88 @@
 
     @stack('styles')
 </head>
+ <style>
+    /* ==================================================
+   NGO HERO BANNER – 2025 PREMIUM STYLE
+   ================================================== */
 
+.ngo-hero {
+    min-height: 88vh;
+    background-image: url("../img/hero-banner.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #ffffff;
+    overflow: hidden;
+}
+
+/* Dark elegant overlay for readability */
+.ngo-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.70) 0%,
+        rgba(0, 0, 0, 0.45) 45%,
+        rgba(0, 0, 0, 0.20) 100%
+    );
+    z-index: 1;
+}
+
+/* Keep content above overlay */
+.ngo-hero .container {
+    z-index: 2;
+}
+
+/* Badge */
+.ngo-hero-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.9);
+    color: #111;
+    padding: 8px 18px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 50px;
+    letter-spacing: 0.5px;
+}
+
+/* Main title */
+.ngo-hero-title {
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+/* Description text */
+.ngo-hero-text {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 620px;
+}
+
+/* Bottom curved separator */
+.ngo-hero-shape {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 90px;
+    background: #ffffff;
+    border-top-left-radius: 50% 100%;
+    border-top-right-radius: 50% 100%;
+    z-index: 2;
+}
+
+/* Mobile spacing adjustments */
+@media (max-width: 768px) {
+    .ngo-hero {
+        min-height: 92vh;
+        text-align: left;
+    }
+}
+
+ </style>
 <body>
 
 <!-- ================= NAVBAR ================= -->
