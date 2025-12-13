@@ -239,7 +239,7 @@
                     </div>
                     <div class="d-flex justify-content-between border-top p-4">
                         <div class="d-flex align-items-center">
-                            <img class="rounded-circle me-2" src="{{ asset('frontend/img/user1.jpg') }}" width="25" height="25" alt="">
+                            <img class="rounded-circle me-2" src="{{ asset('frontend/img/blog-1.jpg') }}" width="25" height="25" alt="">
                             <small>Jane Mukamana</small>
                         </div>
                         <div class="d-flex align-items-center">
@@ -260,7 +260,7 @@
                     </div>
                     <div class="d-flex justify-content-between border-top p-4">
                         <div class="d-flex align-items-center">
-                            <img class="rounded-circle me-2" src="{{ asset('frontend/img/user2.jpg') }}" width="25" height="25" alt="">
+                            <img class="rounded-circle me-2" src="{{ asset('frontend/img/blog-2.jpg') }}" width="25" height="25" alt="">
                             <small>Paul Habimana</small>
                         </div>
                         <div class="d-flex align-items-center">
@@ -281,7 +281,7 @@
                     </div>
                     <div class="d-flex justify-content-between border-top p-4">
                         <div class="d-flex align-items-center">
-                            <img class="rounded-circle me-2" src="{{ asset('frontend/img/user3.jpg') }}" width="25" height="25" alt="">
+                            <img class="rounded-circle me-2" src="{{ asset('frontend/img/blog-3.jpg') }}" width="25" height="25" alt="">
                             <small>Emmanuel Niyonsaba</small>
                         </div>
                         <div class="d-flex align-items-center">
