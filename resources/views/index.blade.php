@@ -143,7 +143,7 @@
         <div class="row g-4">
             <div class="col-md-4">
                 <div class="card shadow-sm h-100">
-                    <img src="{{ asset('frontend/img/event1.jpg') }}" class="card-img-top">
+                    <img src="{{ asset('frontend/img/blog-1.jpg') }}" class="card-img-top">
                     <div class="card-body">
                         <h5 class="fw-bold">Community Prayer Day</h5>
                         <p class="text-muted">Bringing hope and unity through prayer.</p>
@@ -154,7 +154,7 @@
 
             <div class="col-md-4">
                 <div class="card shadow-sm h-100">
-                    <img src="{{ asset('frontend/img/event2.jpg') }}" class="card-img-top">
+                    <img src="{{ asset('frontend/img/blog-1.jpg') }}" class="card-img-top">
                     <div class="card-body">
                         <h5 class="fw-bold">Youth Mentorship Camp</h5>
                         <p class="text-muted">Building faith-driven future leaders.</p>
@@ -165,7 +165,7 @@
 
             <div class="col-md-4">
                 <div class="card shadow-sm h-100">
-                    <img src="{{ asset('frontend/img/event3.jpg') }}" class="card-img-top">
+                    <img src="{{ asset('frontend/img/blog-1.jpg') }}" class="card-img-top">
                     <div class="card-body">
                         <h5 class="fw-bold">Family Restoration Workshop</h5>
                         <p class="text-muted">Healing families through love and guidance.</p>
