@@ -172,9 +172,9 @@
                 <p class="mb-4">
                     Fragrance Of God NGO is committed to uplifting communities and transforming lives through education, health, and economic empowerment.
                 </p>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>Kigali, Rwanda</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>info@hfro.org</p>
-                <p class="mb-0"><i class="fa fa-phone-alt text-primary me-3"></i>+250 788 123 456</p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>Kampala, Uganda</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>info@fragranceofgod.org</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary me-3"></i>+256 751 231644</p>
             </div>
 
             <!-- Quick Links -->
@@ -235,7 +235,7 @@
                     <p class="mb-md-0">&copy; <a class="text-primary" href="/">Fragrance Of God NGO</a>. All Rights Reserved.</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
-                    <p class="mb-0">Designed by <a class="text-primary" href="https://htmlcodex.com" target="_blank">HTML Codex</a>. Distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a>.</p>
+                    <p class="mb-0">Designed by <a class="text-primary" href="#" target="_blank">Tonny Jack</a></p>
                 </div>
             </div>
         </div>
