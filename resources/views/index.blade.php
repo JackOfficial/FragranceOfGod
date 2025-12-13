@@ -130,6 +130,98 @@
     </div>
 </section>
 
+<!-- ================= EVENTS ================= -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold" style="color:#ffcc00;">Upcoming & Recent Events</h2>
+            <p class="text-muted">Our work in action</p>
+        </div>
+
+        <div class="row g-4">
+            @foreach ([
+                ['title'=>'Community Prayer Day', 'desc'=>'Bringing hope and unity through prayer.', 'location'=>'Kigali', 'date'=>'July 2025', 'img'=>'blog-1.jpg'],
+                ['title'=>'Youth Mentorship Camp', 'desc'=>'Building faith-driven future leaders.', 'location'=>'Huye', 'date'=>'June 2025', 'img'=>'blog-2.jpg'],
+                ['title'=>'Family Restoration Workshop', 'desc'=>'Healing families through love and guidance.', 'location'=>'Musanze', 'date'=>'May 2025', 'img'=>'blog-3.jpg']
+            ] as $event)
+            <div class="col-md-4">
+                <div class="card shadow-sm h-100">
+                    <img src="{{ asset('frontend/img/'.$event['img']) }}" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="fw-bold" style="color:#ffcc00;">{{ $event['title'] }}</h5>
+                        <p class="text-muted">{{ $event['desc'] }}</p>
+                        <small class="text-muted">📍 {{ $event['location'] }} | 🗓 {{ $event['date'] }}</small>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold" style="color:#ffcc00;">What People Say</h2>
+            <p class="text-muted">Lives touched by Fragrance Of God</p>
+        </div>
+
+        <div class="row g-4">
+            @foreach ([
+                ['quote'=>'Through Fragrance Of God, I found hope, faith, and a family that truly cares.', 'name'=>'Grace M.', 'role'=>'Program Beneficiary'],
+                ['quote'=>'Their commitment to faith and community transformation is truly inspiring.', 'name'=>'Local Pastor', 'role'=>'Community Partner'],
+                ['quote'=>'You don’t just hear about God’s love — you experience it.', 'name'=>'Volunteer', 'role'=>'Field Team Member']
+            ] as $test)
+            <div class="col-md-4">
+                <div class="card p-4 shadow-sm h-100">
+                    <p class="fst-italic">“{{ $test['quote'] }}”</p>
+                    <h6 class="fw-bold mt-3 mb-0">{{ '— '.$test['name'] }}</h6>
+                    <small class="text-muted">{{ $test['role'] }}</small>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+<!-- ================= BLOG ================= -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5" style="max-width: 500px;">
+            <h5 class="d-inline-block" style="color:#ffcc00; text-transform:uppercase; border-bottom: 4px solid #d32f2f;">Blog Post</h5>
+            <h1 class="display-4" style="color:#111;">Our Latest Stories & Updates</h1>
+        </div>
+        <div class="row g-5">
+            @foreach ([
+                ['title'=>'Empowering Girls Through Education in Kigali', 'desc'=>'Discover how our programs are creating opportunities for young girls to access quality education and break the cycle of poverty.', 'author'=>'Jane Mukamana', 'img'=>'blog-1.jpg', 'views'=>245, 'comments'=>12],
+                ['title'=>'Community Health Awareness Campaigns', 'desc'=>'We organize workshops and health campaigns to educate communities about nutrition, hygiene, and preventive healthcare.', 'author'=>'Paul Habimana', 'img'=>'blog-2.jpg', 'views'=>310, 'comments'=>18],
+                ['title'=>'Economic Empowerment for Women', 'desc'=>'Our economic empowerment programs equip women with skills and resources to start small businesses and gain financial independence.', 'author'=>'Emmanuel Niyonsaba', 'img'=>'blog-3.jpg', 'views'=>198, 'comments'=>9]
+            ] as $blog)
+            <div class="col-xl-4 col-lg-6">
+                <div class="bg-light rounded overflow-hidden">
+                    <img class="img-fluid w-100" src="{{ asset('frontend/img/'.$blog['img']) }}" alt="{{ $blog['title'] }}">
+                    <div class="p-4">
+                        <a class="h3 d-block mb-3" href="#!" style="color:#111;">{{ $blog['title'] }}</a>
+                        <p class="m-0 text-muted">{{ $blog['desc'] }}</p>
+                    </div>
+                    <div class="d-flex justify-content-between border-top p-4">
+                        <div class="d-flex align-items-center">
+                            <img class="rounded-circle me-2" src="{{ asset('frontend/img/'.$blog['img']) }}" width="25" height="25" alt="">
+                            <small>{{ $blog['author'] }}</small>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <small class="ms-3"><i class="far fa-eye text-primary me-1"></i>{{ $blog['views'] }}</small>
+                            <small class="ms-3"><i class="far fa-comment text-primary me-1"></i>{{ $blog['comments'] }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+
 <!-- ================= CTA ================= -->
 <section class="py-5 text-center" style="background-color:#111; color:#ffcc00;">
     <div class="container">
