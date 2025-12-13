@@ -156,7 +156,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
     <div class="container">
         <a class="navbar-brand fw-bold" href="/">
-           <img src="{{ asset('frontend/img/Fog.png') }}" alt="Fragrance Of God Logo" style="width:50px; height:auto">
+           <img src="{{ asset('frontend/img/Fog.png') }}" alt="Fragrance Of God Logo" style="width:150px; height:auto">
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
