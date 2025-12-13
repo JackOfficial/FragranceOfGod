@@ -169,6 +169,17 @@
             background-color: var(--brand-red);
             color: #fff;
         }
+
+         /* Hover effect for program cards */
+    .card:hover .program-hover {
+        opacity: 1;
+    }
+
+    /* Icon circle hover scale */
+    .card:hover .icon-circle {
+        transform: scale(1.1);
+        transition: transform 0.3s;
+    }
     </style>
 </head>
 <body>

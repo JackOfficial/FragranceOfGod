@@ -89,44 +89,68 @@
 <!-- ================= PROGRAMS ================= -->
 <section class="py-5 bg-light">
     <div class="container">
+        <!-- Section Header -->
         <div class="text-center mb-5">
             <h2 class="fw-bold" style="color:#ffcc00;">Our Core Programs</h2>
-            <p class="text-muted">Transforming lives through faith and service</p>
+            <p class="text-muted fs-5">Transforming lives through faith and service</p>
         </div>
 
+        <!-- Programs Grid -->
         <div class="row g-4">
+            <!-- Program Card 1 -->
             <div class="col-md-4">
-                <div class="card h-100 shadow-sm p-4">
-                    <h5 class="fw-bold" style="color:#ffcc00;">Community Outreach</h5>
-                    <p class="text-muted">
-                        Serving vulnerable communities through food support,
-                        prayer, counseling, and social programs.
-                    </p>
+                <div class="card h-100 border-0 shadow-sm rounded-4 position-relative overflow-hidden">
+                    <div class="p-4">
+                        <div class="icon-circle bg-warning text-dark mb-3 d-inline-flex align-items-center justify-content-center rounded-circle" style="width:60px; height:60px;">
+                            <i class="fas fa-hands-helping fa-lg"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3" style="color:#ffcc00;">Community Outreach</h5>
+                        <p class="text-muted">
+                            Serving vulnerable communities through food support,
+                            prayer, counseling, and social programs.
+                        </p>
+                    </div>
+                    <div class="program-hover position-absolute top-0 start-0 w-100 h-100" style="background: rgba(255, 204, 0, 0.1); opacity:0; transition: all 0.3s;"></div>
                 </div>
             </div>
 
+            <!-- Program Card 2 -->
             <div class="col-md-4">
-                <div class="card h-100 shadow-sm p-4">
-                    <h5 class="fw-bold" style="color:#ffcc00;">Youth & Family Empowerment</h5>
-                    <p class="text-muted">
-                        Equipping young people and families with values,
-                        life skills, and spiritual guidance.
-                    </p>
+                <div class="card h-100 border-0 shadow-sm rounded-4 position-relative overflow-hidden">
+                    <div class="p-4">
+                        <div class="icon-circle bg-warning text-dark mb-3 d-inline-flex align-items-center justify-content-center rounded-circle" style="width:60px; height:60px;">
+                            <i class="fas fa-users fa-lg"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3" style="color:#ffcc00;">Youth & Family Empowerment</h5>
+                        <p class="text-muted">
+                            Equipping young people and families with values,
+                            life skills, and spiritual guidance.
+                        </p>
+                    </div>
+                    <div class="program-hover position-absolute top-0 start-0 w-100 h-100" style="background: rgba(255, 204, 0, 0.1); opacity:0; transition: all 0.3s;"></div>
                 </div>
             </div>
 
+            <!-- Program Card 3 -->
             <div class="col-md-4">
-                <div class="card h-100 shadow-sm p-4">
-                    <h5 class="fw-bold" style="color:#ffcc00;">Faith & Discipleship</h5>
-                    <p class="text-muted">
-                        Encouraging spiritual growth through teachings,
-                        mentorship, and prayer programs.
-                    </p>
+                <div class="card h-100 border-0 shadow-sm rounded-4 position-relative overflow-hidden">
+                    <div class="p-4">
+                        <div class="icon-circle bg-warning text-dark mb-3 d-inline-flex align-items-center justify-content-center rounded-circle" style="width:60px; height:60px;">
+                            <i class="fas fa-praying-hands fa-lg"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3" style="color:#ffcc00;">Faith & Discipleship</h5>
+                        <p class="text-muted">
+                            Encouraging spiritual growth through teachings,
+                            mentorship, and prayer programs.
+                        </p>
+                    </div>
+                    <div class="program-hover position-absolute top-0 start-0 w-100 h-100" style="background: rgba(255, 204, 0, 0.1); opacity:0; transition: all 0.3s;"></div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
 
 <!-- ================= EVENTS ================= -->
 <section class="py-5">
