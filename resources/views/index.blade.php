@@ -232,14 +232,14 @@
             <!-- Blog 1 -->
             <div class="col-xl-4 col-lg-6">
                 <div class="bg-light rounded overflow-hidden">
-                    <img class="img-fluid w-100" src="img/blog-1.jpg" alt="Empowering Girls">
+                    <img class="img-fluid w-100" src="{{ asset('frontend/img/blog-1.jpg') }}" alt="Empowering Girls">
                     <div class="p-4">
                         <a class="h3 d-block mb-3" href="#!">Empowering Girls Through Education in Kigali</a>
                         <p class="m-0">Discover how our programs are creating opportunities for young girls to access quality education and break the cycle of poverty.</p>
                     </div>
                     <div class="d-flex justify-content-between border-top p-4">
                         <div class="d-flex align-items-center">
-                            <img class="rounded-circle me-2" src="img/user1.jpg" width="25" height="25" alt="">
+                            <img class="rounded-circle me-2" src="{{ asset('frontend/img/user1.jpg') }}" width="25" height="25" alt="">
                             <small>Jane Mukamana</small>
                         </div>
                         <div class="d-flex align-items-center">
@@ -253,14 +253,14 @@
             <!-- Blog 2 -->
             <div class="col-xl-4 col-lg-6">
                 <div class="bg-light rounded overflow-hidden">
-                    <img class="img-fluid w-100" src="img/blog-2.jpg" alt="Health Awareness">
+                    <img class="img-fluid w-100" src="{{ asset('frontend/img/blog-2.jpg') }}" alt="Health Awareness">
                     <div class="p-4">
                         <a class="h3 d-block mb-3" href="#!">Community Health Awareness Campaigns</a>
                         <p class="m-0">We organize workshops and health campaigns to educate communities about nutrition, hygiene, and preventive healthcare.</p>
                     </div>
                     <div class="d-flex justify-content-between border-top p-4">
                         <div class="d-flex align-items-center">
-                            <img class="rounded-circle me-2" src="img/user2.jpg" width="25" height="25" alt="">
+                            <img class="rounded-circle me-2" src="{{ asset('frontend/img/user2.jpg') }}" width="25" height="25" alt="">
                             <small>Paul Habimana</small>
                         </div>
                         <div class="d-flex align-items-center">
@@ -274,14 +274,14 @@
             <!-- Blog 3 -->
             <div class="col-xl-4 col-lg-6">
                 <div class="bg-light rounded overflow-hidden">
-                    <img class="img-fluid w-100" src="img/blog-3.jpg" alt="Economic Empowerment">
+                    <img class="img-fluid w-100" src="{{ asset('frontend/img/blog-3.jpg') }}" alt="Economic Empowerment">
                     <div class="p-4">
                         <a class="h3 d-block mb-3" href="#!">Economic Empowerment for Women</a>
                         <p class="m-0">Our economic empowerment programs equip women with skills and resources to start small businesses and gain financial independence.</p>
                     </div>
                     <div class="d-flex justify-content-between border-top p-4">
                         <div class="d-flex align-items-center">
-                            <img class="rounded-circle me-2" src="img/user3.jpg" width="25" height="25" alt="">
+                            <img class="rounded-circle me-2" src="{{ asset('frontend/img/user3.jpg') }}" width="25" height="25" alt="">
                             <small>Emmanuel Niyonsaba</small>
                         </div>
                         <div class="d-flex align-items-center">
