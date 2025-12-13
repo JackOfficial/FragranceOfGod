@@ -222,50 +222,79 @@
 </section>
 
 <!-- ================= BLOG ================= -->
-<section class="py-5">
+<div class="container-fluid py-5">
     <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold">Latest News & Insights</h2>
-            <p class="text-muted">Stories, reflections, and updates</p>
+        <div class="text-center mx-auto mb-5" style="max-width: 500px;">
+            <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Blog Post</h5>
+            <h1 class="display-4">Our Latest Stories & Updates</h1>
         </div>
-
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <img src="{{ asset('frontend/img/blog1.jpg') }}" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="fw-bold">Living Out Faith Through Service</h5>
-                        <p class="text-muted">How love in action transforms communities.</p>
-                        <a href="#" class="fw-bold text-primary">Read More →</a>
+        <div class="row g-5">
+            <!-- Blog 1 -->
+            <div class="col-xl-4 col-lg-6">
+                <div class="bg-light rounded overflow-hidden">
+                    <img class="img-fluid w-100" src="img/blog-1.jpg" alt="Empowering Girls">
+                    <div class="p-4">
+                        <a class="h3 d-block mb-3" href="#!">Empowering Girls Through Education in Kigali</a>
+                        <p class="m-0">Discover how our programs are creating opportunities for young girls to access quality education and break the cycle of poverty.</p>
+                    </div>
+                    <div class="d-flex justify-content-between border-top p-4">
+                        <div class="d-flex align-items-center">
+                            <img class="rounded-circle me-2" src="img/user1.jpg" width="25" height="25" alt="">
+                            <small>Jane Mukamana</small>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <small class="ms-3"><i class="far fa-eye text-primary me-1"></i>245</small>
+                            <small class="ms-3"><i class="far fa-comment text-primary me-1"></i>12</small>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <img src="{{ asset('frontend/img/blog2.jpg') }}" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="fw-bold">Why Community Matters</h5>
-                        <p class="text-muted">Faith grows stronger together.</p>
-                        <a href="#" class="fw-bold text-primary">Read More →</a>
+            <!-- Blog 2 -->
+            <div class="col-xl-4 col-lg-6">
+                <div class="bg-light rounded overflow-hidden">
+                    <img class="img-fluid w-100" src="img/blog-2.jpg" alt="Health Awareness">
+                    <div class="p-4">
+                        <a class="h3 d-block mb-3" href="#!">Community Health Awareness Campaigns</a>
+                        <p class="m-0">We organize workshops and health campaigns to educate communities about nutrition, hygiene, and preventive healthcare.</p>
+                    </div>
+                    <div class="d-flex justify-content-between border-top p-4">
+                        <div class="d-flex align-items-center">
+                            <img class="rounded-circle me-2" src="img/user2.jpg" width="25" height="25" alt="">
+                            <small>Paul Habimana</small>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <small class="ms-3"><i class="far fa-eye text-primary me-1"></i>310</small>
+                            <small class="ms-3"><i class="far fa-comment text-primary me-1"></i>18</small>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <img src="{{ asset('frontend/img/blog3.jpg') }}" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="fw-bold">Restoring Hope One Life at a Time</h5>
-                        <p class="text-muted">Stories from the field.</p>
-                        <a href="#" class="fw-bold text-primary">Read More →</a>
+            <!-- Blog 3 -->
+            <div class="col-xl-4 col-lg-6">
+                <div class="bg-light rounded overflow-hidden">
+                    <img class="img-fluid w-100" src="img/blog-3.jpg" alt="Economic Empowerment">
+                    <div class="p-4">
+                        <a class="h3 d-block mb-3" href="#!">Economic Empowerment for Women</a>
+                        <p class="m-0">Our economic empowerment programs equip women with skills and resources to start small businesses and gain financial independence.</p>
+                    </div>
+                    <div class="d-flex justify-content-between border-top p-4">
+                        <div class="d-flex align-items-center">
+                            <img class="rounded-circle me-2" src="img/user3.jpg" width="25" height="25" alt="">
+                            <small>Emmanuel Niyonsaba</small>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <small class="ms-3"><i class="far fa-eye text-primary me-1"></i>198</small>
+                            <small class="ms-3"><i class="far fa-comment text-primary me-1"></i>9</small>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
-</section>
-
+</div>
 <!-- ================= CTA ================= -->
 <section class="py-5 text-center bg-primary text-light">
     <div class="container">
