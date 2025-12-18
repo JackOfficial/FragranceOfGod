@@ -49,7 +49,7 @@
                 <div class="p-4 shadow-sm rounded-4 bg-light mb-4">
                     <h5 class="fw-bold mb-3" style="color:#ffcc00;">Related Stories</h5>
                     <ul class="list-unstyled">
-                        @foreach ($relatedBlogs ?? [] as $related)
+                        @foreach ($relatedBlogs as $related)
                         <li class="mb-3">
                             <a href="{{ url('/blogs/'.$related['slug']) }}" class="text-dark fw-bold" style="text-decoration:none;">
                                 {{ $related['title'] }}
