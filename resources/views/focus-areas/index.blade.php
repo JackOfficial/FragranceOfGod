@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Community Outreach & Care | Fragrance Of God')
+@section('title', 'Our Focus Areas | Fragrance Of God')
 
 @section('content')
 
@@ -12,173 +12,142 @@
         <div class="row">
             <div class="col-lg-8">
                 <span class="ngo-hero-badge" style="background-color:#ffcc00; color:#111;">
-                    Our Focus Area
+                    Our Work • Our Calling
                 </span>
 
                 <h1 class="ngo-hero-title mt-3" style="color:#ffcc00;">
-                    Community Outreach & Care
+                    Our Focus Areas
                 </h1>
 
                 <p class="ngo-hero-text mt-4" style="color:rgba(255, 204, 0, 0.85); max-width:700px;">
-                    Serving vulnerable individuals and communities through compassion,
-                    practical support, prayer, and holistic care.
+                    Fragrance Of God works through clearly defined focus areas that reflect
+                    our faith, mission, and commitment to transforming lives and communities
+                    through compassion, service, and spiritual empowerment.
                 </p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ================= OVERVIEW ================= -->
+<!-- ================= INTRO ================= -->
 <section class="py-5">
-    <div class="container">
-        <div class="row align-items-center g-5">
-            <div class="col-lg-6">
-                <h2 class="fw-bold" style="color:#ffcc00;">Overview</h2>
-                <p class="text-muted fs-5 mt-3">
-                    Our Community Outreach & Care focus area exists to respond to urgent
-                    needs within vulnerable communities. We believe that demonstrating
-                    God’s love through action restores dignity, builds trust, and opens
-                    pathways to lasting transformation.
-                </p>
-                <p class="text-muted">
-                    Through outreach initiatives, relief support, counseling, and prayer,
-                    we walk alongside individuals and families during their most
-                    challenging moments.
-                </p>
-            </div>
-
-            <div class="col-lg-6">
-                <img src="{{ asset('frontend/img/focus-community.jpg') }}"
-                     class="img-fluid rounded-4 shadow"
-                     alt="Community Outreach & Care">
-            </div>
-        </div>
+    <div class="container text-center" style="max-width:900px;">
+        <h2 class="fw-bold" style="color:#ffcc00;">How We Serve</h2>
+        <p class="text-muted fs-5 mt-3">
+            Our programs are designed to address both spiritual and practical needs,
+            ensuring holistic transformation for individuals, families, and communities.
+        </p>
     </div>
 </section>
 
-<!-- ================= WHAT WE DO ================= -->
+<!-- ================= FOCUS AREAS ================= -->
 <section class="py-5 bg-light">
     <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold" style="color:#ffcc00;">What We Do</h2>
-            <p class="text-muted fs-5">
-                Key activities under this focus area
-            </p>
-        </div>
-
         <div class="row g-4">
-            <div class="col-md-4">
+
+            <!-- Focus Area 1 -->
+            <div class="col-lg-4 col-md-6">
                 <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
-                    <i class="fas fa-box-open fa-2x mb-3 text-warning"></i>
-                    <h5 class="fw-bold">Relief & Basic Support</h5>
+                    <div class="icon-circle bg-warning text-dark mb-4 d-inline-flex align-items-center justify-content-center rounded-circle"
+                         style="width:65px; height:65px;">
+                        <i class="fas fa-hands-helping fa-lg"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3" style="color:#ffcc00;">
+                        Community Outreach & Care
+                    </h4>
                     <p class="text-muted">
-                        Providing food, clothing, and emergency assistance to families
-                        facing hardship.
+                        We serve vulnerable communities through food support, relief assistance,
+                        counseling, prayer, and social care initiatives that restore dignity
+                        and hope.
                     </p>
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <!-- Focus Area 2 -->
+            <div class="col-lg-4 col-md-6">
                 <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
-                    <i class="fas fa-comments fa-2x mb-3 text-warning"></i>
-                    <h5 class="fw-bold">Counseling & Guidance</h5>
+                    <div class="icon-circle bg-warning text-dark mb-4 d-inline-flex align-items-center justify-content-center rounded-circle"
+                         style="width:65px; height:65px;">
+                        <i class="fas fa-users fa-lg"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3" style="color:#ffcc00;">
+                        Youth & Family Empowerment
+                    </h4>
                     <p class="text-muted">
-                        Offering emotional and spiritual counseling to restore hope
-                        and strengthen resilience.
+                        We equip youth and families with life skills, values, mentorship,
+                        and spiritual guidance to build resilient households and future leaders.
                     </p>
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <!-- Focus Area 3 -->
+            <div class="col-lg-4 col-md-6">
                 <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
-                    <i class="fas fa-praying-hands fa-2x mb-3 text-warning"></i>
-                    <h5 class="fw-bold">Prayer & Pastoral Care</h5>
+                    <div class="icon-circle bg-warning text-dark mb-4 d-inline-flex align-items-center justify-content-center rounded-circle"
+                         style="width:65px; height:65px;">
+                        <i class="fas fa-praying-hands fa-lg"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3" style="color:#ffcc00;">
+                        Faith & Discipleship
+                    </h4>
                     <p class="text-muted">
-                        Standing with individuals through prayer, discipleship,
-                        and faith-based support.
+                        We nurture spiritual growth through discipleship programs,
+                        prayer initiatives, biblical teaching, and leadership development.
                     </p>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
 
-<!-- ================= IMPACT ================= -->
-<section class="py-5">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold" style="color:#ffcc00;">Our Impact</h2>
-            <p class="text-muted fs-5">
-                The difference this focus area is making
-            </p>
-        </div>
-
-        <div class="row text-center">
-            <div class="col-md-4">
-                <h3 class="fw-bold" style="color:#ffcc00;">3,000+</h3>
-                <p class="text-muted">People Supported</p>
-            </div>
-            <div class="col-md-4">
-                <h3 class="fw-bold" style="color:#ffcc00;">45+</h3>
-                <p class="text-muted">Community Outreach Programs</p>
-            </div>
-            <div class="col-md-4">
-                <h3 class="fw-bold" style="color:#ffcc00;">120+</h3>
-                <p class="text-muted">Volunteers Engaged</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ================= RELATED STORIES ================= -->
-<section class="py-5 bg-light">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold" style="color:#ffcc00;">Stories From the Field</h2>
-            <p class="text-muted">
-                Real lives, real impact
-            </p>
-        </div>
-
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <img src="{{ asset('frontend/img/blog-1.jpg') }}" class="card-img-top">
-                    <div class="card-body">
-                        <h6 class="fw-bold">Restoring Hope Through Community Care</h6>
-                        <p class="text-muted small">
-                            How outreach programs are transforming vulnerable families.
-                        </p>
-                        <a href="#" class="text-warning fw-semibold">Read Story →</a>
+            <!-- Focus Area 4 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
+                    <div class="icon-circle bg-warning text-dark mb-4 d-inline-flex align-items-center justify-content-center rounded-circle"
+                         style="width:65px; height:65px;">
+                        <i class="fas fa-briefcase fa-lg"></i>
                     </div>
+                    <h4 class="fw-bold mb-3" style="color:#ffcc00;">
+                        Economic Empowerment
+                    </h4>
+                    <p class="text-muted">
+                        We support sustainable livelihoods through skills training,
+                        entrepreneurship support, and income-generating initiatives.
+                    </p>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <img src="{{ asset('frontend/img/blog-2.jpg') }}" class="card-img-top">
-                    <div class="card-body">
-                        <h6 class="fw-bold">Standing With Families in Crisis</h6>
-                        <p class="text-muted small">
-                            Responding with compassion when it matters most.
-                        </p>
-                        <a href="#" class="text-warning fw-semibold">Read Story →</a>
+            <!-- Focus Area 5 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
+                    <div class="icon-circle bg-warning text-dark mb-4 d-inline-flex align-items-center justify-content-center rounded-circle"
+                         style="width:65px; height:65px;">
+                        <i class="fas fa-heartbeat fa-lg"></i>
                     </div>
+                    <h4 class="fw-bold mb-3" style="color:#ffcc00;">
+                        Health & Well-Being
+                    </h4>
+                    <p class="text-muted">
+                        We promote physical, emotional, and mental well-being through
+                        health education, counseling, and community wellness initiatives.
+                    </p>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <img src="{{ asset('frontend/img/blog-3.jpg') }}" class="card-img-top">
-                    <div class="card-body">
-                        <h6 class="fw-bold">Faith in Action</h6>
-                        <p class="text-muted small">
-                            Serving communities through prayer and practical care.
-                        </p>
-                        <a href="#" class="text-warning fw-semibold">Read Story →</a>
+            <!-- Focus Area 6 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
+                    <div class="icon-circle bg-warning text-dark mb-4 d-inline-flex align-items-center justify-content-center rounded-circle"
+                         style="width:65px; height:65px;">
+                        <i class="fas fa-hand-holding-heart fa-lg"></i>
                     </div>
+                    <h4 class="fw-bold mb-3" style="color:#ffcc00;">
+                        Compassion & Advocacy
+                    </h4>
+                    <p class="text-muted">
+                        We advocate for justice, dignity, and care for the vulnerable,
+                        standing with those affected by poverty, abuse, and social exclusion.
+                    </p>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
@@ -186,19 +155,17 @@
 <!-- ================= CTA ================= -->
 <section class="py-5 text-center" style="background-color:#111; color:#ffcc00;">
     <div class="container">
-        <h2 class="fw-bold">Support This Focus Area</h2>
+        <h2 class="fw-bold">Partner With Us</h2>
         <p class="lead mt-3">
-            Your generosity helps us continue serving communities
-            with compassion and faith.
+            Together, we can expand our reach and deepen our impact
+            across communities and generations.
         </p>
         <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
-            <a href="/donate" class="btn btn-lg"
-               style="background-color:#ffcc00; color:#111; font-weight:600;">
-                Donate Now
+            <a href="/donate" class="btn btn-lg" style="background-color:#ffcc00; color:#111; font-weight:600;">
+                Support Our Work
             </a>
-            <a href="/contact" class="btn btn-outline-light btn-lg"
-               style="border-color:#ffcc00; color:#ffcc00;">
-                Get Involved
+            <a href="/contact" class="btn btn-outline-light btn-lg" style="border-color:#ffcc00; color:#ffcc00;">
+                Partner With Us
             </a>
         </div>
     </div>
