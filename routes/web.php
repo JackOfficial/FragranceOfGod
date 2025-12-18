@@ -8,6 +8,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\FocusAreaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StoryController;
 use App\Http\Controllers\VolunteerController;
@@ -36,3 +37,5 @@ Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.
 Route::get('/volunteers', [VolunteerController::class, 'index'])->name('volunteers.index');
 Route::get('/volunteers/signup', [VolunteerController::class, 'signup'])->name('volunteers.signup');
 Route::post('/volunteers/signup', [VolunteerController::class, 'submit'])->name('volunteers.submit');
+Route::get('/programs', [ProgramController::class, 'index'])->name('programs.index');
+Route::get('/programs/{slug}', [ProgramController::class, 'show'])->name('programs.show');
