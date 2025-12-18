@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DonateController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\FocusAreaController;
@@ -29,4 +30,6 @@ Route::get('/projects/{slug}', [ProjectController::class, 'show']);
 Route::get('/donate', [DonateController::class, 'index'])->name('donate.index');
 Route::post('/donate/process', [DonateController::class, 'process'])->name('donate.process');
 Route::get('/donate/callback', [DonateController::class, 'callback'])->name('donate.callback');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
 

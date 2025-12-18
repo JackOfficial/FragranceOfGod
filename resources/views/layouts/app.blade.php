@@ -222,6 +222,7 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
                 <li class="nav-item"><a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">Home</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->is('about') ? 'active' : '' }}" href="/about">About</a></li>
+                <li class="nav-item"><a class="nav-link {{ request()->is('contact') ? 'active' : '' }}" href="/contact">Contact</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->is('focus-areas') ? 'active' : '' }}" href="/focus-areas">Focus Areas</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->is('programs') ? 'active' : '' }}" href="/programs">Programs</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->is('stories') ? 'active' : '' }}" href="/stories">Stories</a></li>
