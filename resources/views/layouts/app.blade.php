@@ -278,7 +278,7 @@
                     Popular Links</h4>
                 <div class="d-flex flex-column justify-content-start">
                     <a class="text-light mb-2" href="/donate"><i class="fa fa-angle-right me-2"></i>Donate</a>
-                    <a class="text-light mb-2" href="/volunteer"><i class="fa fa-angle-right me-2"></i>Volunteer</a>
+                    <a class="text-light mb-2" href="/volunteers"><i class="fa fa-angle-right me-2"></i>Volunteer</a>
                     <a class="text-light mb-2" href="/events"><i class="fa fa-angle-right me-2"></i>Events</a>
                     <a class="text-light mb-2" href="/testimonials"><i class="fa fa-angle-right me-2"></i>Testimonials</a>
                     <a class="text-light mb-2" href="/gallery"><i class="fa fa-angle-right me-2"></i>Gallery</a>

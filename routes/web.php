@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StoryController;
+use App\Http\Controllers\VolunteerController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -32,4 +33,5 @@ Route::post('/donate/process', [DonateController::class, 'process'])->name('dona
 Route::get('/donate/callback', [DonateController::class, 'callback'])->name('donate.callback');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
+Route::get('/volunteers', [VolunteerController::class, 'index'])->name('volunteers.index');
 
