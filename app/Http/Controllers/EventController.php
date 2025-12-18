@@ -15,7 +15,7 @@ class EventController extends Controller
                 'location' => 'Kigali',
                 'date' => 'December 2025',
                 'slug' => 'community-prayer-day',
-                'img' => 'event-1.jpg'
+                'img' => 'fragrace of god happy kid.jpeg'
             ],
             [
                 'title' => 'Youth Mentorship Camp',
@@ -23,7 +23,7 @@ class EventController extends Controller
                 'location' => 'Huye',
                 'date' => 'January 2026',
                 'slug' => 'youth-mentorship-camp',
-                'img' => 'event-2.jpg'
+                'img' => 'about.jpg'
             ],
         ];
 
@@ -34,7 +34,7 @@ class EventController extends Controller
                 'location' => 'Musanze',
                 'date' => 'July 2025',
                 'slug' => 'family-restoration-workshop',
-                'img' => 'event-3.jpg'
+                'img' => 'fragrace of god kids.jpeg'
             ],
         ];
 
