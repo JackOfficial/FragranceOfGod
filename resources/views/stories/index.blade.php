@@ -38,9 +38,9 @@
 
         <div class="row g-4">
             @foreach ([
-                ['title'=>'Empowering Girls Through Education', 'desc'=>'Meet Aline, a young girl in Kigali whose life was transformed through education programs.', 'img'=>'story-1.jpg'],
-                ['title'=>'Community Health Awareness', 'desc'=>'Discover how our health initiatives improved access to care for rural communities.', 'img'=>'story-2.jpg'],
-                ['title'=>'Restoring Family Dignity', 'desc'=>'Read about a family in Musanze that received counseling and support to rebuild their lives.', 'img'=>'story-3.jpg']
+                ['title'=>'Empowering Girls Through Education', 'desc'=>'Meet Aline, a young girl in Kigali whose life was transformed through education programs.', 'img'=>'fragrance of god.jpeg'],
+                ['title'=>'Community Health Awareness', 'desc'=>'Discover how our health initiatives improved access to care for rural communities.', 'img'=>'fragrace of god community.jpeg'],
+                ['title'=>'Restoring Family Dignity', 'desc'=>'Read about a family in Musanze that received counseling and support to rebuild their lives.', 'img'=>'fragrace of god kids.jpeg']
             ] as $story)
             <div class="col-lg-4 col-md-6">
                 <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
