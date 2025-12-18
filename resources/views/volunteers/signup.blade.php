@@ -109,7 +109,7 @@
 
             <!-- Image / Visual -->
             <div class="col-lg-6">
-                <img src="{{ asset('frontend/img/volunteer-hero.jpg') }}" alt="Volunteer with Fragrance Of God" class="img-fluid rounded shadow">
+                <img src="{{ asset('frontend/img/banner.jpg') }}" alt="Volunteer with Fragrance Of God" class="img-fluid rounded shadow">
             </div>
         </div>
     </div>
