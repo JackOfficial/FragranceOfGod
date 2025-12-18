@@ -215,24 +215,85 @@
         <a class="navbar-brand fw-bold" href="/">
             <img src="{{ asset('frontend/img/Fog Logo.png') }}" alt="Fragrance Of God Logo" style="width:150px; height:auto">
         </a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
-                <li class="nav-item"><a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->is('about') ? 'active' : '' }}" href="/about">About</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->is('focus-areas') ? 'active' : '' }}" href="/focus-areas">Focus Areas</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->is('programs') ? 'active' : '' }}" href="/programs">Programs</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->is('projects') ? 'active' : '' }}" href="/projects">Projects</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->is('stories') ? 'active' : '' }}" href="/stories">Stories</a></li>
-                 <li class="nav-item"><a class="nav-link {{ request()->is('events') ? 'active' : '' }}" href="/events">Events</a></li>
-                 <li class="nav-item"><a class="nav-link {{ request()->is('volunteers') ? 'active' : '' }}" href="/volunteers">Get Involved</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->is('contact') ? 'active' : '' }}" href="/contact">Contact</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->is('blogs') ? 'active' : '' }}" href="/blogs">Blog</a></li>
-                <li class="nav-item ms-lg-3">
-                    <a class="btn btn-donate btn-sm px-4" href="/donate">Donate</a>
+
+                <!-- Home -->
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">Home</a>
                 </li>
+
+                <!-- About -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle {{ request()->is('about*') ? 'active' : '' }}"
+                       href="#" role="button" data-bs-toggle="dropdown">
+                        About
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/about">Who We Are</a></li>
+                        <li><a class="dropdown-item" href="/about#mission">Mission & Values</a></li>
+                        <li><a class="dropdown-item" href="/team">Leadership</a></li>
+                    </ul>
+                </li>
+
+                <!-- Our Work -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle {{ request()->is('focus-areas*') || request()->is('programs*') || request()->is('projects*') ? 'active' : '' }}"
+                       href="#" role="button" data-bs-toggle="dropdown">
+                        Our Work
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/focus-areas">Focus Areas</a></li>
+                        <li><a class="dropdown-item" href="/programs">Programs</a></li>
+                        <li><a class="dropdown-item" href="/projects">Projects</a></li>
+                    </ul>
+                </li>
+
+                <!-- Stories -->
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('stories*') ? 'active' : '' }}" href="/stories">
+                        Stories
+                    </a>
+                </li>
+
+                <!-- Get Involved -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle {{ request()->is('volunteers*') ? 'active' : '' }}"
+                       href="#" role="button" data-bs-toggle="dropdown">
+                        Get Involved
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/volunteers">Volunteer</a></li>
+                        <li><a class="dropdown-item" href="/partner">Partner With Us</a></li>
+                    </ul>
+                </li>
+
+                <!-- Events -->
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('events*') ? 'active' : '' }}" href="/events">
+                        Events
+                    </a>
+                </li>
+
+                <!-- Contact -->
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('contact*') ? 'active' : '' }}" href="/contact">
+                        Contact
+                    </a>
+                </li>
+
+                <!-- Donate Button -->
+                <li class="nav-item ms-lg-3">
+                    <a class="btn btn-donate btn-sm px-4" href="/donate">
+                        Donate
+                    </a>
+                </li>
+
             </ul>
         </div>
     </div>
