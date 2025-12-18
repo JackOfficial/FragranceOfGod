@@ -224,7 +224,7 @@
                 <li class="nav-item"><a class="nav-link {{ request()->is('about') ? 'active' : '' }}" href="/about">About</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->is('focus-areas') ? 'active' : '' }}" href="/focus-areas">Focus Areas</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->is('programs') ? 'active' : '' }}" href="/programs">Programs</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->is('stories') ? 'active' : '' }}" href="/stories">Events</a></li>
+                <li class="nav-item"><a class="nav-link {{ request()->is('stories') ? 'active' : '' }}" href="/stories">Stories</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->is('events') ? 'active' : '' }}" href="/events">Events</a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->is('blogs') ? 'active' : '' }}" href="/blogs">Blog</a></li>
                 <li class="nav-item ms-lg-3">
