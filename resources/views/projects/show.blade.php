@@ -47,24 +47,31 @@
             </div>
 
             <!-- Sidebar -->
-            <div class="col-lg-4">
-                <div class="p-4 shadow-sm rounded-4 bg-light mb-4">
-                    <h5 class="fw-bold mb-3" style="color:#ffcc00;">Related Projects</h5>
-                    <ul class="list-unstyled">
-                        @foreach ($relatedProjects ?? [] as $rel)
-                        <li class="mb-3 d-flex align-items-start">
-                            <img src="{{ asset('frontend/img/'.$rel['img']) }}" alt="{{ $rel['title'] }}" class="rounded me-2" style="width:60px; height:60px; object-fit:cover;">
-                            <div>
-                                <a href="{{ url('/projects/'.$rel['slug']) }}" class="text-dark fw-bold" style="text-decoration:none;">
-                                    {{ $rel['title'] }}
-                                </a>
-                                <small class="d-block text-muted">{{ Str::limit($rel['short_desc'] ?? '', 50) }}</small>
-                            </div>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
+            <!-- Sidebar -->
+<div class="col-lg-4">
+    <div class="p-4 shadow-sm rounded-4 bg-light">
+        <h5 class="fw-bold mb-3" style="color:#ffcc00;">Related Projects</h5>
+        <ul class="list-unstyled">
+            @foreach ($relatedProjects ?? [] as $rel)
+                <li class="mb-3 d-flex align-items-center">
+                    <img src="{{ asset('frontend/img/' . ($rel['img'] ?? 'default-project.jpg')) }}" 
+                         alt="{{ $rel['title'] }}" 
+                         class="rounded me-2" 
+                         style="width:60px; height:60px; object-fit:cover;">
+                    <div>
+                        <a href="{{ url('/projects/'.$rel['slug']) }}" class="text-dark fw-bold" style="text-decoration:none;">
+                            {{ $rel['title'] }}
+                        </a>
+                        @if(!empty($rel['short_desc']))
+                            <small class="d-block text-muted">{{ Str::limit($rel['short_desc'], 50) }}</small>
+                        @endif
+                    </div>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+</div>
+
 
         </div>
     </div>
