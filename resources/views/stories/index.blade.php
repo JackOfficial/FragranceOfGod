@@ -48,7 +48,7 @@
                     <div class="card-body p-4">
                         <h5 class="fw-bold mb-3" style="color:#ffcc00;">{{ $story['title'] }}</h5>
                         <p class="text-muted">{{ $story['desc'] }}</p>
-                        <a href="#" class="text-decoration-none fw-semibold" style="color:#ffcc00;">Read More →</a>
+                        <a href="/stories/{{  $story['title'] }}" class="text-decoration-none fw-semibold" style="color:#ffcc00;">Read More →</a>
                     </div>
                 </div>
             </div>
