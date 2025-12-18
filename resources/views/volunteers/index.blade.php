@@ -10,6 +10,9 @@
     <div class="container position-relative text-center">
         <h1 class="ngo-hero-title mt-3" style="color:#ffcc00;">Join Our Volunteers</h1>
         <p class="text-light lead mt-3">Make a difference in lives and communities through service.</p>
+        <a href="/volunteer/signup" class="btn btn-lg mt-4" style="background-color:#ffcc00; color:#111; font-weight:600;">
+            Sign Up Now
+        </a>
     </div>
 </section>
 
@@ -42,6 +45,13 @@
             </div>
             @endforeach
         </div>
+
+        <!-- ================= MID-SECTION CTA ================= -->
+        <div class="text-center mt-5">
+            <a href="/volunteer/signup" class="btn btn-lg" style="background-color:#ffcc00; color:#111; font-weight:600;">
+                Sign Up to Volunteer
+            </a>
+        </div>
     </div>
 </section>
 
@@ -52,7 +62,9 @@
         <p class="lead mt-3">
             Join our team and help us transform lives. Your time and passion can create lasting impact.
         </p>
-        <a href="/contact" class="btn btn-lg" style="background-color:#ffcc00; color:#111; font-weight:600;">Sign Up to Volunteer</a>
+        <a href="/volunteer/signup" class="btn btn-lg" style="background-color:#ffcc00; color:#111; font-weight:600;">
+            Sign Up to Volunteer
+        </a>
     </div>
 </section>
 
