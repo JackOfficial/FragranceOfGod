@@ -17,18 +17,19 @@
 <section class="py-5">
     <div class="container">
         <div class="row g-5">
+
             <!-- Main Content -->
             <div class="col-lg-8">
                 <img src="{{ asset('frontend/img/'.$project['img']) }}" class="img-fluid rounded shadow mb-4" alt="{{ $project['title'] }}">
-                
+
                 <div class="project-content text-muted fs-5" style="line-height:1.8;">
                     {!! $project['desc'] !!}
                 </div>
 
                 <!-- Share Buttons -->
-                <div class="mt-4">
+                <div class="mt-5">
                     <p class="fw-bold" style="color:#ffcc00;">Share This Project:</p>
-                    <div class="d-flex gap-3 flex-wrap">
+                    <div class="d-flex gap-2 flex-wrap">
                         <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank" class="btn btn-primary">
                             <i class="fab fa-facebook-f me-2"></i> Facebook
                         </a>
@@ -47,19 +48,24 @@
 
             <!-- Sidebar -->
             <div class="col-lg-4">
-                <div class="p-4 shadow-sm rounded-4 bg-light">
+                <div class="p-4 shadow-sm rounded-4 bg-light mb-4">
                     <h5 class="fw-bold mb-3" style="color:#ffcc00;">Related Projects</h5>
                     <ul class="list-unstyled">
                         @foreach ($relatedProjects ?? [] as $rel)
-                            <li class="mb-3">
+                        <li class="mb-3 d-flex align-items-start">
+                            <img src="{{ asset('frontend/img/'.$rel['img']) }}" alt="{{ $rel['title'] }}" class="rounded me-2" style="width:60px; height:60px; object-fit:cover;">
+                            <div>
                                 <a href="{{ url('/projects/'.$rel['slug']) }}" class="text-dark fw-bold" style="text-decoration:none;">
                                     {{ $rel['title'] }}
                                 </a>
-                            </li>
+                                <small class="d-block text-muted">{{ Str::limit($rel['short_desc'] ?? '', 50) }}</small>
+                            </div>
+                        </li>
                         @endforeach
                     </ul>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
@@ -67,11 +73,18 @@
 <!-- ================= CTA ================= -->
 <section class="py-5 text-center" style="background-color:#111; color:#ffcc00;">
     <div class="container">
-        <h2 class="fw-bold">Support Our Projects</h2>
-        <p class="lead mt-3">Help us continue transforming lives and communities through faith-driven initiatives.</p>
-        <a href="/donate" class="btn btn-lg" style="background-color:#ffcc00; color:#111; font-weight:600;">
-            Donate Now
-        </a>
+        <h2 class="fw-bold">Support This Project</h2>
+        <p class="lead mt-3">
+            Help us continue transforming lives and communities through faith-driven initiatives.
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+            <a href="/donate" class="btn btn-lg" style="background-color:#ffcc00; color:#111; font-weight:600;">
+                Donate Now
+            </a>
+            <a href="/contact" class="btn btn-outline-light btn-lg" style="border-color:#ffcc00; color:#ffcc00;">
+                Get Involved
+            </a>
+        </div>
     </div>
 </section>
 
