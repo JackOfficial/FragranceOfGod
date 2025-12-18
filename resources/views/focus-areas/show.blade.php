@@ -48,7 +48,7 @@
             </div>
 
             <div class="col-lg-6">
-                <img src="{{ asset('frontend/img/focus-community.jpg') }}"
+                <img src="{{ asset('frontend/img/about.jpg') }}"
                      class="img-fluid rounded-4 shadow"
                      alt="Community Outreach & Care">
             </div>
