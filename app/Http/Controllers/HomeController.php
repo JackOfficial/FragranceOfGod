@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
+use App\Models\Story;
 
 class HomeController extends Controller
 {
@@ -24,7 +25,13 @@ class HomeController extends Controller
                                ->take(3)
                                ->get();
 
-        return view('index', compact('events', 'featuredEvents'));
+        $stories = Story::with('media')
+        ->where('is_published', true)
+        ->latest()
+        ->take(3) // show latest 3 stories
+        ->get();
+
+        return view('index', compact('events', 'featuredEvents', 'stories'));
     }
 
     /**

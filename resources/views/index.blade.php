@@ -216,42 +216,75 @@
     </div>
 </section>
 
-<!-- ================= BLOG ================= -->
+<!-- ================= STORIES ================= -->
 <div class="container-fluid py-5">
     <div class="container">
-        <div class="text-center mx-auto mb-5" style="max-width: 500px;">
-            <h5 class="d-inline-block" style="color:#ffcc00; text-transform:uppercase; border-bottom: 4px solid #d32f2f;">Blog Post</h5>
-            <h1 class="display-4" style="color:#111;">Our Latest Stories & Updates</h1>
+        <div class="text-center mx-auto mb-5" style="max-width: 600px;">
+            <h5 class="d-inline-block"
+                style="color:#ffcc00; text-transform:uppercase; border-bottom: 4px solid #d32f2f;">
+                Stories
+            </h5>
+            <h1 class="display-5 fw-bold" style="color:#111;">
+                Our Latest Stories & Impact
+            </h1>
         </div>
+
         <div class="row g-5">
-            @foreach ([
-                ['title'=>'Empowering Girls Through Education in Kigali', 'desc'=>'Discover how our programs are creating opportunities for young girls to access quality education and break the cycle of poverty.', 'author'=>'Jane Mukamana', 'img'=>'blog-1.jpg', 'views'=>245, 'comments'=>12],
-                ['title'=>'Community Health Awareness Campaigns', 'desc'=>'We organize workshops and health campaigns to educate communities about nutrition, hygiene, and preventive healthcare.', 'author'=>'Paul Habimana', 'img'=>'blog-2.jpg', 'views'=>310, 'comments'=>18],
-                ['title'=>'Economic Empowerment for Women', 'desc'=>'Our economic empowerment programs equip women with skills and resources to start small businesses and gain financial independence.', 'author'=>'Emmanuel Niyonsaba', 'img'=>'blog-3.jpg', 'views'=>198, 'comments'=>9]
-            ] as $blog)
-            <div class="col-xl-4 col-lg-6">
-                <div class="bg-light rounded overflow-hidden">
-                    <img class="img-fluid w-100" src="{{ asset('frontend/img/'.$blog['img']) }}" alt="{{ $blog['title'] }}">
-                    <div class="p-4">
-                        <a class="h3 d-block mb-3" href="#!" style="color:#111;">{{ $blog['title'] }}</a>
-                        <p class="m-0 text-muted">{{ $blog['desc'] }}</p>
-                    </div>
-                    <div class="d-flex justify-content-between border-top p-4">
-                        <div class="d-flex align-items-center">
-                            <img class="rounded-circle me-2" src="{{ asset('frontend/img/'.$blog['img']) }}" width="25" height="25" alt="">
-                            <small>{{ $blog['author'] }}</small>
+            @forelse($stories as $story)
+                @php
+                    $image = $story->media->firstWhere('file_type', 'image');
+                @endphp
+
+                <div class="col-xl-4 col-lg-6">
+                    <div class="bg-light rounded overflow-hidden shadow-sm h-100">
+                        <img
+                            class="img-fluid w-100"
+                            style="height:230px; object-fit:cover"
+                            src="{{ $image ? asset('storage/'.$image->file_path) : asset('frontend/img/default-story.jpg') }}"
+                            alt="{{ $story->title }}">
+
+                        <div class="p-4">
+                            <a class="h4 d-block mb-3 text-decoration-none"
+                               href="{{ route('stories.show', $story->slug) }}"
+                               style="color:#111;">
+                                {{ $story->title }}
+                            </a>
+
+                            <p class="m-0 text-muted">
+                                {{ Str::limit(strip_tags($story->description), 120) }}
+                            </p>
                         </div>
-                        <div class="d-flex align-items-center">
-                            <small class="ms-3"><i class="far fa-eye text-primary me-1"></i>{{ $blog['views'] }}</small>
-                            <small class="ms-3"><i class="far fa-comment text-primary me-1"></i>{{ $blog['comments'] }}</small>
+
+                        <div class="d-flex justify-content-between align-items-center border-top p-4">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-user-circle me-2 text-muted"></i>
+                                <small>{{ $story->author->name ?? 'HFRO Team' }}</small>
+                            </div>
+                            <small class="text-muted">
+                                {{ $story->created_at->format('d M, Y') }}
+                            </small>
                         </div>
                     </div>
                 </div>
-            </div>
-            @endforeach
+            @empty
+                <div class="col-12 text-center text-muted">
+                    <p>No stories available yet. Please check back soon.</p>
+                </div>
+            @endforelse
         </div>
+
+        @if($stories->count() >= 3)
+            <div class="text-center mt-5">
+                <a href="{{ route('stories.index') }}"
+                   class="btn btn-outline-dark px-5"
+                   style="border-color:#ffcc00; color:#ffcc00;">
+                    View All Stories
+                </a>
+            </div>
+        @endif
     </div>
 </div>
+
 
 <!-- ================= CTA ================= -->
 <section class="py-5 text-center" style="background-color:#111; color:#ffcc00;">
