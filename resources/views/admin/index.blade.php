@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Dashboard | Happy Family Rwanda Organization')
+@section('title', 'Dashboard | Fragrance Of God')
 
 @section('content')
 <div class="container-fluid">

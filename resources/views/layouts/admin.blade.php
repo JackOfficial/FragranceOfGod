@@ -61,7 +61,7 @@
 
     <!-- Brand -->
     <a href="{{ route('admin.dashboard') }}" class="brand-link">
-       <img src="{{ asset('frontend/img/Fog Logo.png') }}" alt="AutoSpaceLink" class="brand-image">
+       <img src="{{ asset('frontend/img/Fog Logo.png') }}" alt="Fragrance Of God" class="brand-image">
     <span class="brand-text font-weight-light">FOG</span>
     </a>
 
