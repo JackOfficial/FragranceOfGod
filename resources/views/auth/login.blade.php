@@ -31,7 +31,8 @@
                         @endif
 
                         <!-- Google Login -->
-                        <a class="btn btn-primary mb-2 d-block text-center"
+                        <a class="btn mb-2 d-block text-center"
+                        style="background-color:#ccc"
                            href="{{ url('auth/redirect/google') }}">
                             Login with Google
                             <i class="fa-brands fa-google ms-1"></i>
