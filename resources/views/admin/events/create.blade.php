@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('layouts.admin')
 @section('title', 'HFRO - Create Event')
 
 @section('content')
