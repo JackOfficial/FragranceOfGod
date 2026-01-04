@@ -61,7 +61,7 @@
 
     <!-- Brand -->
     <a href="{{ route('admin.dashboard') }}" class="brand-link">
-      <img src="{{ asset('frontend/img/Fog Logo.png') }}" class="brand-image elevation-3">
+      <img src="{{ asset('frontend/img/Fog Logo.png') }}" style="width:100px; height:auto" class="brand-image elevation-3">
     </a>
 
     <div class="sidebar">
