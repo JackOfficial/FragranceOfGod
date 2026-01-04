@@ -12,8 +12,7 @@ class SocialLoginController extends Controller
 {
     public function redirect($provider)
     {
-        dd("hello");
-        
+        return Socialite::driver($provider)->redirect();
     }
 
      public function callback($provider)
