@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('layouts.admin')
 @section('title', 'Events')
 @section('content')
 
@@ -42,7 +42,7 @@
                             <th>Image</th>
                             <th>Title</th>
                             <th>Description</th>
-                            <th>Date</th>
+                            <th>Date & Time</th> <!-- Updated header -->
                             <th>Location</th>
                             <th>Status</th>
                             <th style="width:180px;">Actions</th>
@@ -51,21 +51,25 @@
                     <tbody>
                         @forelse($events as $event)
                         <tr>
-                            <td>{{ $event->iteration }}</td>
-                          <td>
-    @php
-        $firstImage = $event->media->where('file_type', 'image')->first();
-    @endphp
+                            <td>{{ $loop->iteration }}</td>
+                            <td>
+                                @php
+                                    $firstImage = $event->media->where('file_type', 'image')->first();
+                                @endphp
 
-    @if($firstImage)
-        <img src="{{ asset('storage/' . $firstImage->file_path) }}" class="img-thumbnail" style="width:80px">
-    @else
-        <span class="text-muted">No image</span>
-    @endif
-</td>
+                                @if($firstImage)
+                                    <img src="{{ asset('storage/' . $firstImage->file_path) }}" class="img-thumbnail" style="width:80px">
+                                @else
+                                    <span class="text-muted">No image</span>
+                                @endif
+                            </td>
                             <td>{{ $event->title }}</td>
                             <td>{!! Str::limit(strip_tags($event->description), 50) !!}</td>
-                            <td>{{ $event->event_date->format('d M, Y') }}</td>
+                            <td>
+                                {{ $event->event_date->format('d M, Y') }}
+                                <br>
+                                <small class="text-muted">{{ \Carbon\Carbon::parse($event->event_time)->format('h:i A') }}</small>
+                            </td>
                             <td>{{ $event->location }}</td>
                             <td>
                                 @if($event->is_published)
