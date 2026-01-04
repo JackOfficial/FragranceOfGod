@@ -61,7 +61,8 @@
 
     <!-- Brand -->
     <a href="{{ route('admin.dashboard') }}" class="brand-link">
-      <img src="{{ asset('frontend/img/Fog Logo.png') }}" style="width:100px; height:auto" class="brand-image elevation-3">
+       <img src="{{ asset('frontend/img/Fog Logo.png') }}" alt="AutoSpaceLink" class="brand-image elevation-3" style="opacity: .8">
+    <span class="brand-text font-weight-light">FOG</span>
     </a>
 
     <div class="sidebar">
