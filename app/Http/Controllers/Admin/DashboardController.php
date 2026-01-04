@@ -38,7 +38,7 @@ class DashboardController extends Controller
 
         $programStats = [120, 60, 40, 25];
 
-        return view('admin.dashboard', compact(
+        return view('admin.index', compact(
             'programs',
             'beneficiaries',
             'activeProjects',
