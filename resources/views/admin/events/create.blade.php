@@ -95,18 +95,24 @@
 </div>
 
                         <!-- Event Documents -->
-                        <div class="form-group">
-                            <label for="documents">Attach Documents / PDFs</label>
-                            <input type="file" name="documents[]" id="documents" multiple class="form-control"
-                                   @change="docs = Array.from($event.target.files).map(f => f.name)">
-                            <template x-if="docs.length">
-                                <div class="mt-2">
-                                    <ul class="list-group">
-                                        <li class="list-group-item" x-text="doc" x-for="doc in docs"></li>
-                                    </ul>
-                                </div>
-                            </template>
-                        </div>
+                        <div class="form-group" x-data="{ docs: [] }">
+    <label for="documents">Attach Documents / PDFs</label>
+    <input type="file" name="documents[]" id="documents" multiple class="form-control"
+           @change="docs = Array.from($event.target.files).map(f => ({ name: f.name, size: f.size }))">
+    
+    <template x-if="docs.length">
+        <div class="mt-2">
+            <ul class="list-group">
+                <template x-for="(doc, index) in docs" :key="index">
+                    <li class="list-group-item">
+                        <span x-text="doc.name"></span>
+                        <small class="text-muted ms-2" x-text="'(' + Math.round(doc.size/1024) + ' KB)'"></small>
+                    </li>
+                </template>
+            </ul>
+        </div>
+    </template>
+</div>
 
                         <!-- Publish -->
                         <div class="form-group">
