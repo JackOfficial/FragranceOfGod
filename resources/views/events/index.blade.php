@@ -16,47 +16,60 @@
 <!-- ================= UPCOMING & PAST EVENTS ================= -->
 <section class="py-5">
     <div class="container">
+        <!-- Upcoming Events -->
         <div class="text-center mb-5">
             <h2 class="fw-bold" style="color:#ffcc00;">Upcoming Events</h2>
             <p class="text-muted">Join us and be part of our initiatives</p>
         </div>
 
         <div class="row g-4">
-            @foreach ($upcomingEvents ?? [] as $event)
+            @forelse ($upcomingEvents as $event)
                 <div class="col-md-4">
                     <div class="card shadow-sm h-100">
-                        <img src="{{ asset('frontend/img/'.$event['img']) }}" class="card-img-top" alt="{{ $event['title'] }}">
+                        @php
+                            $firstImage = $event->media->where('file_type', 'image')->first();
+                        @endphp
+                        <img src="{{ $firstImage ? asset('storage/'.$firstImage->file_path) : asset('frontend/img/default-event.jpg') }}" 
+                             class="card-img-top" alt="{{ $event->title }}">
                         <div class="card-body">
-                            <h5 class="fw-bold" style="color:#ffcc00;">{{ $event['title'] }}</h5>
-                            <p class="text-muted">{{ $event['desc'] }}</p>
-                            <small class="text-muted">📍 {{ $event['location'] }} | 🗓 {{ $event['date'] }}</small>
-                            <a href="{{ url('/events/'.$event['slug']) }}" class="d-block mt-2 text-primary fw-bold">Read More →</a>
+                            <h5 class="fw-bold" style="color:#ffcc00;">{{ $event->title }}</h5>
+                            <p class="text-muted">{!! Str::limit(strip_tags($event->description), 100) !!}</p>
+                            <small class="text-muted">📍 {{ $event->location }} | 🗓 {{ $event->event_date->format('d M, Y') }} | ⏰ {{ $event->event_time ?? 'TBA' }}</small>
+                            <a href="{{ url('/events/'.$event->slug) }}" class="d-block mt-2 text-primary fw-bold">Read More →</a>
                         </div>
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <div class="col-12 text-center text-muted">No upcoming events.</div>
+            @endforelse
         </div>
 
-        <!-- ================= PAST EVENTS ================= -->
+        <!-- Past Events -->
         <div class="text-center mt-5 mb-4">
             <h2 class="fw-bold" style="color:#ffcc00;">Past Events</h2>
             <p class="text-muted">See the impact we've made</p>
         </div>
 
         <div class="row g-4">
-            @foreach ($pastEvents ?? [] as $event)
+            @forelse ($pastEvents as $event)
                 <div class="col-md-4">
                     <div class="card shadow-sm h-100">
-                        <img src="{{ asset('frontend/img/'.$event['img']) }}" class="card-img-top" alt="{{ $event['title'] }}">
+                        @php
+                            $firstImage = $event->media->where('file_type', 'image')->first();
+                        @endphp
+                        <img src="{{ $firstImage ? asset('storage/'.$firstImage->file_path) : asset('frontend/img/default-event.jpg') }}" 
+                             class="card-img-top" alt="{{ $event->title }}">
                         <div class="card-body">
-                            <h5 class="fw-bold" style="color:#ffcc00;">{{ $event['title'] }}</h5>
-                            <p class="text-muted">{{ $event['desc'] }}</p>
-                            <small class="text-muted">📍 {{ $event['location'] }} | 🗓 {{ $event['date'] }}</small>
-                            <a href="{{ url('/events/'.$event['slug']) }}" class="d-block mt-2 text-primary fw-bold">Read More →</a>
+                            <h5 class="fw-bold" style="color:#ffcc00;">{{ $event->title }}</h5>
+                            <p class="text-muted">{!! Str::limit(strip_tags($event->description), 100) !!}</p>
+                            <small class="text-muted">📍 {{ $event->location }} | 🗓 {{ $event->event_date->format('d M, Y') }} | ⏰ {{ $event->event_time ?? 'TBA' }}</small>
+                            <a href="{{ url('/events/'.$event->slug) }}" class="d-block mt-2 text-primary fw-bold">Read More →</a>
                         </div>
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <div class="col-12 text-center text-muted">No past events.</div>
+            @endforelse
         </div>
     </div>
 </section>
