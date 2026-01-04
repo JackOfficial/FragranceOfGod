@@ -1,63 +1,74 @@
 @extends('layouts.admin')
-@section('title', 'Dashboard | Fragrance Of God')
+
+@section('title', 'Dashboard | Happy Family Rwanda Organization')
+
 @section('content')
 <div class="container-fluid">
-    <!-- KPI Cards -->
+
+    <!-- KPI CARDS -->
     <div class="row">
         <div class="col-lg-3 col-6">
             <div class="small-box bg-primary">
                 <div class="inner">
-                    <h3>{{ $brands }}</h3>
-                    <p>Total Brands</p>
+                    <h3>{{ $programs }}</h3>
+                    <p>Total Programs</p>
                 </div>
-                <div class="icon"><i class="fas fa-car"></i></div>
-                <a href="#" class="small-box-footer">Manage Brands <i class="fas fa-arrow-circle-right"></i></a>
+                <div class="icon"><i class="fas fa-hands-helping"></i></div>
+                <a href="#" class="small-box-footer">
+                    Manage Programs <i class="fas fa-arrow-circle-right"></i>
+                </a>
             </div>
         </div>
 
         <div class="col-lg-3 col-6">
             <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>{{ $vehicle_models }}</h3>
-                    <p>Total Models</p>
+                    <h3>{{ $beneficiaries }}</h3>
+                    <p>Total Beneficiaries</p>
                 </div>
-                <div class="icon"><i class="fas fa-cogs"></i></div>
-                <a href="#" class="small-box-footer">Manage Models <i class="fas fa-arrow-circle-right"></i></a>
+                <div class="icon"><i class="fas fa-users"></i></div>
+                <a href="#" class="small-box-footer">
+                    View Beneficiaries <i class="fas fa-arrow-circle-right"></i>
+                </a>
             </div>
         </div>
 
         <div class="col-lg-3 col-6">
             <div class="small-box bg-warning">
                 <div class="inner">
-                    <h3>9</h3>
-                    <p>Pending Orders</p>
+                    <h3>{{ $activeProjects }}</h3>
+                    <p>Active Projects</p>
                 </div>
-                <div class="icon"><i class="fas fa-shopping-cart"></i></div>
-                <a href="#" class="small-box-footer">View Orders <i class="fas fa-arrow-circle-right"></i></a>
+                <div class="icon"><i class="fas fa-project-diagram"></i></div>
+                <a href="#" class="small-box-footer">
+                    Project Status <i class="fas fa-arrow-circle-right"></i>
+                </a>
             </div>
         </div>
 
         <div class="col-lg-3 col-6">
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3>6</h3>
-                    <p>Low Stock Parts</p>
+                    <h3>{{ $staff }}</h3>
+                    <p>Staff & Volunteers</p>
                 </div>
-                <div class="icon"><i class="fas fa-boxes"></i></div>
-                <a href="#" class="small-box-footer">Check Inventory <i class="fas fa-arrow-circle-right"></i></a>
+                <div class="icon"><i class="fas fa-user-tie"></i></div>
+                <a href="#" class="small-box-footer">
+                    Manage Team <i class="fas fa-arrow-circle-right"></i>
+                </a>
             </div>
         </div>
     </div>
 
-    <!-- Charts Row -->
+    <!-- IMPACT & PROGRAM CHARTS -->
     <div class="row">
         <div class="col-md-8">
             <div class="card card-info">
                 <div class="card-header">
-                    <h3 class="card-title">Monthly Sales Overview</h3>
+                    <h3 class="card-title">Monthly Program Impact</h3>
                 </div>
                 <div class="card-body">
-                    <canvas id="salesChart"></canvas>
+                    <canvas id="impactChart"></canvas>
                 </div>
             </div>
         </div>
@@ -65,115 +76,87 @@
         <div class="col-md-4">
             <div class="card card-success">
                 <div class="card-header">
-                    <h3 class="card-title">Inventory Status</h3>
+                    <h3 class="card-title">Program Distribution</h3>
                 </div>
                 <div class="card-body">
-                    <canvas id="inventoryChart"></canvas>
+                    <canvas id="programChart"></canvas>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Recent Orders & Shortcuts -->
+    <!-- RECENT ACTIVITIES & QUICK LINKS -->
     <div class="row">
-        <!-- Recent Orders -->
         <div class="col-md-8">
             <div class="card card-outline card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Recent Orders</h3>
+                    <h3 class="card-title">Recent Activities</h3>
                 </div>
                 <div class="card-body p-0">
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Order #</th>
-                                <th>Customer</th>
-                                <th>Status</th>
-                                <th>Total</th>
+                                <th>Activity</th>
+                                <th>Program</th>
                                 <th>Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($recentOrders as $order)
-                            <tr>
-                                <td>{{ $order->id }}</td>
-                                <td>{{ $order->customer_name }}</td>
-                                <td>
-                                    <span class="badge 
-                                        @if($order->status == 'Pending') badge-warning 
-                                        @elseif($order->status == 'Completed') badge-success 
-                                        @else badge-secondary @endif">
-                                        {{ $order->status }}
-                                    </span>
-                                </td>
-                                <td>${{ number_format($order->total, 2) }}</td>
-                                <td>{{ $order->created_at->format('d M Y') }}</td>
-                            </tr>
-                            @endforeach --}}
+                            {{-- Loop recent activities here --}}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <!-- Quick Access Shortcuts -->
         <div class="col-md-4">
             <div class="card card-outline card-secondary">
                 <div class="card-header">
-                    <h3 class="card-title">Quick Access</h3>
+                    <h3 class="card-title">Quick Actions</h3>
                 </div>
                 <div class="card-body">
                     <a href="#" class="btn btn-app bg-info">
-                        <i class="fas fa-car"></i> Vehicles
-                    </a>
-                    <a href="#" class="btn btn-app bg-warning">
-                        <i class="fas fa-boxes"></i> Spare Parts
+                        <i class="fas fa-plus"></i> New Program
                     </a>
                     <a href="#" class="btn btn-app bg-success">
-                        <i class="fas fa-shopping-cart"></i> Orders
+                        <i class="fas fa-user-plus"></i> Add Beneficiary
                     </a>
                     <a href="#" class="btn btn-app bg-primary">
-                        <i class="fas fa-users"></i> Users
+                        <i class="fas fa-users-cog"></i> Staff
                     </a>
-                    <a href="#" class="btn btn-app bg-danger">
-                        <i class="fas fa-chart-pie"></i> Reports
+                    <a href="#" class="btn btn-app bg-warning">
+                        <i class="fas fa-file-alt"></i> Reports
                     </a>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 @endsection
 
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Sales Chart
-    var ctx = document.getElementById('salesChart').getContext('2d');
-    new Chart(ctx, {
+    new Chart(document.getElementById('impactChart'), {
         type: 'line',
         data: {
-            labels: @json($salesMonths),
+            labels: @json($months),
             datasets: [{
-                label: 'Sales',
-                data: @json($salesData),
-                borderColor: '#007bff',
-                backgroundColor: 'rgba(0,123,255,0.2)',
+                label: 'Beneficiaries Reached',
+                data: @json($impactData),
+                borderWidth: 2,
                 fill: true,
-                tension: 0.3
             }]
         }
     });
 
-    // Inventory Chart
-    var ctx2 = document.getElementById('inventoryChart').getContext('2d');
-    new Chart(ctx2, {
+    new Chart(document.getElementById('programChart'), {
         type: 'doughnut',
         data: {
-            labels: ['In Stock', 'Low Stock', 'Out of Stock'],
+            labels: @json($programLabels),
             datasets: [{
-                data: @json($inventoryData),
-                backgroundColor: ['#28a745', '#ffc107', '#dc3545']
+                data: @json($programStats),
             }]
         }
     });

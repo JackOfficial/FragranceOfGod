@@ -61,8 +61,7 @@
 
     <!-- Brand -->
     <a href="{{ route('admin.dashboard') }}" class="brand-link">
-      <img src="{{ asset('frontend/img/logo.png') }}" class="brand-image img-circle elevation-3">
-      <span class="brand-text font-weight-light">Fragrance Of God</span>
+      <img src="{{ asset('frontend/img/Fog Logo.png') }}" class="brand-image elevation-3">
     </a>
 
     <div class="sidebar">
