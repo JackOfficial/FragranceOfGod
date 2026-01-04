@@ -4,6 +4,7 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\MediaController;
+use App\Http\Controllers\Admin\StoryController as AdminStoryController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
@@ -49,6 +50,7 @@ Route::get('/auth/callback/{provider}', [SocialLoginController::class, 'callback
 Route::middleware(['auth', 'role:admin|staff'])->prefix('admin')->name('admin.')->group(function () {
   Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
   Route::resource('events', AdminEventController::class);
+  Route::resource('stories', AdminStoryController::class);
   Route::delete('media/{media}', MediaController::class)->name('media.destroy');
 });
 
