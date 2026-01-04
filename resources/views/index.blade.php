@@ -161,22 +161,31 @@
         </div>
 
         <div class="row g-4">
-            @foreach ([
-                ['title'=>'Providing School Facilities', 'desc'=>'Bringing hope and unity through prayer.', 'location'=>'Kigali', 'date'=>'July 2025', 'img'=>'fragrance of god.jpeg'],
-                ['title'=>'Youth Mentorship Camp', 'desc'=>'Building faith-driven future leaders.', 'location'=>'Huye', 'date'=>'June 2025', 'img'=>'blog-2.jpg'],
-                ['title'=>'Family Restoration Workshop', 'desc'=>'Healing families through love and guidance.', 'location'=>'Musanze', 'date'=>'May 2025', 'img'=>'blog-3.jpg']
-            ] as $event)
+            @forelse($events as $event)
             <div class="col-md-4">
                 <div class="card shadow-sm h-100">
-                    <img src="{{ asset('frontend/img/'.$event['img']) }}" class="card-img-top">
+                    @php
+                        // Check if event has image media
+                        $image = $event->media->firstWhere('file_type', 'image');
+                    @endphp
+                    <img src="{{ $image ? asset('storage/'.$image->file_path) : asset('frontend/img/default-event.jpg') }}" class="card-img-top" alt="{{ $event->title }}">
                     <div class="card-body">
-                        <h5 class="fw-bold" style="color:#ffcc00;">{{ $event['title'] }}</h5>
-                        <p class="text-muted">{{ $event['desc'] }}</p>
-                        <small class="text-muted">📍 {{ $event['location'] }} | 🗓 {{ $event['date'] }}</small>
+                        <h5 class="fw-bold" style="color:#ffcc00;">{{ $event->title }}</h5>
+                        <p class="text-muted">{{ Str::limit($event->description, 100) }}</p>
+                        <small class="text-muted">
+                            📍 {{ $event->location }} | 🗓 {{ \Carbon\Carbon::parse($event->event_date)->format('d M, Y') }}
+                        </small>
+                        <div class="mt-2">
+                            <a href="{{ route('events.show', $event->slug) }}" class="btn btn-sm btn-success mt-2">View Details</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            @endforeach
+            @empty
+            <div class="col-12 text-center text-muted">
+                <p>No events available at the moment. Stay tuned!</p>
+            </div>
+            @endforelse
         </div>
     </div>
 </section>
