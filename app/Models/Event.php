@@ -15,6 +15,10 @@ class Event extends Model
         'is_published',
     ];
 
+    protected $casts = [
+    'event_date' => 'date', // now $event->event_date will be a Carbon instance
+    ];
+
     public function media()
     {
         return $this->morphMany(Media::class, 'mediable');
