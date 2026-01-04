@@ -25,41 +25,50 @@
                     @csrf
 
                     <!-- Event Info -->
-                    <fieldset class="border p-3 mb-3">
-                        <legend class="w-auto px-2"><i class="fas fa-info-circle"></i> Event Info</legend>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="title"><i class="fas fa-heading"></i> Event Title <span class="text-danger">*</span></label>
-                                    <input type="text" name="title" id="title" class="form-control" value="{{ old('title') }}" required>
-                                </div>
-                            </div>
+                   <!-- Event Info -->
+<fieldset class="border p-3 mb-3">
+    <legend class="w-auto px-2"><i class="fas fa-info-circle"></i> Event Info</legend>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="title"><i class="fas fa-heading"></i> Event Title <span class="text-danger">*</span></label>
+                <input type="text" name="title" id="title" class="form-control" value="{{ old('title') }}" required>
+            </div>
+        </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="event_date"><i class="fas fa-calendar-alt"></i> Event Date <span class="text-danger">*</span></label>
-                                    <input type="date" name="event_date" id="event_date" class="form-control" value="{{ old('event_date') }}" required>
-                                </div>
-                            </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="event_date"><i class="fas fa-calendar-alt"></i> Event Date <span class="text-danger">*</span></label>
+                <input type="date" name="event_date" id="event_date" class="form-control" value="{{ old('event_date') }}" required>
+            </div>
+        </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="location"><i class="fas fa-map-marker-alt"></i> Location <span class="text-danger">*</span></label>
-                                    <input type="text" name="location" id="location" class="form-control" value="{{ old('location') }}" required>
-                                </div>
-                            </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="event_time"><i class="fas fa-clock"></i> Event Time <span class="text-danger">*</span></label>
+                <input type="time" name="event_time" id="event_time" class="form-control" value="{{ old('event_time', '12:00') }}" required>
+            </div>
+        </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="is_published"><i class="fas fa-eye"></i> Publish Event?</label>
-                                    <select name="is_published" id="is_published" class="form-control">
-                                        <option value="1" {{ old('is_published') == 1 ? 'selected' : '' }}>Yes</option>
-                                        <option value="0" {{ old('is_published') == 0 ? 'selected' : '' }}>No</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="location"><i class="fas fa-map-marker-alt"></i> Location <span class="text-danger">*</span></label>
+                <input type="text" name="location" id="location" class="form-control" value="{{ old('location') }}" required>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="is_published"><i class="fas fa-eye"></i> Publish Event?</label>
+                <select name="is_published" id="is_published" class="form-control">
+                    <option value="1" {{ old('is_published') == 1 ? 'selected' : '' }}>Yes</option>
+                    <option value="0" {{ old('is_published') == 0 ? 'selected' : '' }}>No</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</fieldset>
+
 
                     <!-- Description -->
                     <fieldset class="border p-3 mb-3">
