@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
 
     @stack('styles')
+     @livewireStyles
 </head>
 <body>
 
@@ -48,6 +49,6 @@
 
 <!-- ================= SCRIPTS ================= -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+      @livewireScripts
 </body>
 </html>
