@@ -45,7 +45,7 @@ Route::get('/auth/callback/{provider}', [SocialLoginController::class, 'callback
 
 // Admin Routes
 Route::middleware(['auth', 'role:admin|staff'])->prefix('admin')->name('admin.')->group(function () {
-  Route::get('/home', [DashboardController::class, 'index'])->name('dashboard');
+  Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 });
 
 // Authenticated Users
