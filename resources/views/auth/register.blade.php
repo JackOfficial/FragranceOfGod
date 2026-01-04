@@ -11,7 +11,7 @@
 
                 <div class="card rounded shadow">
                     <div class="card-header text-center fw-bold">
-                        Sign up For AutoSpareLink
+                        Sign up For Fragrance Of God Organization
                     </div>
 
                     <div class="card-body">
