@@ -3,26 +3,50 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+    public function index()
+    {
+        /*
+        |--------------------------------------------------------------------------
+        | KPI DATA (Replace with real models later)
+        |--------------------------------------------------------------------------
+        */
+        $programs        = 6;   // Total NGO programs
+        $beneficiaries   = 245; // Total beneficiaries reached
+        $activeProjects  = 4;   // Ongoing projects
+        $staff           = 18;  // Staff + volunteers
 
-    public function index(){
-        $brands = 5;
-        $vehicle_models = 5;
-        $parts = 5;
-        $users = 5;
-        $recentOrders = 5;
-        $salesMonths = ["Jan", "Feb", "Mar", "Apr", "May"];
-        $salesData = [120, 190, 300, 500, 200];
-        $inventoryData = [300, 50, 20]; // In Stock, Low Stock, Out of Stock
+        /*
+        |--------------------------------------------------------------------------
+        | CHART DATA
+        |--------------------------------------------------------------------------
+        */
+        $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
 
-        $pendingOrders = 5;
-        $lowStockParts = 5;
-        $recentOrders;
+        // Beneficiaries reached per month
+        $impactData = [25, 40, 55, 60, 35, 70];
 
+        // Program distribution
+        $programLabels = [
+            'Education',
+            'Health',
+            'Gender-Based Violence',
+            'Economic Empowerment'
+        ];
 
-        return view('admin.index', compact('brands', 'parts', 'vehicle_models', 'pendingOrders', 'lowStockParts', 'recentOrders', 'users', 'recentOrders', 'salesMonths', 'salesData', 'inventoryData'));
+        $programStats = [120, 60, 40, 25];
+
+        return view('admin.dashboard', compact(
+            'programs',
+            'beneficiaries',
+            'activeProjects',
+            'staff',
+            'months',
+            'impactData',
+            'programLabels',
+            'programStats'
+        ));
     }
 }
