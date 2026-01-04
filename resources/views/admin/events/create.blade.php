@@ -23,116 +23,111 @@
 <!-- Main content -->
 <section class="content">
     <div class="row justify-content-center">
-        <div class="col-md-10">
-            <div class="card card-primary" x-data="{ imagePreview: null, docs: [] }">
-                <div class="card-header">
-                    <h3 class="card-title">New Event Details</h3>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
+        <div class="col-lg-10 col-md-12">
+            <div class="card shadow-sm border-0 rounded p-4" x-data="{ imagePreviews: [], docs: [] }">
+
+                <h4 class="mb-4 text-primary"><i class="fas fa-calendar-plus"></i> New Event Details</h4>
+
+                <!-- Display Validation Errors -->
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
-                </div>
+                @endif
 
-                <div class="card-body">
+                <form action="{{ route('admin.events.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
 
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul class="mb-0">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    <form action="{{ route('admin.events.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-
-                        <!-- Event Title -->
-                        <div class="form-group">
-                            <label for="title">Event Title <span class="text-danger">*</span></label>
+                    <!-- Event Title & Slug -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="title" class="form-label">Event Title <span class="text-danger">*</span></label>
                             <input type="text" name="title" id="title" class="form-control" value="{{ old('title') }}" required>
                         </div>
-
-                        <!-- Slug -->
-                        <div class="form-group">
-                            <label for="slug">Slug (URL Friendly) <span class="text-danger">*</span></label>
+                        <div class="col-md-6 mb-3">
+                            <label for="slug" class="form-label">Slug (URL Friendly) <span class="text-danger">*</span></label>
                             <input type="text" name="slug" id="slug" class="form-control" value="{{ old('slug') }}" required>
                         </div>
+                    </div>
 
-                        <!-- Event Date -->
-                        <div class="form-group">
-                            <label for="event_date">Event Date <span class="text-danger">*</span></label>
+                    <!-- Event Date & Location -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="event_date" class="form-label">Event Date <span class="text-danger">*</span></label>
                             <input type="date" name="event_date" id="event_date" class="form-control" value="{{ old('event_date') }}" required>
                         </div>
-
-                        <!-- Location -->
-                        <div class="form-group">
-                            <label for="location">Location <span class="text-danger">*</span></label>
+                        <div class="col-md-6 mb-3">
+                            <label for="location" class="form-label">Location <span class="text-danger">*</span></label>
                             <input type="text" name="location" id="location" class="form-control" value="{{ old('location') }}" required>
                         </div>
+                    </div>
 
-                        <!-- Description -->
-                        <div class="form-group">
-                            <label for="description">Description <span class="text-danger">*</span></label>
-                            <textarea name="description" id="description" class="form-control summernote" rows="6">{{ old('description') }}</textarea>
-                        </div>
+                    <!-- Description -->
+                    <div class="form-group mb-4">
+                        <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
+                        <textarea name="description" id="description" class="form-control summernote" rows="6">{{ old('description') }}</textarea>
+                    </div>
 
-                        <!-- Event Image -->
-                        <div class="form-group" x-data="{ imagePreviews: [] }">
-    <label for="images">Event Images</label>
-    <input type="file" name="images[]" id="images" accept="image/*" class="form-control" multiple
-           @change="imagePreviews = Array.from($event.target.files).map(f => URL.createObjectURL(f))">
+                    <!-- Event Images -->
+                    <div class="form-group mb-4">
+                        <label for="images" class="form-label">Event Images</label>
+                        <input type="file" name="images[]" id="images" accept="image/*" class="form-control" multiple
+                               @change="imagePreviews = Array.from($event.target.files).map(f => ({ src: URL.createObjectURL(f), name: f.name }))">
+                        
+                        <template x-if="imagePreviews.length">
+                            <div class="d-flex flex-wrap gap-2 mt-2">
+                                <template x-for="(img, index) in imagePreviews" :key="index">
+                                    <div class="position-relative">
+                                        <img :src="img.src" class="img-thumbnail" style="width:120px; height:120px; object-fit:cover;">
+                                        <button type="button" class="btn btn-sm btn-danger position-absolute top-0 end-0"
+                                                @click="imagePreviews.splice(index, 1)">×</button>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
 
-    <template x-if="imagePreviews.length">
-        <div class="mt-2 d-flex flex-wrap gap-2">
-            <template x-for="src in imagePreviews" :key="src">
-                <img :src="src" class="img-thumbnail" style="width:150px;">
-            </template>
-        </div>
-    </template>
-</div>
+                    <!-- Event Documents -->
+                    <div class="form-group mb-4">
+                        <label for="documents" class="form-label">Attach Documents / PDFs</label>
+                        <input type="file" name="documents[]" id="documents" multiple class="form-control"
+                               @change="docs = Array.from($event.target.files).map(f => ({ name: f.name, size: f.size }))">
+                        
+                        <template x-if="docs.length">
+                            <ul class="list-group mt-2">
+                                <template x-for="(doc, index) in docs" :key="index">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <span x-text="doc.name"></span>
+                                            <small class="text-muted ms-2" x-text="'(' + Math.round(doc.size/1024) + ' KB)'"></small>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-outline-danger" @click="docs.splice(index,1)">Remove</button>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+                    </div>
 
-                        <!-- Event Documents -->
-                        <div class="form-group" x-data="{ docs: [] }">
-    <label for="documents">Attach Documents / PDFs</label>
-    <input type="file" name="documents[]" id="documents" multiple class="form-control"
-           @change="docs = Array.from($event.target.files).map(f => ({ name: f.name, size: f.size }))">
-    
-    <template x-if="docs.length">
-        <div class="mt-2">
-            <ul class="list-group">
-                <template x-for="(doc, index) in docs" :key="index">
-                    <li class="list-group-item">
-                        <span x-text="doc.name"></span>
-                        <small class="text-muted ms-2" x-text="'(' + Math.round(doc.size/1024) + ' KB)'"></small>
-                    </li>
-                </template>
-            </ul>
-        </div>
-    </template>
-</div>
+                    <!-- Publish -->
+                    <div class="form-group mb-4">
+                        <label for="is_published" class="form-label">Publish Event?</label>
+                        <select name="is_published" id="is_published" class="form-control">
+                            <option value="1" {{ old('is_published') == 1 ? 'selected' : '' }}>Yes</option>
+                            <option value="0" {{ old('is_published') == 0 ? 'selected' : '' }}>No</option>
+                        </select>
+                    </div>
 
-                        <!-- Publish -->
-                        <div class="form-group">
-                            <label for="is_published">Publish Event?</label>
-                            <select name="is_published" id="is_published" class="form-control">
-                                <option value="1" {{ old('is_published') == 1 ? 'selected' : '' }}>Yes</option>
-                                <option value="0" {{ old('is_published') == 0 ? 'selected' : '' }}>No</option>
-                            </select>
-                        </div>
+                    <!-- Submit -->
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-lg"><i class="fas fa-plus-circle"></i> Create Event</button>
+                        <a href="{{ route('admin.events.index') }}" class="btn btn-secondary btn-lg">Cancel</a>
+                    </div>
 
-                        <!-- Submit -->
-                        <div class="form-group mt-3">
-                            <button type="submit" class="btn btn-success">
-                                <i class="fas fa-plus-circle"></i> Create Event
-                            </button>
-                            <a href="{{ route('admin.events.index') }}" class="btn btn-secondary">Cancel</a>
-                        </div>
-
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
     </div>
