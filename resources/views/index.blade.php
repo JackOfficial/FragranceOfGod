@@ -176,7 +176,7 @@
                             📍 {{ $event->location }} | 🗓 {{ \Carbon\Carbon::parse($event->event_date)->format('d M, Y') }}
                         </small>
                         <div class="mt-2">
-                            <a href="/events{{ $event->slug }}" class="btn btn-sm btn-success mt-2">View Details</a>
+                            <a href="/events/{{ $event->slug }}" class="btn btn-sm btn-success mt-2">View Details</a>
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $event['title'].' | Fragrance Of God')
+@section('title', $event->title.' | Fragrance Of God')
 
 @section('content')
 
@@ -8,7 +8,7 @@
 <section class="ngo-hero position-relative d-flex align-items-center" style="min-height:400px;">
     <div class="ngo-hero-overlay"></div>
     <div class="container position-relative text-center">
-        <h1 class="ngo-hero-title mt-3" style="color:#ffcc00;">{{ $event['title'] }}</h1>
+        <h1 class="ngo-hero-title mt-3" style="color:#ffcc00;">{{ $event->title }}</h1>
         <p class="text-light lead mt-3">Discover how this event is making an impact</p>
     </div>
 </section>
@@ -19,18 +19,25 @@
         <div class="row g-5">
             <!-- Main Content -->
             <div class="col-lg-8">
-                <img src="{{ asset('frontend/img/'.$event['img']) }}" class="img-fluid rounded shadow mb-4" alt="{{ $event['title'] }}">
+                @php
+                    $firstImage = $event->media->where('file_type', 'image')->first();
+                @endphp
+
+                <img src="{{ $firstImage ? asset('storage/'.$firstImage->file_path) : asset('frontend/img/default-event.jpg') }}" 
+                     class="img-fluid rounded shadow mb-4" 
+                     alt="{{ $event->title }}">
 
                 <div class="event-content">
                     <p class="text-muted fs-5" style="line-height:1.8;">
-                        {!! $event['desc'] !!}
+                        {!! $event->description !!}
                     </p>
 
                     <div class="mt-4">
                         <p class="fw-bold" style="color:#ffcc00;">Event Details:</p>
                         <ul class="list-unstyled text-muted">
-                            <li>📍 Location: {{ $event['location'] }}</li>
-                            <li>🗓 Date: {{ $event['date'] }}</li>
+                            <li>📍 Location: {{ $event->location }}</li>
+                            <li>🗓 Date: {{ $event->event_date->format('d M, Y') }}</li>
+                            <li>⏰ Time: {{ \Carbon\Carbon::parse($event->event_time)->format('h:i A') }}</li>
                         </ul>
                     </div>
 
@@ -41,13 +48,13 @@
                             <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank" class="btn btn-primary">
                                 <i class="fab fa-facebook-f me-2"></i> Facebook
                             </a>
-                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}&text={{ urlencode($event['title']) }}" target="_blank" class="btn btn-info text-white">
+                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}&text={{ urlencode($event->title) }}" target="_blank" class="btn btn-info text-white">
                                 <i class="fab fa-twitter me-2"></i> Twitter
                             </a>
-                            <a href="https://api.whatsapp.com/send?text={{ urlencode($event['title'].' '.url()->current()) }}" target="_blank" class="btn btn-success">
+                            <a href="https://api.whatsapp.com/send?text={{ urlencode($event->title.' '.url()->current()) }}" target="_blank" class="btn btn-success">
                                 <i class="fab fa-whatsapp me-2"></i> WhatsApp
                             </a>
-                            <a href="mailto:?subject={{ urlencode($event['title']) }}&body={{ urlencode(url()->current()) }}" class="btn btn-secondary">
+                            <a href="mailto:?subject={{ urlencode($event->title) }}&body={{ urlencode(url()->current()) }}" class="btn btn-secondary">
                                 <i class="fas fa-envelope me-2"></i> Email
                             </a>
                         </div>
@@ -62,8 +69,8 @@
                     <ul class="list-unstyled">
                         @foreach ($relatedEvents ?? [] as $rel)
                             <li class="mb-3">
-                                <a href="{{ url('/events/'.$rel['slug']) }}" class="text-dark fw-bold" style="text-decoration:none;">
-                                    {{ $rel['title'] }}
+                                <a href="/events/{{ $rel->slug }}" class="text-dark fw-bold" style="text-decoration:none;">
+                                    {{ $rel->title }}
                                 </a>
                             </li>
                         @endforeach

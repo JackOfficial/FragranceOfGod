@@ -2,65 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
+    /**
+     * Show list of events: upcoming and past
+     */
     public function index()
     {
-        $upcomingEvents = [
-            [
-                'title' => 'Community Prayer Day',
-                'desc' => 'Bringing hope and unity through prayer.',
-                'location' => 'Kigali',
-                'date' => 'December 2025',
-                'slug' => 'community-prayer-day',
-                'img' => 'fragrace of god happy kid.jpeg'
-            ],
-            [
-                'title' => 'Youth Mentorship Camp',
-                'desc' => 'Building faith-driven future leaders.',
-                'location' => 'Huye',
-                'date' => 'January 2026',
-                'slug' => 'youth-mentorship-camp',
-                'img' => 'about.jpg'
-            ],
-        ];
+        $today = Carbon::today();
 
-        $pastEvents = [
-            [
-                'title' => 'Family Restoration Workshop',
-                'desc' => 'Healing families through love and guidance.',
-                'location' => 'Musanze',
-                'date' => 'July 2025',
-                'slug' => 'family-restoration-workshop',
-                'img' => 'fragrace of god kids.jpeg'
-            ],
-        ];
+        $upcomingEvents = Event::where('event_date', '>=', $today)
+            ->orderBy('event_date', 'asc')
+            ->get();
+
+        $pastEvents = Event::where('event_date', '<', $today)
+            ->orderBy('event_date', 'desc')
+            ->get();
 
         return view('events.index', compact('upcomingEvents', 'pastEvents'));
     }
 
+    /**
+     * Show a single event by slug
+     */
     public function show($slug)
     {
-        $event = [
-            'title' => 'Community Prayer Day',
-            'desc' => 'Full description of the event with details about activities, objectives, and impact.',
-            'location' => 'Kigali',
-            'date' => 'December 2025',
-            'img' => 'event-1.jpg'
-        ];
+        $event = Event::where('slug', $slug)
+            ->with('media') // load related media (images/documents)
+            ->firstOrFail();
 
-        $relatedEvents = [
-            [
-                'title' => 'Youth Mentorship Camp',
-                'slug' => 'youth-mentorship-camp'
-            ],
-            [
-                'title' => 'Family Restoration Workshop',
-                'slug' => 'family-restoration-workshop'
-            ]
-        ];
+        // Fetch related events: latest 5 events excluding current
+        $relatedEvents = Event::where('id', '!=', $event->id)
+            ->orderBy('event_date', 'desc')
+            ->take(5)
+            ->get();
 
         return view('events.show', compact('event', 'relatedEvents'));
     }
