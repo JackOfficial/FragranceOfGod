@@ -18,6 +18,7 @@ return new class extends Migration
     $table->longText('description'); // LONG FORM CONTENT ✔
     $table->string('location');
     $table->date('event_date');
+    $table->time('event_time')->nullable();
     $table->boolean('is_published')->default(true);
     $table->timestamps();
         });

@@ -17,7 +17,7 @@ class EventController extends Controller
      */
     public function index()
     {
-         $events = Event::with('media')->latest()->paginate(10); 
+        $events = Event::with('media')->latest()->paginate(10); 
         return view('admin.events.index', compact('events'));
     }
 
@@ -42,6 +42,7 @@ class EventController extends Controller
             'description'  => $data['description'],
             'location'     => $data['location'],
             'event_date'   => $data['event_date'],
+            'event_time'   => $data['event_time'], // <-- add this
             'is_published' => $request->boolean('is_published'),
         ]);
 
@@ -62,10 +63,10 @@ class EventController extends Controller
 
     public function show(Event $event)
     {
-    // Load related media (images & documents)
-    $event->load('media');
+        // Load related media (images & documents)
+        $event->load('media');
 
-    return view('admin.events.show', compact('event'));
+        return view('admin.events.show', compact('event'));
     }
 
     /**
@@ -81,6 +82,7 @@ class EventController extends Controller
             'description'  => $data['description'],
             'location'     => $data['location'],
             'event_date'   => $data['event_date'],
+            'event_time'   => $data['event_time'], // <-- add this
             'is_published' => $request->boolean('is_published'),
         ]);
 
@@ -117,6 +119,7 @@ class EventController extends Controller
             'description' => 'required|string',
             'location'    => 'required|string|max:255',
             'event_date'  => 'required|date',
+            'event_time'  => 'required|date_format:H:i', // <-- add validation
             'images.*'    => 'nullable|image|max:2048',
             'documents.*' => 'nullable|mimes:pdf,doc,docx|max:5120',
             'is_published'=> 'nullable|boolean',
