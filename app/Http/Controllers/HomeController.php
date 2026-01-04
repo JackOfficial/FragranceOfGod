@@ -20,7 +20,6 @@ class HomeController extends Controller
 
         // Optionally, fetch featured events for a slider/banner
         $featuredEvents = Event::where('is_published', true)
-                               ->where('is_featured', true) // if you add this column
                                ->orderBy('event_date', 'asc')
                                ->take(3)
                                ->get();
