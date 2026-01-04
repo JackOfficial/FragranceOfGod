@@ -18,6 +18,18 @@
             Logout
         </button>
     </form>
+
+        @role('admin')
+    <a href="/admin">Admin Dashboard</a>
+@endrole
+
+@can('manage users')
+    <a href="/users">Manage Users</a>
+@endcan
+
+@hasanyrole('admin|staff')
+    <button>Manage Events</button>
+@endhasanyrole
 </div>
 </body>
 </html>
