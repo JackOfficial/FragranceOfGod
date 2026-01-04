@@ -41,7 +41,7 @@
 </main>
 
 <footer class="bg-dark text-light mt-5">
-    <div class="container py-3 text-center small">
+    <div class="container pt-3 text-center small">
         © {{ date('Y') }} Fragrance Of God NGO. All Rights Reserved.
     </div>
 </footer>
