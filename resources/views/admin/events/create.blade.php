@@ -80,16 +80,19 @@
                         </div>
 
                         <!-- Event Image -->
-                        <div class="form-group">
-                            <label for="image">Event Image</label>
-                            <input type="file" name="image" id="image" accept="image/*" class="form-control"
-                                   @change="imagePreview = URL.createObjectURL($event.target.files[0])">
-                            <template x-if="imagePreview">
-                                <div class="mt-2">
-                                    <img :src="imagePreview" class="img-thumbnail" style="width:200px;">
-                                </div>
-                            </template>
-                        </div>
+                        <div class="form-group" x-data="{ imagePreviews: [] }">
+    <label for="images">Event Images</label>
+    <input type="file" name="images[]" id="images" accept="image/*" class="form-control" multiple
+           @change="imagePreviews = Array.from($event.target.files).map(f => URL.createObjectURL(f))">
+
+    <template x-if="imagePreviews.length">
+        <div class="mt-2 d-flex flex-wrap gap-2">
+            <template x-for="src in imagePreviews" :key="src">
+                <img :src="src" class="img-thumbnail" style="width:150px;">
+            </template>
+        </div>
+    </template>
+</div>
 
                         <!-- Event Documents -->
                         <div class="form-group">

@@ -51,7 +51,7 @@
                     <tbody>
                         @forelse($events as $event)
                         <tr>
-                            <td>{{ $event->id }}</td>
+                            <td>{{ $event->iteration }}</td>
                           <td>
     @php
         $firstImage = $event->media->where('file_type', 'image')->first();
