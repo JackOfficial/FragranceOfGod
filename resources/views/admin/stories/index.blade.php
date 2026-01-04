@@ -31,11 +31,13 @@
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped projects">
+                <table class="table table-striped projects align-middle">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Title</th>
+                            <th>Images</th>
+                            <th>Documents</th>
                             <th>Author</th>
                             <th>Status</th>
                             <th>Created</th>
@@ -46,8 +48,57 @@
                         @forelse($stories as $story)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $story->title }}</td>
+
+                                <td class="fw-bold">{{ $story->title }}</td>
+
+                                {{-- Images --}}
+                                <td>
+                                    @php
+                                        $images = $story->media->where('file_type', 'image');
+                                    @endphp
+
+                                    @if($images->count())
+                                        <div class="d-flex gap-1 flex-wrap">
+                                            @foreach($images->take(3) as $img)
+                                                <img src="{{ asset('storage/'.$img->file_path) }}"
+                                                     class="img-thumbnail"
+                                                     style="width:45px; height:45px; object-fit:cover;">
+                                            @endforeach
+                                            @if($images->count() > 3)
+                                                <span class="badge badge-secondary">+{{ $images->count() - 3 }}</span>
+                                            @endif
+                                        </div>
+                                    @else
+                                        <span class="text-muted">—</span>
+                                    @endif
+                                </td>
+
+                                {{-- Documents --}}
+                                <td>
+                                    @php
+                                        $docs = $story->media->where('file_type', 'document');
+                                    @endphp
+
+                                    @if($docs->count())
+                                        <ul class="list-unstyled mb-0">
+                                            @foreach($docs as $doc)
+                                                <li>
+                                                    <a href="{{ asset('storage/'.$doc->file_path) }}"
+                                                       target="_blank"
+                                                       class="text-sm">
+                                                        <i class="fas fa-file-pdf text-danger"></i>
+                                                        {{ \Illuminate\Support\Str::limit(basename($doc->file_path), 18) }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <span class="text-muted">—</span>
+                                    @endif
+                                </td>
+
                                 <td>{{ $story->author->name ?? 'Unknown' }}</td>
+
                                 <td>
                                     @if($story->is_published)
                                         <span class="badge badge-success">Published</span>
@@ -55,11 +106,15 @@
                                         <span class="badge badge-secondary">Draft</span>
                                     @endif
                                 </td>
+
                                 <td>{{ $story->created_at->format('d M, Y') }}</td>
+
                                 <td class="d-flex gap-1">
-                                    <a href="{{ route('admin.stories.edit', $story->id) }}" class="btn btn-info btn-sm">
+                                    <a href="{{ route('admin.stories.edit', $story->id) }}"
+                                       class="btn btn-info btn-sm">
                                         <i class="fas fa-edit"></i>
                                     </a>
+
                                     @if($story->trashed())
                                         <form action="{{ route('admin.stories.restore', $story->id) }}" method="POST">
                                             @csrf
@@ -67,7 +122,10 @@
                                                 <i class="fas fa-trash-restore"></i>
                                             </button>
                                         </form>
-                                        <form action="{{ route('admin.stories.forceDelete', $story->id) }}" method="POST" onsubmit="return confirm('Permanently delete?')">
+
+                                        <form action="{{ route('admin.stories.forceDelete', $story->id) }}"
+                                              method="POST"
+                                              onsubmit="return confirm('Permanently delete?')">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-danger btn-sm" title="Delete Forever">
@@ -75,7 +133,9 @@
                                             </button>
                                         </form>
                                     @else
-                                        <form action="{{ route('admin.stories.destroy', $story->id) }}" method="POST" onsubmit="return confirm('Move to trash?')">
+                                        <form action="{{ route('admin.stories.destroy', $story->id) }}"
+                                              method="POST"
+                                              onsubmit="return confirm('Move to trash?')">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-warning btn-sm" title="Trash">
@@ -86,12 +146,18 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr><td colspan="6" class="text-center text-muted">No stories available.</td></tr>
+                            <tr>
+                                <td colspan="8" class="text-center text-muted">
+                                    No stories available.
+                                </td>
+                            </tr>
                         @endforelse
                     </tbody>
                 </table>
 
-                <div class="mt-3">{{ $stories->links('pagination::bootstrap-4') }}</div>
+                <div class="mt-3">
+                    {{ $stories->links('pagination::bootstrap-4') }}
+                </div>
             </div>
         </div>
     </div>
