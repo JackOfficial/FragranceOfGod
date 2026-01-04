@@ -1,147 +1,151 @@
-@extends('admin.layouts.app')
-@section('title', 'HFRO - Edit Event')
+@extends('layouts.admin')
+@section('title', 'HFRO - Create Event')
 
 @section('content')
 
-<!-- Content Header -->
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Edit Event: {{ $event->title }}</h1>
-            </div>
+            <div class="col-sm-6"><h1>Add Event</h1></div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('admin.events.index') }}">Events</a></li>
-                    <li class="breadcrumb-item active">Edit Event</li>
+                    <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                    <li class="breadcrumb-item active">Add Event</li>
                 </ol>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Main content -->
 <section class="content">
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            <div class="card card-primary" x-data="{ imagePreview: '{{ $event->image ? asset('storage/' . $event->image) : '' }}', docs: @json($event->media->where('file_type','document')->pluck('file_path')->map(fn($p)=>basename($p))) }">
-                <div class="card-header">
-                    <h3 class="card-title">Edit Event Details</h3>
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
+    <div class="container-fluid">
+        <div class="card shadow-sm" x-data="{ imagePreviews: [], docs: [] }">
+            <div class="card-header bg-gradient-primary text-white">
+                <h3 class="card-title"><i class="fas fa-calendar-plus"></i> Create New Event</h3>
+            </div>
+
+            <div class="card-body">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
-                </div>
+                @endif
 
-                <div class="card-body">
+                <form action="{{ route('admin.events.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
 
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul class="mb-0">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                    <!-- Event Info -->
+                   <!-- Event Info -->
+<fieldset class="border p-3 mb-3">
+    <legend class="w-auto px-2"><i class="fas fa-info-circle"></i> Event Info</legend>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="title"><i class="fas fa-heading"></i> Event Title <span class="text-danger">*</span></label>
+                <input type="text" name="title" id="title" class="form-control" value="{{ old('title') }}" required>
+            </div>
+        </div>
 
-                    <form action="{{ route('admin.events.update', $event) }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="event_date"><i class="fas fa-calendar-alt"></i> Event Date <span class="text-danger">*</span></label>
+                <input type="date" name="event_date" id="event_date" class="form-control" value="{{ old('event_date') }}" required>
+            </div>
+        </div>
 
-                        <!-- Event Title -->
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="event_time"><i class="fas fa-clock"></i> Event Time <span class="text-danger">*</span></label>
+                <input type="time" name="event_time" id="event_time" class="form-control" value="{{ old('event_time', '12:00') }}" required>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="location"><i class="fas fa-map-marker-alt"></i> Location <span class="text-danger">*</span></label>
+                <input type="text" name="location" id="location" class="form-control" value="{{ old('location') }}" required>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="is_published"><i class="fas fa-eye"></i> Publish Event?</label>
+                <select name="is_published" id="is_published" class="form-control">
+                    <option value="1" {{ old('is_published') == 1 ? 'selected' : '' }}>Yes</option>
+                    <option value="0" {{ old('is_published') == 0 ? 'selected' : '' }}>No</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</fieldset>
+
+
+                    <!-- Description -->
+                    <fieldset class="border p-3 mb-3">
+                        <legend class="w-auto px-2"><i class="fas fa-align-left"></i> Description</legend>
                         <div class="form-group">
-                            <label for="title">Event Title <span class="text-danger">*</span></label>
-                            <input type="text" name="title" id="title" class="form-control" value="{{ old('title', $event->title) }}" required
-                                   @input="document.getElementById('slug').value = this.value.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'')">
+                            <textarea name="description" id="description" class="form-control summernote">{{ old('description') }}</textarea>
                         </div>
+                    </fieldset>
 
-                        <!-- Slug (auto-generated) -->
-                        <div class="form-group">
-                            <label for="slug">Slug (URL Friendly) <span class="text-danger">*</span></label>
-                            <input type="text" name="slug" id="slug" class="form-control" value="{{ old('slug', $event->slug) }}" readonly>
-                        </div>
+                    <!-- Media Uploads -->
+                    <fieldset class="border p-3 mb-3">
+                        <legend class="w-auto px-2"><i class="fas fa-file-upload"></i> Media Uploads</legend>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- Event Images -->
+                                <div class="form-group">
+                                    <label for="images"><i class="fas fa-image"></i> Event Images</label>
+                                    <input type="file" name="images[]" id="images" accept="image/*" class="form-control" multiple
+                                           @change="imagePreviews = Array.from($event.target.files).map(f => URL.createObjectURL(f))">
 
-                        <!-- Event Date -->
-                        <div class="form-group">
-                            <label for="event_date">Event Date <span class="text-danger">*</span></label>
-                            <input type="date" name="event_date" id="event_date" class="form-control" value="{{ old('event_date', $event->event_date->format('Y-m-d')) }}" required>
-                        </div>
-
-                        <!-- Location -->
-                        <div class="form-group">
-                            <label for="location">Location <span class="text-danger">*</span></label>
-                            <input type="text" name="location" id="location" class="form-control" value="{{ old('location', $event->location) }}" required>
-                        </div>
-
-                        <!-- Description -->
-                        <div class="form-group">
-                            <label for="description">Description <span class="text-danger">*</span></label>
-                            <textarea name="description" id="description" class="form-control summernote" rows="6">{{ old('description', $event->description) }}</textarea>
-                        </div>
-
-                        <!-- Event Image -->
-                        <div class="form-group">
-                            <label for="image">Event Image</label>
-                            <input type="file" name="image" id="image" accept="image/*" class="form-control"
-                                   @change="imagePreview = URL.createObjectURL($event.target.files[0])">
-                            <template x-if="imagePreview">
-                                <div class="mt-2">
-                                    <img :src="imagePreview" class="img-thumbnail" style="width:200px;">
+                                    <template x-if="imagePreviews.length">
+                                        <div class="mt-2 d-flex flex-wrap gap-2">
+                                            <template x-for="src in imagePreviews" :key="src">
+                                                <img :src="src" class="img-thumbnail" style="width:100px; height:100px; object-fit:cover;">
+                                            </template>
+                                        </div>
+                                    </template>
                                 </div>
-                            </template>
-                        </div>
+                            </div>
 
-                        <!-- Existing Documents -->
-                        <div class="form-group">
-                            <label>Existing Documents</label>
-                            <ul class="list-group mb-2">
-                                @foreach($event->media->where('file_type','document') as $doc)
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <a href="{{ asset('storage/'.$doc->file_path) }}" target="_blank">{{ basename($doc->file_path) }}</a>
-                                        <a href="{{ route('admin.events.media.delete', $doc->id) }}" class="text-danger" onclick="return confirm('Delete this file?')">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
+                            <div class="col-md-6">
+                                <!-- Event Documents -->
+                                <div class="form-group">
+                                    <label for="documents"><i class="fas fa-file-pdf"></i> Attach Documents / PDFs</label>
+                                    <input type="file" name="documents[]" id="documents" multiple class="form-control"
+                                           @change="docs = Array.from($event.target.files).map(f => ({ name: f.name, size: f.size }))">
 
-                        <!-- Upload New Documents -->
-                        <div class="form-group">
-                            <label for="documents">Add New Documents</label>
-                            <input type="file" name="documents[]" id="documents" multiple class="form-control"
-                                   @change="docs = Array.from($event.target.files).map(f => f.name)">
-                            <template x-if="docs.length">
-                                <div class="mt-2">
-                                    <ul class="list-group">
-                                        <li class="list-group-item" x-text="doc" x-for="doc in docs"></li>
-                                    </ul>
+                                    <template x-if="docs.length">
+                                        <ul class="list-group mt-2">
+                                            <template x-for="(doc, index) in docs" :key="index">
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <span x-text="doc.name"></span>
+                                                    <small class="text-muted" x-text="'(' + Math.round(doc.size/1024) + ' KB)'"></small>
+                                                </li>
+                                            </template>
+                                        </ul>
+                                    </template>
                                 </div>
-                            </template>
+                            </div>
                         </div>
+                    </fieldset>
 
-                        <!-- Publish -->
-                        <div class="form-group">
-                            <label for="is_published">Publish Event?</label>
-                            <select name="is_published" id="is_published" class="form-control">
-                                <option value="1" {{ old('is_published', $event->is_published) == 1 ? 'selected' : '' }}>Yes</option>
-                                <option value="0" {{ old('is_published', $event->is_published) == 0 ? 'selected' : '' }}>No</option>
-                            </select>
-                        </div>
+                    <!-- Submit Buttons -->
+                   <div class="d-flex justify-content-start gap-3">
+    <a href="{{ route('admin.events.index') }}" class="btn btn-secondary mr-2">
+        <i class="fas fa-times me-1"></i> Cancel
+    </a>
+    <button type="submit" class="btn btn-success">
+        <i class="fas fa-plus-circle me-1"></i> Create Event
+    </button>
+</div>
 
-                        <!-- Submit -->
-                        <div class="form-group mt-3">
-                            <button type="submit" class="btn btn-success">
-                                <i class="fas fa-save"></i> Update Event
-                            </button>
-                            <a href="{{ route('admin.events.index') }}" class="btn btn-secondary">Cancel</a>
-                        </div>
-
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -150,7 +154,6 @@
 @endsection
 
 @section('scripts')
-<!-- Summernote -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
 <script>
@@ -158,7 +161,7 @@
         $('.summernote').summernote({
             placeholder: 'Write detailed event description here...',
             tabsize: 2,
-            height: 200
+            height: 180
         });
     });
 </script>
