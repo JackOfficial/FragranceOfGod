@@ -137,7 +137,7 @@
 
                     <!-- Submit Buttons -->
                    <div class="d-flex justify-content-start gap-3">
-    <a href="{{ route('admin.events.index') }}" class="btn btn-secondary">
+    <a href="{{ route('admin.events.index') }}" class="btn btn-secondary mr-2">
         <i class="fas fa-times me-1"></i> Cancel
     </a>
     <button type="submit" class="btn btn-success">
