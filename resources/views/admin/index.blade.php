@@ -1,5 +1,5 @@
-@extends('admin.layouts.app')
-@section('title', 'Dashboard | AutoSpareLink')
+@extends('layouts.admin')
+@section('title', 'Dashboard | Fragrance Of God')
 @section('content')
 <div class="container-fluid">
     <!-- KPI Cards -->
