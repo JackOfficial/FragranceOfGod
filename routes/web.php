@@ -18,6 +18,7 @@ use App\Http\Controllers\VolunteerController;
 // });
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/home', [HomeController::class, 'home']);
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/focus-areas', [FocusAreaController::class, 'index'])->name('focus-areas.index');
 Route::get('/focus-areas/{slug}', [FocusAreaController::class, 'show'])->name('focus-areas.show');

@@ -7,7 +7,7 @@
                     <div class="col-md-3">
                     </div>
                     <div class="col-md-6">
-                        <img class="mb-4 d-block mx-auto" style="width: 200px;" src="{{ asset('frontend/img/logo.png') }}" alt="Icon">
+                        <img class="mb-4 d-block mx-auto" style="width: 200px;" src="{{ asset('frontend/img/Fog Logo.png') }}" alt="Icon">
                     
                         <div class="card rounded shadow">
                           <div class="card-header">Sign up For AutoSpareLink</div>
