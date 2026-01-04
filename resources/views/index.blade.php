@@ -162,7 +162,7 @@
 
         <div class="row g-4">
             @foreach ([
-                ['title'=>'Community Prayer Day', 'desc'=>'Bringing hope and unity through prayer.', 'location'=>'Kigali', 'date'=>'July 2025', 'img'=>'fragrance of god.jpeg'],
+                ['title'=>'Providing School Facilities', 'desc'=>'Bringing hope and unity through prayer.', 'location'=>'Kigali', 'date'=>'July 2025', 'img'=>'fragrance of god.jpeg'],
                 ['title'=>'Youth Mentorship Camp', 'desc'=>'Building faith-driven future leaders.', 'location'=>'Huye', 'date'=>'June 2025', 'img'=>'blog-2.jpg'],
                 ['title'=>'Family Restoration Workshop', 'desc'=>'Healing families through love and guidance.', 'location'=>'Musanze', 'date'=>'May 2025', 'img'=>'blog-3.jpg']
             ] as $event)
