@@ -7,9 +7,21 @@
     <title>Document</title>
 </head>
 <body>
-    Admin Panel
+    <h1>This is Admin Panel</h1>
+    <div class="text-center">
+    <div class="fw-bold">
+        {{ Auth::user()->name }}
+        <div>{{ Auth::user()->getRoleNames()->first() }}</div>
+    </div>
 
-    @role('admin')
+    <form method="POST" action="{{ route('logout') }}" class="mt-2">
+        @csrf
+        <button type="submit" class="btn btn-sm btn-outline-danger">
+            Logout
+        </button>
+    </form>
+
+        @role('admin')
     <a href="/admin">Admin Dashboard</a>
 @endrole
 
@@ -20,6 +32,6 @@
 @hasanyrole('admin|staff')
     <button>Manage Events</button>
 @endhasanyrole
-
+</div>
 </body>
 </html>

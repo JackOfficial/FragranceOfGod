@@ -7,9 +7,11 @@
     <title>Document</title>
 </head>
 <body>
+    <h1>This Home</h1>
     <div class="text-center">
     <div class="fw-bold">
         {{ Auth::user()->name }}
+        <div>{{ Auth::user()->getRoleNames()->first() }}</div>
     </div>
 
     <form method="POST" action="{{ route('logout') }}" class="mt-2">
