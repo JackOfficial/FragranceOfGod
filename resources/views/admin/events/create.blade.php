@@ -136,7 +136,7 @@
                     </fieldset>
 
                     <!-- Submit Buttons -->
-                    <div class="d-flex justify-content-end gap-2">
+                    <div class="d-flex justify-content-start gap-2">
                         <a href="{{ route('admin.events.index') }}" class="btn btn-secondary"><i class="fas fa-times"></i> Cancel</a>
                         <button type="submit" class="btn btn-success"><i class="fas fa-plus-circle"></i> Create Event</button>
                     </div>
