@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Story;
 use Illuminate\Http\Request;
 
 class StoryController extends Controller
@@ -9,46 +10,39 @@ class StoryController extends Controller
     // Display the Our Stories page
     public function index()
     {
-        // Example: dynamic stories can come from a database later
-        $stories = [
-            [
-                'title' => 'Empowering Girls Through Education',
-                'desc' => 'Meet Aline, a young girl in Kigali whose life was transformed through education programs.',
-                'img'  => 'story-1.jpg',
-                'link' => '#'
-            ],
-            [
-                'title' => 'Community Health Awareness',
-                'desc' => 'Discover how our health initiatives improved access to care for rural communities.',
-                'img'  => 'story-2.jpg',
-                'link' => '#'
-            ],
-            [
-                'title' => 'Restoring Family Dignity',
-                'desc' => 'Read about a family in Musanze that received counseling and support to rebuild their lives.',
-                'img'  => 'story-3.jpg',
-                'link' => '#'
-            ],
-        ];
+        $stories = Story::with(['media', 'author'])
+        ->where('is_published', true)
+        ->latest()
+        ->paginate(9);
 
         return view('stories.index', compact('stories'));
     }
 
     // Optional: show single story details
-   public function show($slug)
+public function show($slug)
 {
-    // Example: fetch story dynamically by slug
-    $story = [
-        'title' => 'Empowering Girls Through Education',
-        'desc' => 'Aline is a young girl in Kigali whose life was transformed through our education programs. She gained confidence, access to quality education, and mentorship that opened doors to new opportunities.',
-        'img'  => 'story-1.jpg',
-    ];
+    $story = Story::with(['media', 'author'])
+        ->where('slug', $slug)
+        ->where('is_published', true)
+        ->firstOrFail();
 
-    $otherStories = [
-        ['title'=>'Community Health Awareness','slug'=>'community-health-awareness','short_desc'=>'Health education and workshops in rural communities.'],
-        ['title'=>'Restoring Family Dignity','slug'=>'restoring-family-dignity','short_desc'=>'Support for families to rebuild their lives and restore hope.'],
-    ];
+    $relatedStories = Story::with('media')
+        ->where('id', '!=', $story->id)
+        ->where('is_published', true)
+        ->latest()
+        ->take(2)
+        ->get();
 
-    return view('stories.show', compact('story', 'otherStories'));
+    $otherStories = Story::where('id', '!=', $story->id)
+        ->where('is_published', true)
+        ->latest()
+        ->take(5)
+        ->get();
+
+    return view('stories.show', compact(
+        'story',
+        'relatedStories',
+        'otherStories'
+    ));
 }
 }
