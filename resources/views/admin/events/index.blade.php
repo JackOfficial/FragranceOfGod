@@ -52,13 +52,17 @@
                         @forelse($events as $event)
                         <tr>
                             <td>{{ $event->id }}</td>
-                            <td>
-                                @if($event->image)
-                                    <img src="{{ asset('storage/' . $event->image) }}" class="img-thumbnail" style="width:80px">
-                                @else
-                                    <span class="text-muted">No image</span>
-                                @endif
-                            </td>
+                          <td>
+    @php
+        $firstImage = $event->media->where('file_type', 'image')->first();
+    @endphp
+
+    @if($firstImage)
+        <img src="{{ asset('storage/' . $firstImage->file_path) }}" class="img-thumbnail" style="width:80px">
+    @else
+        <span class="text-muted">No image</span>
+    @endif
+</td>
                             <td>{{ $event->title }}</td>
                             <td>{!! Str::limit(strip_tags($event->description), 50) !!}</td>
                             <td>{{ $event->event_date->format('d M, Y') }}</td>
