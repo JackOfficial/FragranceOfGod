@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
@@ -14,12 +15,8 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StoryController;
 use App\Http\Controllers\VolunteerController;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
+// Guest Routes
 Route::get('/', [HomeController::class, 'index']);
-Route::get('/home', [HomeController::class, 'home'])->middleware('auth');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/focus-areas', [FocusAreaController::class, 'index'])->name('focus-areas.index');
 Route::get('/focus-areas/{slug}', [FocusAreaController::class, 'show'])->name('focus-areas.show');
@@ -47,11 +44,12 @@ Route::get('/auth/redirect/{provider}', [SocialLoginController::class, 'redirect
 Route::get('/auth/callback/{provider}', [SocialLoginController::class, 'callback']);
 
 // Admin Routes
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-  Route::get('/dashboard', fn () => view('admin.dashboard'));
+Route::middleware(['auth', 'role:admin|staff'])->prefix('admin')->name('admin.')->group(function () {
+  Route::get('/home', [DashboardController::class, 'index'])->name('dashboard');
 });
 
 // Authenticated Users
-Route::middleware(['auth', 'permission:manage users'])->group(function () {
-    // Route::get('/users', [UserController::class, 'index']);
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [HomeController::class, 'home']);
 });
+
