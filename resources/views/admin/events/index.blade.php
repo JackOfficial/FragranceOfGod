@@ -71,7 +71,7 @@
                                 @endif
                             </td>
                             <td class="d-flex">
-                                <a href="{{ route('events.show', $event->slug) }}" target="_blank" class="btn btn-success btn-sm mr-1" title="View Frontend">
+                                <a href="/events/{{ $event->slug }}" target="_blank" class="btn btn-success btn-sm mr-1" title="View Frontend">
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 <a href="{{ route('admin.events.edit', $event->id) }}" class="btn btn-info btn-sm mr-1" title="Edit Event">
