@@ -135,11 +135,14 @@
                         </div>
                     </fieldset>
 
-                    <!-- Submit Buttons -->
-                    <div class="d-flex justify-content-start gap-2">
-                        <a href="{{ route('admin.events.index') }}" class="btn btn-secondary"><i class="fas fa-times"></i> Cancel</a>
-                        <button type="submit" class="btn btn-success"><i class="fas fa-plus-circle"></i> Create Event</button>
-                    </div>
+<div class="form-group mt-3 d-flex flex-wrap gap-3">
+    <a href="{{ route('admin.events.index') }}" class="btn btn-outline-secondary px-4 py-2">
+        <i class="fas fa-times me-1"></i> Cancel
+    </a>
+    <button type="submit" class="btn btn-success px-4 py-2">
+        <i class="fas fa-plus-circle me-1"></i> Create Event
+    </button>
+</div>
 
                 </form>
             </div>
