@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DonateController;
@@ -40,3 +41,7 @@ Route::get('/volunteers/signup', [VolunteerController::class, 'signup'])->name('
 Route::post('/volunteers/signup', [VolunteerController::class, 'submit'])->name('volunteers.submit');
 Route::get('/programs', [ProgramController::class, 'index'])->name('programs.index');
 Route::get('/programs/{slug}', [ProgramController::class, 'show'])->name('programs.show');
+
+// Social login routes
+Route::get('/auth/redirect/{provider}', [SocialLoginController::class, 'redirect']);
+Route::get('/auth/callback/{provider}', [SocialLoginController::class, 'callback']);
