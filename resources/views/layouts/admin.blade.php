@@ -80,150 +80,180 @@
       </div>
 
       <!-- Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview">
+     <nav class="mt-2">
+  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-          <!-- Dashboard -->
-          <li class="nav-item">
-            <a href="{{ route('admin.dashboard') }}" class="nav-link">
-              <i class="nav-icon fas fa-gauge-high"></i>
-              <p>Dashboard</p>
-            </a>
-          </li>
+    <!-- Dashboard -->
+    <li class="nav-item">
+      <a href="{{ route('admin.dashboard') }}" class="nav-link">
+        <i class="nav-icon fas fa-gauge-high"></i>
+        <p>Dashboard</p>
+      </a>
+    </li>
 
-          <!-- Programs & Projects -->
-          <li class="nav-header">PROGRAMS & PROJECTS</li>
+    <!-- PROGRAMS & PROJECTS -->
+    <li class="nav-header">PROGRAMS & PROJECTS</li>
 
-          <li class="nav-item">
-            <a href="/admin/programs" class="nav-link">
-              <i class="nav-icon fas fa-diagram-project"></i>
-              <p>Programs</p>
-            </a>
-          </li>
+    <li class="nav-item has-treeview">
+      <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-diagram-project"></i>
+        <p>
+          Programs
+          <i class="right fas fa-angle-left"></i>
+        </p>
+      </a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item">
+          <a href="/admin/programs" class="nav-link">
+            <i class="fas fa-list nav-icon"></i>
+            <p>All Programs</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/programs/create" class="nav-link">
+            <i class="fas fa-plus nav-icon"></i>
+            <p>Create Program</p>
+          </a>
+        </li>
+      </ul>
+    </li>
 
-          <li class="nav-item">
-            <a href="/admin/projects" class="nav-link">
-              <i class="nav-icon fas fa-briefcase"></i>
-              <p>Projects</p>
-            </a>
-          </li>
+    <li class="nav-item">
+      <a href="/admin/projects" class="nav-link">
+        <i class="nav-icon fas fa-briefcase"></i>
+        <p>Projects</p>
+      </a>
+    </li>
 
-          <!-- Events -->
-          <li class="nav-header">EVENTS & CAMPAIGNS</li>
+    <!-- EVENTS & CAMPAIGNS -->
+    <li class="nav-header">EVENTS & CAMPAIGNS</li>
 
-          <li class="nav-item">
-            <a href="/admin/events" class="nav-link">
-              <i class="nav-icon fas fa-calendar-days"></i>
-              <p>Events</p>
-            </a>
-          </li>
+    <li class="nav-item">
+      <a href="/admin/events" class="nav-link">
+        <i class="nav-icon fas fa-calendar-days"></i>
+        <p>Events</p>
+      </a>
+    </li>
 
-          <li class="nav-item">
-            <a href="/admin/campaigns" class="nav-link">
-              <i class="nav-icon fas fa-bullhorn"></i>
-              <p>Campaigns</p>
-            </a>
-          </li>
+    <li class="nav-item">
+      <a href="/admin/campaigns" class="nav-link">
+        <i class="nav-icon fas fa-bullhorn"></i>
+        <p>Campaigns</p>
+      </a>
+    </li>
 
-          <!-- Content -->
-          <li class="nav-header">CONTENT</li>
+    <!-- CONTENT & MEDIA -->
+    <li class="nav-header">CONTENT & MEDIA</li>
 
-          <li class="nav-item">
-            <a href="/admin/stories" class="nav-link">
-              <i class="nav-icon fas fa-book-open"></i>
-              <p>Stories</p>
-            </a>
-          </li>
+    <li class="nav-item">
+      <a href="/admin/stories" class="nav-link">
+        <i class="nav-icon fas fa-book-open"></i>
+        <p>Stories</p>
+      </a>
+    </li>
 
-          <li class="nav-item">
-            <a href="/admin/blogs" class="nav-link">
-              <i class="nav-icon fas fa-pen-nib"></i>
-              <p>Blogs</p>
-            </a>
-          </li>
+    <li class="nav-item">
+      <a href="/admin/blogs" class="nav-link">
+        <i class="nav-icon fas fa-pen-nib"></i>
+        <p>Blogs & Articles</p>
+      </a>
+    </li>
 
-          <li class="nav-item">
-            <a href="/admin/media" class="nav-link">
-              <i class="nav-icon fas fa-photo-film"></i>
-              <p>Media Gallery</p>
-            </a>
-          </li>
+    <li class="nav-item">
+      <a href="/admin/media" class="nav-link">
+        <i class="nav-icon fas fa-photo-film"></i>
+        <p>Media Gallery</p>
+      </a>
+    </li>
 
-          <!-- Impact -->
-          <li class="nav-header">IMPACT & M&E</li>
+    <!-- IMPACT & M&E -->
+    <li class="nav-header">IMPACT & M&E</li>
 
-          <li class="nav-item">
-            <a href="/admin/impacts" class="nav-link">
-              <i class="nav-icon fas fa-chart-line"></i>
-              <p>Core Impact</p>
-            </a>
-          </li>
+    <li class="nav-item">
+      <a href="/admin/impacts" class="nav-link">
+        <i class="nav-icon fas fa-chart-line"></i>
+        <p>Core Impact</p>
+      </a>
+    </li>
 
-          <li class="nav-item">
-            <a href="/admin/beneficiaries" class="nav-link">
-              <i class="nav-icon fas fa-people-group"></i>
-              <p>Beneficiaries</p>
-            </a>
-          </li>
+    <li class="nav-item">
+      <a href="/admin/beneficiaries" class="nav-link">
+        <i class="nav-icon fas fa-people-group"></i>
+        <p>Beneficiaries</p>
+      </a>
+    </li>
 
-          <!-- Organization -->
-          <li class="nav-header">ORGANIZATION</li>
+    <!-- ORGANIZATION -->
+    <li class="nav-header">ORGANIZATION</li>
 
-          <li class="nav-item">
-            <a href="/admin/users" class="nav-link">
-              <i class="nav-icon fas fa-users"></i>
-              <p>Users</p>
-            </a>
-          </li>
+    <li class="nav-item has-treeview">
+      <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-users-gear"></i>
+        <p>
+          Staff & Access
+          <i class="right fas fa-angle-left"></i>
+        </p>
+      </a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item">
+          <a href="/admin/users" class="nav-link">
+            <i class="fas fa-user nav-icon"></i>
+            <p>Users</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/roles-and-permissions" class="nav-link">
+            <i class="fas fa-user-shield nav-icon"></i>
+            <p>Roles & Permissions</p>
+          </a>
+        </li>
+      </ul>
+    </li>
 
-          <li class="nav-item">
-            <a href="/admin/roles-and-permissions" class="nav-link">
-              <i class="nav-icon fas fa-user-shield"></i>
-              <p>Roles & Permissions</p>
-            </a>
-          </li>
+    <!-- COMMUNICATION -->
+    <li class="nav-header">COMMUNICATION</li>
 
-          <!-- Communication -->
-          <li class="nav-header">COMMUNICATION</li>
+    <li class="nav-item">
+      <a href="/admin/messages" class="nav-link">
+        <i class="nav-icon fas fa-envelope-open-text"></i>
+        <p>Messages</p>
+      </a>
+    </li>
 
-          <li class="nav-item">
-            <a href="/admin/messages" class="nav-link">
-              <i class="nav-icon fas fa-envelope-open-text"></i>
-              <p>Messages</p>
-            </a>
-          </li>
+    <li class="nav-item">
+      <a href="/admin/subscribers" class="nav-link">
+        <i class="nav-icon fas fa-paper-plane"></i>
+        <p>Newsletter</p>
+      </a>
+    </li>
 
-          <li class="nav-item">
-            <a href="/admin/subscribers" class="nav-link">
-              <i class="nav-icon fas fa-paper-plane"></i>
-              <p>Newsletter</p>
-            </a>
-          </li>
+    <!-- SYSTEM -->
+    <li class="nav-header">SYSTEM</li>
 
-          <!-- System -->
-          <li class="nav-header">SYSTEM</li>
+    <li class="nav-item">
+      <a href="/admin/settings" class="nav-link">
+        <i class="nav-icon fas fa-gear"></i>
+        <p>Settings</p>
+      </a>
+    </li>
 
-          <li class="nav-item">
-            <a href="/admin/settings" class="nav-link">
-              <i class="nav-icon fas fa-gear"></i>
-              <p>Settings</p>
-            </a>
-          </li>
+    <!-- LOGOUT -->
+    @auth
+    <li class="nav-item mt-3 border-top border-secondary">
+      <a href="#" class="nav-link text-danger"
+         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        <i class="nav-icon fas fa-right-from-bracket"></i>
+        <p>Logout</p>
+      </a>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        @csrf
+      </form>
+    </li>
+    @endauth
 
-          <!-- Logout -->
-          <li class="nav-item mt-3 border-top">
-            <a href="#" class="nav-link text-danger"
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-              <i class="nav-icon fas fa-right-from-bracket"></i>
-              <p>Logout</p>
-            </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-              @csrf
-            </form>
-          </li>
+  </ul>
+</nav>
 
-        </ul>
-      </nav>
     </div>
   </aside>
 
