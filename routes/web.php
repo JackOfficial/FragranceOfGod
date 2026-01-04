@@ -45,3 +45,13 @@ Route::get('/programs/{slug}', [ProgramController::class, 'show'])->name('progra
 // Social login routes
 Route::get('/auth/redirect/{provider}', [SocialLoginController::class, 'redirect']);
 Route::get('/auth/callback/{provider}', [SocialLoginController::class, 'callback']);
+
+// Admin Routes
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin', fn () => view('admin.dashboard'));
+});
+
+// Authenticated Users
+Route::middleware(['auth', 'permission:manage users'])->group(function () {
+    // Route::get('/users', [UserController::class, 'index']);
+});
