@@ -47,8 +47,8 @@ Route::get('/auth/redirect/{provider}', [SocialLoginController::class, 'redirect
 Route::get('/auth/callback/{provider}', [SocialLoginController::class, 'callback']);
 
 // Admin Routes
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin', fn () => view('admin.dashboard'));
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+  Route::get('/dashboard', fn () => view('admin.dashboard'));
 });
 
 // Authenticated Users
