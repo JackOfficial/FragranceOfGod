@@ -60,6 +60,14 @@ class EventController extends Controller
         return view('admin.events.edit', compact('event'));
     }
 
+    public function show(Event $event)
+    {
+    // Load related media (images & documents)
+    $event->load('media');
+
+    return view('admin.events.show', compact('event'));
+    }
+
     /**
      * Update an existing event.
      */
