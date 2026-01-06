@@ -34,4 +34,10 @@ class Event extends Model
     {
         return $this->media()->where('file_type', 'document');
     }
+
+    public function focusAreas()
+{
+    return $this->morphToMany(FocusedArea::class, 'focusable');
+}
+
 }

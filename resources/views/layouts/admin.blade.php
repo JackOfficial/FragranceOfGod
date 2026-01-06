@@ -43,7 +43,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ route('admin.dashboard') }}" class="nav-link">Dashboard</a>
+        <a href="/admin/dashboard" class="nav-link">Dashboard</a>
       </li>
     </ul>
 
@@ -60,9 +60,9 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
     <!-- Brand -->
-    <a href="{{ route('admin.dashboard') }}" class="brand-link">
+    <a href="/admin/dashboard" class="brand-link">
        <img src="{{ asset('frontend/img/Fog Logo.png') }}" alt="Fragrance Of God" class="brand-image">
-    <span class="brand-text font-weight-light">FOG</span>
+       <span class="brand-text font-weight-light">FOG</span>
     </a>
 
     <div class="sidebar">
@@ -85,7 +85,7 @@
 
           <!-- Dashboard -->
           <li class="nav-item">
-            <a href="{{ route('admin.dashboard') }}" class="nav-link">
+            <a href="/admin/dashboard" class="nav-link {{ request()->is('admin/dashboard*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-gauge-high"></i>
               <p>Dashboard</p>
             </a>
@@ -95,31 +95,38 @@
           <li class="nav-header">PROGRAMS & PROJECTS</li>
 
           <li class="nav-item">
-            <a href="/admin/programs" class="nav-link">
+            <a href="/admin/focused-areas" class="nav-link {{ request()->is('admin/focused-areas*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-bullseye"></i>
+              <p>Focused Areas</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="/admin/programs" class="nav-link {{ request()->is('admin/programs*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-diagram-project"></i>
               <p>Programs</p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a href="/admin/projects" class="nav-link">
+            <a href="/admin/projects" class="nav-link {{ request()->is('admin/projects*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-briefcase"></i>
               <p>Projects</p>
             </a>
           </li>
 
-          <!-- Events -->
+          <!-- Events & Campaigns -->
           <li class="nav-header">EVENTS & CAMPAIGNS</li>
 
           <li class="nav-item">
-            <a href="/admin/events" class="nav-link">
+            <a href="/admin/events" class="nav-link {{ request()->is('admin/events*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-calendar-days"></i>
               <p>Events</p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a href="/admin/campaigns" class="nav-link">
+            <a href="/admin/campaigns" class="nav-link {{ request()->is('admin/campaigns*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-bullhorn"></i>
               <p>Campaigns</p>
             </a>
@@ -129,38 +136,38 @@
           <li class="nav-header">CONTENT</li>
 
           <li class="nav-item">
-            <a href="/admin/stories" class="nav-link">
+            <a href="/admin/stories" class="nav-link {{ request()->is('admin/stories*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-book-open"></i>
               <p>Stories</p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a href="/admin/blogs" class="nav-link">
+            <a href="/admin/blogs" class="nav-link {{ request()->is('admin/blogs*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-pen-nib"></i>
               <p>Blogs</p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a href="/admin/media" class="nav-link">
+            <a href="/admin/media" class="nav-link {{ request()->is('admin/media*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-photo-film"></i>
               <p>Media Gallery</p>
             </a>
           </li>
 
-          <!-- Impact -->
+          <!-- Impact & M&E -->
           <li class="nav-header">IMPACT & M&E</li>
 
           <li class="nav-item">
-            <a href="/admin/impacts" class="nav-link">
+            <a href="/admin/impacts" class="nav-link {{ request()->is('admin/impacts*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-chart-line"></i>
               <p>Core Impact</p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a href="/admin/beneficiaries" class="nav-link">
+            <a href="/admin/beneficiaries" class="nav-link {{ request()->is('admin/beneficiaries*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-people-group"></i>
               <p>Beneficiaries</p>
             </a>
@@ -170,14 +177,14 @@
           <li class="nav-header">ORGANIZATION</li>
 
           <li class="nav-item">
-            <a href="/admin/users" class="nav-link">
+            <a href="/admin/users" class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-users"></i>
               <p>Users</p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a href="/admin/roles-and-permissions" class="nav-link">
+            <a href="/admin/roles-and-permissions" class="nav-link {{ request()->is('admin/roles-and-permissions*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-user-shield"></i>
               <p>Roles & Permissions</p>
             </a>
@@ -187,14 +194,14 @@
           <li class="nav-header">COMMUNICATION</li>
 
           <li class="nav-item">
-            <a href="/admin/messages" class="nav-link">
+            <a href="/admin/messages" class="nav-link {{ request()->is('admin/messages*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-envelope-open-text"></i>
               <p>Messages</p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a href="/admin/subscribers" class="nav-link">
+            <a href="/admin/subscribers" class="nav-link {{ request()->is('admin/subscribers*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-paper-plane"></i>
               <p>Newsletter</p>
             </a>
@@ -204,7 +211,7 @@
           <li class="nav-header">SYSTEM</li>
 
           <li class="nav-item">
-            <a href="/admin/settings" class="nav-link">
+            <a href="/admin/settings" class="nav-link {{ request()->is('admin/settings*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-gear"></i>
               <p>Settings</p>
             </a>
@@ -217,7 +224,7 @@
               <i class="nav-icon fas fa-right-from-bracket"></i>
               <p>Logout</p>
             </a>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            <form id="logout-form" action="/logout" method="POST" class="d-none">
               @csrf
             </form>
           </li>

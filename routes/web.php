@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
+use App\Http\Controllers\Admin\FocusedAreaController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\StoryController as AdminStoryController;
 use App\Http\Controllers\Auth\SocialLoginController;
@@ -51,6 +52,7 @@ Route::middleware(['auth', 'role:admin|staff'])->prefix('admin')->name('admin.')
   Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
   Route::resource('events', AdminEventController::class);
   Route::resource('stories', AdminStoryController::class);
+  Route::resource('focused-areas', FocusedAreaController::class);
   Route::delete('media/{media}', MediaController::class)->name('media.destroy');
 });
 
