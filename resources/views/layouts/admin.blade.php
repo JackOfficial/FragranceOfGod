@@ -184,6 +184,33 @@
           </li>
 
           <li class="nav-item">
+    <a href="/admin/volunteers" class="nav-link {{ request()->is('admin/volunteers*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-hand-holding-heart"></i>
+        <p>Volunteers
+          @php $volunteersCount = \App\Models\Volunteer::count() @endphp
+            @if($subscriberCount > 0)
+                <span class="right badge badge-info">{{ $volunteersCount }}</span>
+            @endif
+        </p>
+      </a>
+          </li>
+
+          <li class="nav-item">
+    <a href="/admin/subscribers" class="nav-link {{ request()->is('admin/subscribers*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-paper-plane"></i>
+        <p>
+            Newsletter
+            @php
+                $subscriberCount = \App\Models\Subscriber::count();
+            @endphp
+            @if($subscriberCount > 0)
+                <span class="right badge badge-info">{{ $subscriberCount }}</span>
+            @endif
+        </p>
+    </a>
+</li>
+
+          <li class="nav-item">
             <a href="/admin/roles-and-permissions" class="nav-link {{ request()->is('admin/roles-and-permissions*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-user-shield"></i>
               <p>Roles & Permissions</p>
