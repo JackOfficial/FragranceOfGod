@@ -17,6 +17,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
 use App\Http\Controllers\Admin\ProgramController as AdminProgramController;
+use App\Http\Controllers\Admin\SubscriberController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StoryController;
 use App\Http\Controllers\VolunteerController;
@@ -58,6 +59,7 @@ Route::middleware(['auth', 'role:admin|staff'])->prefix('admin')->name('admin.')
   Route::resource('focused-areas', FocusedAreaController::class);
   Route::resource('programs', AdminProgramController::class);
   Route::resource('projects', AdminProjectController::class);
+  Route::resource('subscribers', SubscriberController::class);
   Route::resource('volunteers', AdminVolunteerController::class)->only(['index', 'show', 'destroy']);
   Route::delete('media/{media}', MediaController::class)->name('media.destroy');
       Route::post('media/{media}/cover', [MediaController::class, 'setCover'])
