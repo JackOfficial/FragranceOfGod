@@ -1,16 +1,16 @@
 @extends('layouts.admin')
-@section('title', 'Fragrance Of God - Programs')
+@section('title', 'Fragrance Of God - Focused Areas')
 
 @section('content')
 
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
-            <div class="col-sm-6"><h1>Programs ({{ $programs->total() }})</h1></div>
+            <div class="col-sm-6"><h1>Focused Areas ({{ $focusAreas->total() }})</h1></div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/admin">Home</a></li>
-                    <li class="breadcrumb-item active">Programs</li>
+                    <li class="breadcrumb-item active">Focused Areas</li>
                 </ol>
             </div>
         </div>
@@ -24,8 +24,8 @@
 
     <div class="card shadow-sm">
         <div class="card-header">
-            <a href="{{ route('admin.programs.create') }}" class="btn btn-primary btn-sm">
-                <i class="fas fa-plus"></i> Add Program
+            <a href="{{ route('admin.focused-areas.create') }}" class="btn btn-primary btn-sm">
+                <i class="fas fa-plus"></i> Add Focus Area
             </a>
         </div>
 
@@ -42,16 +42,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($programs as $program)
+                        @forelse($focusAreas as $area)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
 
-                                <td class="fw-bold">{{ $program->title }}</td>
+                                <td class="fw-bold">{{ $area->title }}</td>
 
-                                <td><i class="{{ $program->icon }}"></i></td>
+                                <td><i class="{{ $area->icon }}"></i></td>
 
                                 <td>
-                                    @if($program->is_published)
+                                    @if($area->is_published)
                                         <span class="badge badge-success">Published</span>
                                     @else
                                         <span class="badge badge-secondary">Draft</span>
@@ -59,14 +59,14 @@
                                 </td>
 
                                 <td class="d-flex gap-1">
-                                    <a href="{{ route('admin.programs.edit', $program->id) }}"
+                                    <a href="{{ route('admin.focused-areas.edit', $area->id) }}"
                                        class="btn btn-info btn-sm" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </a>
 
-                                    <form action="{{ route('admin.programs.destroy', $program->id) }}"
+                                    <form action="{{ route('admin.focused-areas.destroy', $area->id) }}"
                                           method="POST"
-                                          onsubmit="return confirm('Delete this program?')">
+                                          onsubmit="return confirm('Delete this focus area?')">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger btn-sm" title="Delete">
@@ -78,7 +78,7 @@
                         @empty
                             <tr>
                                 <td colspan="5" class="text-center text-muted">
-                                    No programs available.
+                                    No focused areas available.
                                 </td>
                             </tr>
                         @endforelse
@@ -86,7 +86,7 @@
                 </table>
 
                 <div class="mt-3">
-                    {{ $programs->links('pagination::bootstrap-4') }}
+                    {{ $focusAreas->links('pagination::bootstrap-4') }}
                 </div>
             </div>
         </div>
