@@ -20,31 +20,41 @@
     <div class="container">
         <div class="row g-4">
 
-            @foreach($programs as $program)
+            @forelse($programs as $program)
             <div class="col-lg-4 col-md-6">
-                <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-4 d-flex flex-column">
+
                     <div class="icon-circle bg-warning text-dark mb-3 d-inline-flex align-items-center justify-content-center rounded-circle"
                          style="width:65px; height:65px;">
-                        <i class="{{ $program['icon'] }} fa-lg"></i>
+                        <i class="{{ $program->icon }} fa-lg"></i>
                     </div>
 
                     <h4 class="fw-bold mb-3" style="color:#ffcc00;">
-                        {{ $program['title'] }}
+                        {{ $program->title }}
                     </h4>
 
                     <p class="text-muted">
-                        {{ $program['excerpt'] }}
+                        {{ $program->excerpt }}
                     </p>
 
-                    <a href="{{ route('programs.show', $program['slug']) }}"
+                    <a href="{{ route('programs.show', $program->id) }}"
                        class="mt-auto fw-bold text-decoration-none"
                        style="color:#111;">
                         Learn More →
                     </a>
                 </div>
             </div>
-            @endforeach
+            @empty
+            <div class="col-12 text-center text-muted">
+                <p>No programs available at the moment.</p>
+            </div>
+            @endforelse
 
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-4">
+            {{ $programs->links('pagination::bootstrap-4') }}
         </div>
     </div>
 </section>
