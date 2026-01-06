@@ -39,10 +39,11 @@ class FocusedAreaController extends Controller
             ->with('success', 'Focused Area created successfully.');
     }
 
-    public function edit(FocusedArea $focusedArea)
-    {
-        return view('admin.focused-areas.edit', compact('focusedArea'));
-    }
+public function edit($id)
+{
+    $focusedArea = FocusedArea::findOrFail($id);
+    return view('admin.focused-areas.edit', compact('focusedArea'));
+}
 
     public function update(Request $request, FocusedArea $focusedArea)
     {
