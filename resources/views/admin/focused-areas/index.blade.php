@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'HFRO - Focused Areas')
+@section('title', 'Fragrance Of God - Focused Areas')
 
 @section('content')
 
