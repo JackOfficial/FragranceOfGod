@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
-use App\Models\Media;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -24,77 +24,131 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'short_desc' => 'required|string|max:500',
-            'description' => 'nullable|string',
-            'images.*' => 'image',
-            'documents.*' => 'file',
+            'title'        => 'required|string|max:255',
+            'short_desc'   => 'required|string|max:500',
+            'description'  => 'nullable|string',
+            'is_published' => 'required|boolean',
+            'images.*'     => 'image|max:5120',
+            'documents.*'  => 'file|max:10240',
         ]);
 
         $project = Project::create([
-            'title' => $request->title,
-            'slug' => Str::slug($request->title),
-            'short_desc' => $request->short_desc,
-            'description' => $request->description,
+            'title'        => $request->title,
+            'slug'         => Str::slug($request->title),
+            'short_desc'   => $request->short_desc,
+            'description'  => $request->description,
             'is_published' => $request->is_published,
         ]);
 
-        /* Images */
+        /* ================= IMAGES ================= */
         if ($request->hasFile('images')) {
-            foreach ($request->images as $index => $image) {
+            foreach ($request->file('images') as $image) {
+
                 $path = $image->store('projects', 'public');
 
-                Media::create([
-                    'mediable_id' => $project->id,
-                    'mediable_type' => Project::class,
+                $project->media()->create([
                     'file_path' => $path,
                     'file_type' => 'image',
-                    'is_cover' => $index === 0, // first image = cover
+                    'mime_type' => $image->getMimeType(),
+                    'title'     => $project->title,
                 ]);
             }
         }
 
-        /* Documents */
+        /* ================= DOCUMENTS ================= */
         if ($request->hasFile('documents')) {
-            foreach ($request->documents as $doc) {
+            foreach ($request->file('documents') as $doc) {
+
                 $path = $doc->store('projects/docs', 'public');
 
-                Media::create([
-                    'mediable_id' => $project->id,
-                    'mediable_type' => Project::class,
+                $project->media()->create([
                     'file_path' => $path,
                     'file_type' => 'document',
+                    'mime_type' => $doc->getMimeType(),
+                    'title'     => $project->title,
                 ]);
             }
         }
 
-        return redirect()->route('admin.projects.index')->with('success', 'Project created successfully.');
+        return redirect()
+            ->route('admin.projects.index')
+            ->with('success', 'Project created successfully.');
     }
 
     public function edit($id)
     {
-        $project = Project::findOrFail($id);
+        $project = Project::with('media')->findOrFail($id);
         return view('admin.projects.edit', compact('project'));
     }
 
     public function update(Request $request, $id)
     {
-        $project = Project::findOrFail($id);
+        $project = Project::with('media')->findOrFail($id);
+
+        $request->validate([
+            'title'        => 'required|string|max:255',
+            'short_desc'   => 'required|string|max:500',
+            'description'  => 'nullable|string',
+            'is_published' => 'required|boolean',
+            'images.*'     => 'image|max:5120',
+            'documents.*'  => 'file|max:10240',
+        ]);
 
         $project->update([
-            'title' => $request->title,
-            'slug' => Str::slug($request->title),
-            'short_desc' => $request->short_desc,
-            'description' => $request->description,
+            'title'        => $request->title,
+            'slug'         => Str::slug($request->title),
+            'short_desc'   => $request->short_desc,
+            'description'  => $request->description,
             'is_published' => $request->is_published,
         ]);
 
-        return redirect()->route('admin.projects.index')->with('success', 'Project updated.');
+        /* ================= ADD NEW IMAGES ================= */
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+
+                $path = $image->store('projects', 'public');
+
+                $project->media()->create([
+                    'file_path' => $path,
+                    'file_type' => 'image',
+                    'mime_type' => $image->getMimeType(),
+                    'title'     => $project->title,
+                ]);
+            }
+        }
+
+        /* ================= ADD NEW DOCUMENTS ================= */
+        if ($request->hasFile('documents')) {
+            foreach ($request->file('documents') as $doc) {
+
+                $path = $doc->store('projects/docs', 'public');
+
+                $project->media()->create([
+                    'file_path' => $path,
+                    'file_type' => 'document',
+                    'mime_type' => $doc->getMimeType(),
+                    'title'     => $project->title,
+                ]);
+            }
+        }
+
+        return redirect()
+            ->route('admin.projects.index')
+            ->with('success', 'Project updated successfully.');
     }
 
     public function destroy($id)
     {
-        Project::findOrFail($id)->delete();
-        return back()->with('success', 'Project deleted.');
+        $project = Project::with('media')->findOrFail($id);
+
+        /* Delete files from storage */
+        foreach ($project->media as $media) {
+            Storage::disk('public')->delete($media->file_path);
+            $media->delete();
+        }
+
+        $project->delete();
+
+        return back()->with('success', 'Project deleted successfully.');
     }
 }
