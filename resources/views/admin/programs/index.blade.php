@@ -15,8 +15,8 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <table class="table table-bordered">
-        <thead>
+    <table class="table table-bordered table-hover align-middle">
+        <thead class="table-light">
             <tr>
                 <th>Title</th>
                 <th>Icon</th>
@@ -37,7 +37,8 @@
                 <td>
                     <a href="{{ route('admin.programs.edit', $program->id) }}" class="btn btn-sm btn-warning">Edit</a>
                     <form action="{{ route('admin.programs.destroy', $program->id) }}" method="POST" class="d-inline">
-                        @csrf @method('DELETE')
+                        @csrf
+                        @method('DELETE')
                         <button class="btn btn-sm btn-danger" onclick="return confirm('Delete this program?')">
                             Delete
                         </button>
