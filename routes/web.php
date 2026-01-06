@@ -15,6 +15,7 @@ use App\Http\Controllers\FocusAreaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
 use App\Http\Controllers\Admin\ProgramController as AdminProgramController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StoryController;
@@ -55,6 +56,7 @@ Route::middleware(['auth', 'role:admin|staff'])->prefix('admin')->name('admin.')
   Route::resource('stories', AdminStoryController::class);
   Route::resource('focused-areas', FocusedAreaController::class);
   Route::resource('programs', AdminProgramController::class);
+  Route::resource('projects', AdminProjectController::class);
   Route::delete('media/{media}', MediaController::class)->name('media.destroy');
 });
 
