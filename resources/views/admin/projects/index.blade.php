@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 @section('title','HFRO - Projects')
+
 <style>
 .image-stack {
     display: flex;
     align-items: center;
 }
-
 .image-stack img {
     width: 40px;
     height: 40px;
@@ -15,11 +15,9 @@
     margin-left: -12px;
     background: #f4f6f9;
 }
-
 .image-stack img:first-child {
     margin-left: 0;
 }
-
 .image-stack .more {
     width: 40px;
     height: 40px;
@@ -32,6 +30,21 @@
     justify-content: center;
     margin-left: -12px;
     border: 2px solid #fff;
+}
+
+.documents-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.documents-list li {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.85rem;
+}
+.documents-list li a {
+    text-decoration: none;
 }
 </style>
 
@@ -56,6 +69,7 @@
 <tr>
     <th>Title</th>
     <th>Images</th>
+    <th>Documents</th>
     <th>Status</th>
     <th width="160">Actions</th>
 </tr>
@@ -89,6 +103,28 @@
         @endif
     </td>
 
+    {{-- Documents --}}
+    <td>
+        @php
+            $docs = $project->media->where('file_type','document');
+        @endphp
+
+        @if($docs->count())
+            <ul class="documents-list">
+                @foreach($docs as $doc)
+                    <li>
+                        <i class="fas fa-file-pdf text-danger"></i>
+                        <a href="{{ asset('storage/'.$doc->file_path) }}" target="_blank">
+                            {{ \Illuminate\Support\Str::limit(basename($doc->file_path), 20) }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        @else
+            <span class="text-muted">No documents</span>
+        @endif
+    </td>
+
     <td>
         @if($project->is_published)
             <span class="badge badge-success">Published</span>
@@ -116,7 +152,7 @@
 </tr>
 @empty
 <tr>
-    <td colspan="4" class="text-center text-muted">
+    <td colspan="5" class="text-center text-muted">
         No projects found.
     </td>
 </tr>
