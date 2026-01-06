@@ -176,6 +176,13 @@
           <!-- Organization -->
           <li class="nav-header">ORGANIZATION</li>
 
+           <li class="nav-item">
+            <a href="/admin/organization" class="nav-link {{ request()->is('admin/organization*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-house"></i>
+              <p>Organizational Info</p>
+            </a>
+          </li>  
+
           <li class="nav-item">
             <a href="/admin/users" class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-users"></i>
