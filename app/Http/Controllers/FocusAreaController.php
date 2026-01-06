@@ -12,6 +12,7 @@ class FocusAreaController extends Controller
      */
     public function index()
     {
+        
         // Fetch all published focus areas from DB
         $focusAreas = FocusedArea::where('is_published', 1)->latest()->get();
 
