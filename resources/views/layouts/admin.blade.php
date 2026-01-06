@@ -199,7 +199,7 @@
     <a href="/admin/subscribers" class="nav-link {{ request()->is('admin/subscribers*') ? 'active' : '' }}">
         <i class="nav-icon fas fa-paper-plane"></i>
         <p>
-            Newsletter
+            Subscriber
             @php
                 $subscriberCount = \App\Models\Subscriber::count();
             @endphp
@@ -228,9 +228,9 @@
           </li>
 
           <li class="nav-item">
-            <a href="/admin/subscribers" class="nav-link {{ request()->is('admin/subscribers*') ? 'active' : '' }}">
+            <a href="/broadcast" class="nav-link {{ request()->is('admin/broadcast*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-paper-plane"></i>
-              <p>Newsletter</p>
+              <p>Broadcast</p>
             </a>
           </li>
 
