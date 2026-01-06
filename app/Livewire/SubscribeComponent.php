@@ -30,9 +30,6 @@ class SubscribeComponent extends Component
 
         // Success message
         $this->successMessage = 'Subscribed successfully!';
-
-        // Optionally, emit an event if you want notifications elsewhere
-        $this->emit('subscribed');
     }
 
     public function render()
