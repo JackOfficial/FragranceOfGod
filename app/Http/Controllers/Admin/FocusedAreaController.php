@@ -68,12 +68,13 @@ public function edit($id)
         ->with('success', 'Focused Area updated successfully.');
 }
 
-    public function destroy(FocusedArea $focusedArea)
+    public function destroy($id)
     {
+        $focusedArea = FocusedArea::findOrFail($id);
         $focusedArea->delete();
 
         return redirect()
             ->route('admin.focused-areas.index')
-            ->with('success', 'Focused Area deleted.');
+            ->with('success', 'Focused Area deleted successfully.');
     }
 }
