@@ -41,6 +41,7 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Roles</th>
+                    <th>Permissions</th>
                     <th>Date</th>
                     <th>Actions</th>
                 </tr>
@@ -75,6 +76,14 @@
                         @endforelse
                     </td>
 
+                    <td>
+                        @forelse($user->getAllPermissions() as $permission)
+                            <span class="badge rounded-pill bg-warning text-dark">{{ $permission->name }}</span>
+                        @empty
+                            <span class="badge rounded-pill bg-secondary">No permission</span>
+                        @endforelse
+                    </td>
+
                     <td>{{ optional($user->created_at)->format('Y-m-d') }}</td>
 
                     <td class="d-flex gap-1">
@@ -95,7 +104,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6" class="text-center text-muted py-3">
+                    <td colspan="7" class="text-center text-muted py-3">
                         <i class="fas fa-user-slash"></i> No users available.
                     </td>
                 </tr>
@@ -108,6 +117,7 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Roles</th>
+                    <th>Permissions</th>
                     <th>Date</th>
                     <th>Actions</th>
                 </tr>
