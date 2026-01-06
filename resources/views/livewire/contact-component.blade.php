@@ -1,47 +1,42 @@
-@extends('layouts.app')
-
-@section('title', 'Contact Us | Fragrance Of God')
-
-@section('content')
-
-<!-- ================= HERO ================= -->
-<section class="ngo-hero position-relative d-flex align-items-center" style="min-height:350px;">
-    <div class="ngo-hero-overlay"></div>
-    <div class="container position-relative text-center">
-        <h1 class="ngo-hero-title mt-3" style="color:#ffcc00;">Contact Us</h1>
-        <p class="text-light lead mt-3">We are here to hear from you. Reach out to us today.</p>
-    </div>
-</section>
-
-<!-- ================= CONTACT FORM ================= -->
 <section class="py-5">
     <div class="container">
         <div class="row g-5">
             <!-- Contact Form -->
             <div class="col-lg-6">
                 <h2 class="fw-bold" style="color:#ffcc00;">Send Us a Message</h2>
-                @if(session('success'))
+
+                @if(session()->has('success'))
                     <div class="alert alert-success mt-3">{{ session('success') }}</div>
                 @endif
-                <form action="{{ route('contact.send') }}" method="POST" class="mt-4">
-                    @csrf
+
+                <form wire:submit.prevent="submit" class="mt-4">
                     <div class="mb-3">
                         <label class="form-label fw-bold">Name</label>
-                        <input type="text" name="name" class="form-control" required>
+                        <input type="text" wire:model="name" class="form-control @error('name') is-invalid @enderror">
+                        @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label fw-bold">Email</label>
-                        <input type="email" name="email" class="form-control" required>
+                        <input type="email" wire:model="email" class="form-control @error('email') is-invalid @enderror">
+                        @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label fw-bold">Subject</label>
-                        <input type="text" name="subject" class="form-control" required>
+                        <input type="text" wire:model="subject" class="form-control @error('subject') is-invalid @enderror">
+                        @error('subject') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label fw-bold">Message</label>
-                        <textarea name="message" class="form-control" rows="6" required></textarea>
+                        <textarea wire:model="message" rows="6" class="form-control @error('message') is-invalid @enderror"></textarea>
+                        @error('message') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
-                    <button type="submit" class="btn btn-lg" style="background-color:#ffcc00; color:#111; font-weight:600;">Send Message</button>
+
+                    <button type="submit" class="btn btn-lg" style="background-color:#ffcc00; color:#111; font-weight:600;">
+                        Send Message
+                    </button>
                 </form>
             </div>
 
@@ -66,14 +61,3 @@
         </div>
     </div>
 </section>
-
-<!-- ================= CTA ================= -->
-<section class="py-5 text-center" style="background-color:#111; color:#ffcc00;">
-    <div class="container">
-        <h2 class="fw-bold">Partner With Us</h2>
-        <p class="lead mt-3">Support our mission and help transform lives in communities across Rwanda.</p>
-        <a href="/donate" class="btn btn-lg" style="background-color:#ffcc00; color:#111; font-weight:600;">Donate Now</a>
-    </div>
-</section>
-
-@endsection
