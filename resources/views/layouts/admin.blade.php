@@ -6,7 +6,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <title>@yield('title', 'Fragrance Of God | Admin')</title>
-
+  <link rel="icon" href="{{ asset('frontend/img/Fog.jpg') }}" type="image/png">
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&display=fallback">
 
