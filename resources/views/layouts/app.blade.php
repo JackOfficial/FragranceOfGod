@@ -364,12 +364,7 @@
                     <i class="fa fa-phone-alt me-2 text-primary"></i>+256 751 231644
                 </p>
 
-                <form action="/subscribe" method="POST" class="d-flex">
-                    @csrf
-                    <input type="email" name="email" class="form-control form-control-sm me-2"
-                           placeholder="Your email address" required>
-                    <button class="btn btn-primary btn-sm">Subscribe</button>
-                </form>
+                <livewire:subscribe-component />
             </div>
 
         </div>
