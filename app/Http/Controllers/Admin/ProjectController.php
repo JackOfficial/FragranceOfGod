@@ -75,67 +75,88 @@ class ProjectController extends Controller
             ->with('success', 'Project created successfully.');
     }
 
-    public function edit($id)
-    {
-        $project = Project::with('media')->findOrFail($id);
-        return view('admin.projects.edit', compact('project'));
+public function edit($id)
+{
+    $project = Project::with('media')->findOrFail($id);
+    return view('admin.projects.edit', compact('project'));
+}
+
+public function update(Request $request, $id)
+{
+    $project = Project::with('media')->findOrFail($id);
+
+    $request->validate([
+        'title'        => 'required|string|max:255',
+        'short_desc'   => 'required|string|max:500',
+        'description'  => 'nullable|string',
+        'is_published' => 'required|boolean',
+        'images.*'     => 'image|max:5120',
+        'documents.*'  => 'file|max:10240',
+        'delete_media' => 'array', // ids of media to delete
+        'cover_image'  => 'nullable|integer', // id of the media to set as cover
+    ]);
+
+    // Update main project fields
+    $project->update([
+        'title'        => $request->title,
+        'slug'         => Str::slug($request->title),
+        'short_desc'   => $request->short_desc,
+        'description'  => $request->description,
+        'is_published' => $request->is_published,
+    ]);
+
+    // ================= DELETE SELECTED MEDIA =================
+    if ($request->filled('delete_media')) {
+        $deleteIds = $request->delete_media;
+        $mediasToDelete = $project->media()->whereIn('id', $deleteIds)->get();
+
+        foreach ($mediasToDelete as $media) {
+            Storage::disk('public')->delete($media->file_path);
+            $media->delete();
+        }
     }
 
-    public function update(Request $request, $id)
-    {
-        $project = Project::with('media')->findOrFail($id);
+    // ================= ADD NEW IMAGES =================
+    if ($request->hasFile('images')) {
+        foreach ($request->file('images') as $image) {
+            $path = $image->store('projects', 'public');
 
-        $request->validate([
-            'title'        => 'required|string|max:255',
-            'short_desc'   => 'required|string|max:500',
-            'description'  => 'nullable|string',
-            'is_published' => 'required|boolean',
-            'images.*'     => 'image|max:5120',
-            'documents.*'  => 'file|max:10240',
-        ]);
-
-        $project->update([
-            'title'        => $request->title,
-            'slug'         => Str::slug($request->title),
-            'short_desc'   => $request->short_desc,
-            'description'  => $request->description,
-            'is_published' => $request->is_published,
-        ]);
-
-        /* ================= ADD NEW IMAGES ================= */
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
-
-                $path = $image->store('projects', 'public');
-
-                $project->media()->create([
-                    'file_path' => $path,
-                    'file_type' => 'image',
-                    'mime_type' => $image->getMimeType(),
-                    'title'     => $project->title,
-                ]);
-            }
+            $project->media()->create([
+                'file_path' => $path,
+                'file_type' => 'image',
+                'mime_type' => $image->getMimeType(),
+                'title'     => $project->title,
+            ]);
         }
-
-        /* ================= ADD NEW DOCUMENTS ================= */
-        if ($request->hasFile('documents')) {
-            foreach ($request->file('documents') as $doc) {
-
-                $path = $doc->store('projects/docs', 'public');
-
-                $project->media()->create([
-                    'file_path' => $path,
-                    'file_type' => 'document',
-                    'mime_type' => $doc->getMimeType(),
-                    'title'     => $project->title,
-                ]);
-            }
-        }
-
-        return redirect()
-            ->route('admin.projects.index')
-            ->with('success', 'Project updated successfully.');
     }
+
+    // ================= ADD NEW DOCUMENTS =================
+    if ($request->hasFile('documents')) {
+        foreach ($request->file('documents') as $doc) {
+            $path = $doc->store('projects/docs', 'public');
+
+            $project->media()->create([
+                'file_path' => $path,
+                'file_type' => 'document',
+                'mime_type' => $doc->getMimeType(),
+                'title'     => $project->title,
+            ]);
+        }
+    }
+
+    // ================= SET COVER IMAGE =================
+    if ($request->filled('cover_image')) {
+        // Reset all images cover to false
+        $project->media()->where('file_type', 'image')->update(['is_cover' => false]);
+
+        // Set selected media as cover
+        $project->media()->where('id', $request->cover_image)->update(['is_cover' => true]);
+    }
+
+    return redirect()
+        ->route('admin.projects.index')
+        ->with('success', 'Project updated successfully.');
+}
 
     public function destroy($id)
     {
