@@ -45,26 +45,28 @@ public function edit($id)
     return view('admin.focused-areas.edit', compact('focusedArea'));
 }
 
-    public function update(Request $request, FocusedArea $focusedArea)
-    {
-        $data = $request->validate([
-            'title'        => 'required|string|max:255',
-            'excerpt'      => 'required|string|max:255',
-            'description'  => 'nullable|string',
-            'icon'         => 'nullable|string|max:255',
-            'is_published' => 'boolean',
-        ]);
+  public function update(Request $request, $id)
+{
+    $focusedArea = FocusedArea::findOrFail($id); // fetch the record
 
-        if ($focusedArea->title !== $data['title']) {
-            $data['slug'] = Str::slug($data['title']);
-        }
+    $data = $request->validate([
+        'title'        => 'required|string|max:255',
+        'excerpt'      => 'required|string|max:255',
+        'description'  => 'nullable|string',
+        'icon'         => 'nullable|string|max:255',
+        'is_published' => 'boolean',
+    ]);
 
-        $focusedArea->update($data);
-
-        return redirect()
-            ->route('admin.focused-areas.index')
-            ->with('success', 'Focused Area updated successfully.');
+    if ($focusedArea->title !== $data['title']) {
+        $data['slug'] = Str::slug($data['title']);
     }
+
+    $focusedArea->update($data);
+
+    return redirect()
+        ->route('admin.focused-areas.index')
+        ->with('success', 'Focused Area updated successfully.');
+}
 
     public function destroy(FocusedArea $focusedArea)
     {
