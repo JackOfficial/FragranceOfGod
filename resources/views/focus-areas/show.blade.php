@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Community Outreach & Care | Fragrance Of God')
+@section('title', $focusArea->title . ' | Fragrance Of God')
 
 @section('content')
 
@@ -16,12 +16,11 @@
                 </span>
 
                 <h1 class="ngo-hero-title mt-3" style="color:#ffcc00;">
-                    Community Outreach & Care
+                    {{ $focusArea->title }}
                 </h1>
 
                 <p class="ngo-hero-text mt-4" style="color:rgba(255, 204, 0, 0.85); max-width:700px;">
-                    Serving vulnerable individuals and communities through compassion,
-                    practical support, prayer, and holistic care.
+                    {{ $focusArea->excerpt ?? Str::limit(strip_tags($focusArea->description), 200) }}
                 </p>
             </div>
         </div>
@@ -35,28 +34,27 @@
             <div class="col-lg-6">
                 <h2 class="fw-bold" style="color:#ffcc00;">Overview</h2>
                 <p class="text-muted fs-5 mt-3">
-                    Our Community Outreach & Care focus area exists to respond to urgent
-                    needs within vulnerable communities. We believe that demonstrating
-                    God’s love through action restores dignity, builds trust, and opens
-                    pathways to lasting transformation.
-                </p>
-                <p class="text-muted">
-                    Through outreach initiatives, relief support, counseling, and prayer,
-                    we walk alongside individuals and families during their most
-                    challenging moments.
+                    {!! $focusArea->description !!}
                 </p>
             </div>
 
             <div class="col-lg-6">
-                <img src="{{ asset('frontend/img/about.jpg') }}"
-                     class="img-fluid rounded-4 shadow"
-                     alt="Community Outreach & Care">
+                @if($focusArea->image)
+                    <img src="{{ asset('storage/focus-areas/' . $focusArea->image) }}"
+                         class="img-fluid rounded-4 shadow"
+                         alt="{{ $focusArea->title }}">
+                @else
+                    <img src="{{ asset('frontend/img/about.jpg') }}"
+                         class="img-fluid rounded-4 shadow"
+                         alt="{{ $focusArea->title }}">
+                @endif
             </div>
         </div>
     </div>
 </section>
 
 <!-- ================= WHAT WE DO ================= -->
+@if($focusArea->activities && count($focusArea->activities))
 <section class="py-5 bg-light">
     <div class="container">
         <div class="text-center mb-5">
@@ -67,43 +65,22 @@
         </div>
 
         <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
-                    <i class="fas fa-box-open fa-2x mb-3 text-warning"></i>
-                    <h5 class="fw-bold">Relief & Basic Support</h5>
-                    <p class="text-muted">
-                        Providing food, clothing, and emergency assistance to families
-                        facing hardship.
-                    </p>
+            @foreach($focusArea->activities as $activity)
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
+                        <i class="{{ $activity->icon ?? 'fas fa-circle' }} fa-2x mb-3 text-warning"></i>
+                        <h5 class="fw-bold">{{ $activity->title }}</h5>
+                        <p class="text-muted">{{ $activity->description }}</p>
+                    </div>
                 </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
-                    <i class="fas fa-comments fa-2x mb-3 text-warning"></i>
-                    <h5 class="fw-bold">Counseling & Guidance</h5>
-                    <p class="text-muted">
-                        Offering emotional and spiritual counseling to restore hope
-                        and strengthen resilience.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
-                    <i class="fas fa-praying-hands fa-2x mb-3 text-warning"></i>
-                    <h5 class="fw-bold">Prayer & Pastoral Care</h5>
-                    <p class="text-muted">
-                        Standing with individuals through prayer, discipleship,
-                        and faith-based support.
-                    </p>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
+@endif
 
 <!-- ================= IMPACT ================= -->
+@if($focusArea->impact)
 <section class="py-5">
     <div class="container">
         <div class="text-center mb-5">
@@ -114,23 +91,19 @@
         </div>
 
         <div class="row text-center">
-            <div class="col-md-4">
-                <h3 class="fw-bold" style="color:#ffcc00;">3,000+</h3>
-                <p class="text-muted">People Supported</p>
-            </div>
-            <div class="col-md-4">
-                <h3 class="fw-bold" style="color:#ffcc00;">45+</h3>
-                <p class="text-muted">Community Outreach Programs</p>
-            </div>
-            <div class="col-md-4">
-                <h3 class="fw-bold" style="color:#ffcc00;">120+</h3>
-                <p class="text-muted">Volunteers Engaged</p>
-            </div>
+            @foreach($focusArea->impact as $impact)
+                <div class="col-md-4">
+                    <h3 class="fw-bold" style="color:#ffcc00;">{{ $impact['value'] }}</h3>
+                    <p class="text-muted">{{ $impact['label'] }}</p>
+                </div>
+            @endforeach
         </div>
     </div>
 </section>
+@endif
 
 <!-- ================= RELATED STORIES ================= -->
+@if($focusArea->stories && $focusArea->stories->count())
 <section class="py-5 bg-light">
     <div class="container">
         <div class="text-center mb-5">
@@ -141,47 +114,22 @@
         </div>
 
         <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <img src="{{ asset('frontend/img/blog-1.jpg') }}" class="card-img-top">
-                    <div class="card-body">
-                        <h6 class="fw-bold">Restoring Hope Through Community Care</h6>
-                        <p class="text-muted small">
-                            How outreach programs are transforming vulnerable families.
-                        </p>
-                        <a href="#" class="text-warning fw-semibold">Read Story →</a>
+            @foreach($focusArea->stories as $story)
+                <div class="col-md-4">
+                    <div class="card shadow-sm h-100">
+                        <img src="{{ asset('storage/stories/' . ($story->image ?? 'default.jpg')) }}" class="card-img-top" alt="{{ $story->title }}">
+                        <div class="card-body">
+                            <h6 class="fw-bold">{{ $story->title }}</h6>
+                            <p class="text-muted small">{{ Str::limit($story->excerpt, 80) }}</p>
+                            <a href="{{ route('stories.show', $story->slug) }}" class="text-warning fw-semibold">Read Story →</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <img src="{{ asset('frontend/img/blog-2.jpg') }}" class="card-img-top">
-                    <div class="card-body">
-                        <h6 class="fw-bold">Standing With Families in Crisis</h6>
-                        <p class="text-muted small">
-                            Responding with compassion when it matters most.
-                        </p>
-                        <a href="#" class="text-warning fw-semibold">Read Story →</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <img src="{{ asset('frontend/img/blog-3.jpg') }}" class="card-img-top">
-                    <div class="card-body">
-                        <h6 class="fw-bold">Faith in Action</h6>
-                        <p class="text-muted small">
-                            Serving communities through prayer and practical care.
-                        </p>
-                        <a href="#" class="text-warning fw-semibold">Read Story →</a>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
+@endif
 
 <!-- ================= CTA ================= -->
 <section class="py-5 text-center" style="background-color:#111; color:#ffcc00;">

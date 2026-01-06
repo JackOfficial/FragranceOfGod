@@ -3,38 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\FocusedArea;
 
 class FocusAreaController extends Controller
 {
     /**
-     * Display all focus areas
+     * Display all published focus areas
      */
     public function index()
     {
-        // Temporary static data (replace with DB later)
-        $focusAreas = [
-            [
-                'title' => 'Community Outreach & Care',
-                'slug'  => 'community-outreach-care',
-                'excerpt' => 'Serving vulnerable communities through compassion, relief, prayer, and holistic care.',
-                'icon' => 'fas fa-hands-helping',
-                'image' => 'focus-community.jpg',
-            ],
-            [
-                'title' => 'Youth & Family Empowerment',
-                'slug'  => 'youth-family-empowerment',
-                'excerpt' => 'Equipping youth and families with life skills, values, and spiritual guidance.',
-                'icon' => 'fas fa-users',
-                'image' => 'focus-youth.jpg',
-            ],
-            [
-                'title' => 'Faith & Discipleship',
-                'slug'  => 'faith-discipleship',
-                'excerpt' => 'Nurturing spiritual growth through teaching, mentorship, and prayer.',
-                'icon' => 'fas fa-praying-hands',
-                'image' => 'focus-faith.jpg',
-            ],
-        ];
+        // Fetch all published focus areas from DB
+        $focusAreas = FocusedArea::where('is_published', 1)->latest()->get();
 
         return view('focus-areas.index', compact('focusAreas'));
     }
@@ -44,31 +23,15 @@ class FocusAreaController extends Controller
      */
     public function show($slug)
     {
-        // Temporary static dataset (DB-ready later)
-        $focusAreas = [
-            'community-outreach-care' => [
-                'title' => 'Community Outreach & Care',
-                'description' => 'Serving vulnerable individuals and communities through compassion, practical support, counseling, and prayer.',
-                'image' => 'focus-community.jpg',
-            ],
-            'youth-family-empowerment' => [
-                'title' => 'Youth & Family Empowerment',
-                'description' => 'Empowering young people and families through education, mentorship, and faith-based values.',
-                'image' => 'focus-youth.jpg',
-            ],
-            'faith-discipleship' => [
-                'title' => 'Faith & Discipleship',
-                'description' => 'Encouraging spiritual growth through discipleship, mentorship, and prayer programs.',
-                'image' => 'focus-faith.jpg',
-            ],
-        ];
+        // Fetch single published focus area by slug
+        $focusArea = FocusedArea::where('slug', $slug)
+                        ->where('is_published', 1)
+                        ->first();
 
-        // Handle invalid slugs professionally
-        if (!array_key_exists($slug, $focusAreas)) {
-            abort(404);
+        // Abort if not found
+        if (!$focusArea) {
+            abort(404, 'Focus Area not found.');
         }
-
-        $focusArea = $focusAreas[$slug];
 
         return view('focus-areas.show', compact('focusArea'));
     }
