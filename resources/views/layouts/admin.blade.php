@@ -179,7 +179,15 @@
           <li class="nav-item">
             <a href="/admin/users" class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-users"></i>
-              <p>Users</p>
+               <p>
+            User
+            @php
+                $userCount = \App\Models\User::count();
+            @endphp
+            @if($userCount > 0)
+                <span class="right badge badge-info">{{ $userCount }}</span>
+            @endif
+        </p>
             </a>
           </li>
 

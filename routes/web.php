@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\Admin\BroadcastController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\FocusedAreaController;
@@ -60,6 +61,7 @@ Route::middleware(['auth', 'role:admin|staff'])->prefix('admin')->name('admin.')
   Route::resource('programs', AdminProgramController::class);
   Route::resource('projects', AdminProjectController::class);
   Route::resource('subscribers', SubscriberController::class);
+  Route::resource('broadcasts', BroadcastController::class);
   Route::resource('volunteers', AdminVolunteerController::class)->only(['index', 'show', 'destroy']);
   Route::delete('media/{media}', MediaController::class)->name('media.destroy');
       Route::post('media/{media}/cover', [MediaController::class, 'setCover'])
