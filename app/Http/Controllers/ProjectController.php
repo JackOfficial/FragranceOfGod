@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -9,27 +10,8 @@ class ProjectController extends Controller
     // Projects index page
     public function index()
     {
-        // Example projects data
-        $projects = [
-            [
-                'title' => 'Girls Education Empowerment',
-                'slug' => 'girls-education-empowerment',
-                'short_desc' => 'Providing education access and scholarships to girls in rural communities.',
-                'img' => 'project-1.jpg',
-            ],
-            [
-                'title' => 'Community Health Initiative',
-                'slug' => 'community-health-initiative',
-                'short_desc' => 'Promoting health awareness and preventive care in vulnerable communities.',
-                'img' => 'project-2.jpg',
-            ],
-            [
-                'title' => 'Youth Entrepreneurship Program',
-                'slug' => 'youth-entrepreneurship-program',
-                'short_desc' => 'Empowering youth with skills and resources to start small businesses.',
-                'img' => 'project-3.jpg',
-            ],
-        ];
+        // Fetch projects with media
+        $projects = Project::with('media')->latest()->paginate(9);
 
         return view('projects.index', compact('projects'));
     }
@@ -37,19 +19,14 @@ class ProjectController extends Controller
     // Single project page
     public function show($slug)
     {
-        // Example project details
-        $project = [
-            'title' => 'Girls Education Empowerment',
-            'slug' => 'girls-education-empowerment',
-            'desc' => '<p>This project provides access to quality education for girls in rural communities, including scholarships, mentorship, and school supplies.</p><p>Our goal is to break the cycle of poverty and empower the next generation of female leaders.</p>',
-            'img' => 'project-1.jpg',
-        ];
+        $project = Project::with('media')->where('slug', $slug)->firstOrFail();
 
-        // Example related projects
-        $relatedProjects = [
-            ['title'=>'Community Health Initiative', 'slug'=>'community-health-initiative'],
-            ['title'=>'Youth Entrepreneurship Program', 'slug'=>'youth-entrepreneurship-program'],
-        ];
+        // Get related projects (excluding this one)
+        $relatedProjects = Project::with('media')
+            ->where('id', '!=', $project->id)
+            ->latest()
+            ->take(3)
+            ->get();
 
         return view('projects.show', compact('project', 'relatedProjects'));
     }
