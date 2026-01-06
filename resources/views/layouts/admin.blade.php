@@ -188,7 +188,7 @@
         <i class="nav-icon fas fa-hand-holding-heart"></i>
         <p>Volunteers
           @php $volunteersCount = \App\Models\Volunteer::count() @endphp
-            @if($subscriberCount > 0)
+            @if($volunteersCount > 0)
                 <span class="right badge badge-info">{{ $volunteersCount }}</span>
             @endif
         </p>
