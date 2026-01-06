@@ -58,6 +58,8 @@ Route::middleware(['auth', 'role:admin|staff'])->prefix('admin')->name('admin.')
   Route::resource('programs', AdminProgramController::class);
   Route::resource('projects', AdminProjectController::class);
   Route::delete('media/{media}', MediaController::class)->name('media.destroy');
+      Route::post('media/{media}/cover', [MediaController::class, 'setCover'])
+        ->name('media.cover');
 });
 
 // Authenticated Users
