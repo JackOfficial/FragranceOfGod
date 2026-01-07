@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Organization;
+use App\Models\OrganizationInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -11,7 +11,7 @@ class OrganizationController extends Controller
 {
     public function index()
     {
-        $organizations = Organization::latest()->paginate(10);
+        $organizations = OrganizationInfo::latest()->paginate(10);
         return view('admin.organizations.index', compact('organizations'));
     }
 
@@ -37,7 +37,7 @@ class OrganizationController extends Controller
             'logo' => 'nullable|image|max:2048',
         ]);
 
-        $organization = Organization::create($data);
+        $organization = OrganizationInfo::create($data);
 
         // Logo upload
         if ($request->hasFile('logo')) {
@@ -56,12 +56,12 @@ class OrganizationController extends Controller
             ->with('success', 'Organization created successfully.');
     }
 
-    public function edit(Organization $organization)
+    public function edit(OrganizationInfo $organization)
     {
         return view('admin.organizations.edit', compact('organization'));
     }
 
-    public function update(Request $request, Organization $organization)
+    public function update(Request $request, OrganizationInfo $organization)
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
@@ -99,7 +99,7 @@ class OrganizationController extends Controller
             ->with('success', 'Organization updated successfully.');
     }
 
-    public function destroy(Organization $organization)
+    public function destroy(OrganizationInfo $organization)
     {
         $organization->media()->delete();
         $organization->delete();

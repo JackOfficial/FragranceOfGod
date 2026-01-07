@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-class Organization extends Model
+class OrganizationInfo extends Model
 {
     protected $fillable = [
         'name',
