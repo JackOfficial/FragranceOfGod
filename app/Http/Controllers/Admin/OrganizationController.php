@@ -23,32 +23,48 @@ class OrganizationController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'slogan' => 'nullable|string|max:255',
-            'about' => 'nullable|string',
-            'mission' => 'nullable|string',
-            'vision' => 'nullable|string',
-            'values' => 'nullable|string',
-            'objectives' => 'nullable|string',
-            'email' => 'nullable|email',
-            'phone' => 'nullable|string',
+            'name'             => 'required|string|max:255',
+            'slogan'           => 'nullable|string|max:255',
+            'about'            => 'nullable|string',
+            'mission'          => 'nullable|string',
+            'vision'           => 'nullable|string',
+            'values'           => 'nullable|string',
+            'objectives'       => 'nullable|string',
+            'email'            => 'nullable|email',
+            'phone'            => 'nullable|string',
             'physical_address' => 'nullable|string',
-            'social_media' => 'nullable|array',
-            'logo' => 'nullable|image|max:2048',
+            'social_media'     => 'nullable|array',
+            'logo'             => 'nullable|image|max:2048',
+            'documents.*'      => 'nullable|file|max:5120',
         ]);
 
         $organization = OrganizationInfo::create($data);
 
-        // Logo upload
+        /* ================= LOGO ================= */
         if ($request->hasFile('logo')) {
-            $path = $request->file('logo')->store('organizations/logos', 'public');
+            $path = $request->file('logo')
+                ->store('organizations/logos', 'public');
 
             $organization->media()->create([
                 'file_path' => $path,
                 'file_type' => 'image',
                 'mime_type' => $request->file('logo')->getMimeType(),
-                'title' => 'Organization Logo',
+                'title'     => 'Organization Logo',
             ]);
+        }
+
+        /* ================= DOCUMENTS ================= */
+        if ($request->hasFile('documents')) {
+            foreach ($request->file('documents') as $file) {
+                $path = $file->store('organizations/documents', 'public');
+
+                $organization->media()->create([
+                    'file_path' => $path,
+                    'file_type' => 'document',
+                    'mime_type' => $file->getMimeType(),
+                    'title'     => $file->getClientOriginalName(),
+                ]);
+            }
         }
 
         return redirect()
@@ -58,40 +74,60 @@ class OrganizationController extends Controller
 
     public function edit(OrganizationInfo $organization)
     {
+        $organization->load('media');
         return view('admin.organizations.edit', compact('organization'));
     }
 
     public function update(Request $request, OrganizationInfo $organization)
     {
         $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'slogan' => 'nullable|string|max:255',
-            'about' => 'nullable|string',
-            'mission' => 'nullable|string',
-            'vision' => 'nullable|string',
-            'values' => 'nullable|string',
-            'objectives' => 'nullable|string',
-            'email' => 'nullable|email',
-            'phone' => 'nullable|string',
+            'name'             => 'required|string|max:255',
+            'slogan'           => 'nullable|string|max:255',
+            'about'            => 'nullable|string',
+            'mission'          => 'nullable|string',
+            'vision'           => 'nullable|string',
+            'values'           => 'nullable|string',
+            'objectives'       => 'nullable|string',
+            'email'            => 'nullable|email',
+            'phone'            => 'nullable|string',
             'physical_address' => 'nullable|string',
-            'social_media' => 'nullable|array',
-            'logo' => 'nullable|image|max:2048',
+            'social_media'     => 'nullable|array',
+            'logo'             => 'nullable|image|max:2048',
+            'documents.*'      => 'nullable|file|max:5120',
         ]);
 
         $organization->update($data);
 
+        /* ================= UPDATE LOGO ================= */
         if ($request->hasFile('logo')) {
-            // delete old logo
-            $organization->logos()->delete();
+            foreach ($organization->logos as $logo) {
+                Storage::disk('public')->delete($logo->file_path);
+                $logo->delete();
+            }
 
-            $path = $request->file('logo')->store('organizations/logos', 'public');
+            $path = $request->file('logo')
+                ->store('organizations/logos', 'public');
 
             $organization->media()->create([
                 'file_path' => $path,
                 'file_type' => 'image',
                 'mime_type' => $request->file('logo')->getMimeType(),
-                'title' => 'Organization Logo',
+                'title'     => 'Organization Logo',
             ]);
+        }
+
+        /* ================= ADD NEW DOCUMENTS ================= */
+        if ($request->hasFile('documents')) {
+            foreach ($request->file('documents') as $file) {
+                $path = $file->store('organizations/documents', 'public');
+
+                $organization->media()->create([
+                    'file_path' => $path,
+                    'file_type' => 'document',
+                    'mime_type' => $file->getMimeType(),
+                    'title'     => $file->getClientOriginalName(),
+                ]);
+            }
         }
 
         return redirect()
@@ -101,6 +137,10 @@ class OrganizationController extends Controller
 
     public function destroy(OrganizationInfo $organization)
     {
+        foreach ($organization->media as $media) {
+            Storage::disk('public')->delete($media->file_path);
+        }
+
         $organization->media()->delete();
         $organization->delete();
 
