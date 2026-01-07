@@ -52,7 +52,7 @@ class OrganizationController extends Controller
         }
 
         return redirect()
-            ->route('admin.organizations.index')
+            ->route('admin.organization.index')
             ->with('success', 'Organization created successfully.');
     }
 
@@ -95,7 +95,7 @@ class OrganizationController extends Controller
         }
 
         return redirect()
-            ->route('admin.organizations.index')
+            ->route('admin.organization.index')
             ->with('success', 'Organization updated successfully.');
     }
 
@@ -105,7 +105,7 @@ class OrganizationController extends Controller
         $organization->delete();
 
         return redirect()
-            ->route('admin.organizations.index')
+            ->route('admin.organization.index')
             ->with('success', 'Organization deleted successfully.');
     }
 }

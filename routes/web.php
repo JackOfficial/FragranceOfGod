@@ -66,7 +66,7 @@ Route::middleware(['auth', 'role:admin|staff'])->prefix('admin')->name('admin.')
   Route::resource('subscribers', SubscriberController::class);
   Route::resource('broadcasts', BroadcastController::class);
   Route::resource('users', UserController::class);
-  Route::resource('organizations', OrganizationController::class);
+  Route::resource('organization', OrganizationController::class);
   Route::resource('contacts', AdminContactController::class)->only(['index','show','destroy']);
   Route::resource('volunteers', AdminVolunteerController::class)->only(['index', 'show', 'destroy']);
   Route::delete('media/{media}', MediaController::class)->name('media.destroy');
