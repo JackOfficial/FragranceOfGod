@@ -21,7 +21,7 @@
 <section class="content">
     <div class="card shadow-sm">
         <div class="card-body">
-            <form action="{{ route('admin.organizations.store') }}"
+            <form action="{{ route('admin.organization.store') }}"
                   method="POST"
                   enctype="multipart/form-data">
 
