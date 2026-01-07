@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\FocusedAreaController;
 use App\Http\Controllers\Admin\MediaController;
+use App\Http\Controllers\Admin\OrganizationController;
 use App\Http\Controllers\Admin\StoryController as AdminStoryController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\BlogController;
@@ -65,6 +66,7 @@ Route::middleware(['auth', 'role:admin|staff'])->prefix('admin')->name('admin.')
   Route::resource('subscribers', SubscriberController::class);
   Route::resource('broadcasts', BroadcastController::class);
   Route::resource('users', UserController::class);
+  Route::resource('organization', OrganizationController::class);
   Route::resource('contacts', AdminContactController::class)->only(['index','show','destroy']);
   Route::resource('volunteers', AdminVolunteerController::class)->only(['index', 'show', 'destroy']);
   Route::delete('media/{media}', MediaController::class)->name('media.destroy');
