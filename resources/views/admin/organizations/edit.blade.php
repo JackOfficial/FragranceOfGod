@@ -10,7 +10,7 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/admin">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('admin.organizations.index') }}">Organizations</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.organization.index') }}">Organizations</a></li>
                     <li class="breadcrumb-item active">Create</li>
                 </ol>
             </div>
@@ -31,7 +31,7 @@
                     <button class="btn btn-success btn-sm">
                         <i class="fas fa-save"></i> Save
                     </button>
-                    <a href="{{ route('admin.organizations.index') }}" class="btn btn-secondary btn-sm">
+                    <a href="{{ route('admin.organization.index') }}" class="btn btn-secondary btn-sm">
                         Cancel
                     </a>
                 </div>

@@ -27,7 +27,7 @@
 
     <div class="card shadow-sm">
         <div class="card-header">
-            <a href="{{ route('admin.organizations.create') }}" class="btn btn-primary btn-sm">
+            <a href="{{ route('admin.organization.create') }}" class="btn btn-primary btn-sm">
                 <i class="fas fa-plus"></i> Add Organization
             </a>
         </div>
