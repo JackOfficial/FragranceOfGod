@@ -65,12 +65,12 @@
                                 </td>
 
                                 <td class="d-flex gap-1">
-                                    <a href="{{ route('admin.organizations.edit', $org->id) }}"
+                                    <a href="{{ route('admin.organization.edit', $org->id) }}"
                                        class="btn btn-info btn-sm" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </a>
 
-                                    <form action="{{ route('admin.organizations.destroy', $org->id) }}"
+                                    <form action="{{ route('admin.organization.destroy', $org->id) }}"
                                           method="POST"
                                           onsubmit="return confirm('Delete this organization?')">
                                         @csrf
