@@ -23,7 +23,7 @@
         <div class="card-body">
             <form action="{{ route('admin.organization.store') }}"
                   method="POST"
-                  enctype="multipart/form-data">
+                  enctype="multipart/form-data" x-data="orgForm()">
 
                 @include('admin.organizations._form')
 
@@ -39,5 +39,29 @@
         </div>
     </div>
 </section>
+
+<script>
+function orgForm() {
+    return {
+        logoPreview: null,
+        documents: [],
+
+        previewLogo(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            this.logoPreview = URL.createObjectURL(file);
+        },
+
+        handleDocuments(event) {
+            this.documents = Array.from(event.target.files);
+        },
+
+        removeDocument(index) {
+            this.documents.splice(index, 1);
+        }
+    }
+}
+</script>
 
 @endsection

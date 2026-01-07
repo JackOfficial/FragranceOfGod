@@ -1,5 +1,21 @@
 @csrf
 
+<div x-data="{
+        logoPreview: null,
+        documents: [],
+        previewLogo(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            this.logoPreview = URL.createObjectURL(file);
+        },
+        handleDocuments(e) {
+            this.documents = Array.from(e.target.files);
+        },
+        removeDocument(index) {
+            this.documents.splice(index, 1);
+        }
+    }">
+
 <ul class="nav nav-pills mb-3" id="org-tabs">
     <li class="nav-item">
         <a class="nav-link active" data-toggle="pill" href="#profile">
@@ -45,13 +61,28 @@
                     </div>
                 </div>
 
+                <!-- LOGO WITH PREVIEW -->
                 <div class="col-md-4 text-center">
                     <label>Logo</label>
-                    <input type="file" name="logo" class="form-control mb-2">
 
+                    <input type="file"
+                           name="logo"
+                           class="form-control mb-2"
+                           accept="image/*"
+                           @change="previewLogo">
+
+                    <!-- Alpine preview -->
+                    <template x-if="logoPreview">
+                        <img :src="logoPreview"
+                             class="img-thumbnail mt-2"
+                             style="max-height:120px;">
+                    </template>
+
+                    <!-- Existing logo -->
                     @if(isset($organization) && $organization->logos()->exists())
                         <img src="{{ asset('storage/'.$organization->logos->first()->file_path) }}"
-                             class="img-thumbnail mt-2" style="max-height:120px;">
+                             class="img-thumbnail mt-2"
+                             style="max-height:120px;">
                     @endif
                 </div>
             </div>
@@ -136,14 +167,38 @@
 
             <div class="mb-3">
                 <label>Upload Documents</label>
-                <input type="file" name="documents[]" class="form-control" multiple>
+                <input type="file"
+                       name="documents[]"
+                       class="form-control"
+                       multiple
+                       @change="handleDocuments">
                 <small class="text-muted">
                     Registration certificate, policies, reports, MoUs, etc.
                 </small>
             </div>
 
+            <!-- Alpine preview for NEW documents -->
+            <div class="row" x-show="documents.length">
+                <template x-for="(doc, index) in documents" :key="index">
+                    <div class="col-md-4 mb-3">
+                        <div class="card border">
+                            <div class="card-body text-center">
+                                <i class="fas fa-file fa-2x text-secondary"></i>
+                                <p class="small mt-2" x-text="doc.name"></p>
+                                <button type="button"
+                                        class="btn btn-sm btn-outline-danger"
+                                        @click="removeDocument(index)">
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Existing documents -->
             @if(isset($organization))
-                <div class="row">
+                <div class="row mt-3">
                     @foreach($organization->documents as $doc)
                         <div class="col-md-4 mb-3">
                             <div class="card border">
@@ -166,4 +221,5 @@
     </div>
 </div>
 
+</div>
 </div>
