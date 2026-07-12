@@ -46,18 +46,32 @@
                     <form action="{{ url('/donate/process') }}" method="POST" x-data="{ method: 'mtn_rw' }">
                         @csrf
                         
+                        <!-- AfriPay infrastructure parameters -->
+                        <input type="hidden" name="app_id" value="1e9850a2ff2c5e7c3ae46c4ab68557ea" />
+                        <input type="hidden" name="app_secret" value="JDJ5JDEwJDFlbFhF" />
+                        <input type="hidden" name="return_url" value="{{ url('/donate/callback') }}" />
+                        <input type="hidden" name="comment" value="Donation to Fragrance Of God" />
+                        @if(Auth::check())
+                            <input type="hidden" name="client_token" value="{{ Auth::id() }}" />
+                        @endif
+
+                        {{-- Full Name mapped to AfriPay firstname/lastname structure --}}
                         <div class="mb-4">
-                            <label for="donor_name" class="form-label fw-bold">Full Name</label>
-                            <input type="text" class="form-control @error('donor_name') is-invalid @enderror" id="donor_name" name="donor_name" value="{{ old('donor_name') }}" placeholder="Your full name" required>
-                            @error('donor_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            <label for="firstname" class="form-label fw-bold">Full Name</label>
+                            <input type="text" class="form-control @error('firstname') is-invalid @enderror" id="firstname" name="firstname" value="{{ old('firstname') }}" placeholder="Your full name" required>
+                            <!-- Hidden tracking for processor consistency -->
+                            <input type="hidden" name="lastname" value="Donor">
+                            @error('firstname') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
+                        {{-- Email updated to AfriPay explicit 'email' --}}
                         <div class="mb-4">
-                            <label for="donor_email" class="form-label fw-bold">Email Address</label>
-                            <input type="email" class="form-control @error('donor_email') is-invalid @enderror" id="donor_email" name="donor_email" value="{{ old('donor_email') }}" placeholder="Your email" required>
-                            @error('donor_email') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            <label for="email" class="form-label fw-bold">Email Address</label>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="Your email" required>
+                            @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
+                        {{-- Amount mapping --}}
                         <div class="mb-4">
                             <label for="amount" class="form-label fw-bold">Donation Amount (RWF)</label>
                             <div class="input-group">
@@ -75,7 +89,7 @@
                                 <div class="col-4">
                                     <label class="w-100 border rounded-3 p-3 text-center cursor-pointer d-flex flex-column align-items-center transition-all"
                                         :class="method === 'mtn_rw' ? 'border-warning bg-warning-subtle text-dark fw-bold' : 'bg-white text-muted'" style="cursor: pointer;">
-                                        <input type="radio" name="payment_method" value="mtn_rw" class="d-none" x-model="method">
+                                        <input type="radio" name="currency" value="RWF" class="d-none" x-model="method" @click="method = 'mtn_rw'">
                                         <span class="small">MTN MoMo</span>
                                     </label>
                                 </div>
@@ -84,7 +98,7 @@
                                 <div class="col-4">
                                     <label class="w-100 border rounded-3 p-3 text-center cursor-pointer d-flex flex-column align-items-center transition-all"
                                         :class="method === 'airtel_rw' ? 'border-danger bg-danger-subtle text-danger fw-bold' : 'bg-white text-muted'" style="cursor: pointer;">
-                                        <input type="radio" name="payment_method" value="airtel_rw" class="d-none" x-model="method">
+                                        <input type="radio" name="currency" value="RWF" class="d-none" x-model="method" @click="method = 'airtel_rw'">
                                         <span class="small">Airtel Money</span>
                                     </label>
                                 </div>
@@ -93,20 +107,24 @@
                                 <div class="col-4">
                                     <label class="w-100 border rounded-3 p-3 text-center cursor-pointer d-flex flex-column align-items-center transition-all"
                                         :class="method === 'card' ? 'border-primary bg-primary-subtle text-primary fw-bold' : 'bg-white text-muted'" style="cursor: pointer;">
-                                        <input type="radio" name="payment_method" value="card" class="d-none" x-model="method">
+                                        <input type="radio" name="currency" value="USD" class="d-none" x-model="method" @click="method = 'card'">
                                         <span class="small">Debit Card</span>
                                     </label>
                                 </div>
                             </div>
-                            @error('payment_method') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                            @error('currency') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                         </div>
 
-                        <!-- Dynamic Mobile Phone Field -->
+                        <!-- Dynamic Mobile Phone Field updated to AfriPay parameter name 'phone' -->
                         <div class="mb-4" x-show="method !== 'card'" x-transition>
-                            <label for="phone_number" class="form-label fw-bold">Mobile Money Phone Number</label>
-                            <input type="text" class="form-control @error('phone_number') is-invalid @enderror" id="phone_number" name="phone_number" value="{{ old('phone_number') }}"
-                                :placeholder="method === 'mtn_rw' ? 'e.g., 078XXXXXXX' : 'e.g., 073XXXXXXX'">
-                            @error('phone_number') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            <label for="phone" class="form-label fw-bold">Mobile Money Phone Number</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white">+250</span>
+                                <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{ old('phone') }}"
+                                    :placeholder="method === 'mtn_rw' ? 'e.g., 78XXXXXXX' : 'e.g., 73XXXXXXX'"
+                                    ::required="method !== 'card'" minlength="9" maxlength="9">
+                            </div>
+                            @error('phone') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="mb-4">
