@@ -18,7 +18,7 @@ class PaymentController extends Controller
 
     public function showForm()
     {
-        return view('donate');
+        return view('donate.index');
     }
 
     public function process(Request $request)
