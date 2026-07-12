@@ -43,13 +43,14 @@
 
                 <div class="p-4 shadow-sm rounded-4 bg-light">
                     <!-- Initialized Alpine.js context to watch payment choices -->
-                    <form action="{{ url('/donate/process') }}" method="POST" x-data="{ method: 'mtn_rw' }">
+                    <form action="{{ route('payment.process') }}" method="POST" x-data="{ method: 'mtn_rw' }">
                         @csrf
                         
                         <!-- AfriPay infrastructure parameters -->
                         <input type="hidden" name="app_id" value="1e9850a2ff2c5e7c3ae46c4ab68557ea" />
                         <input type="hidden" name="app_secret" value="JDJ5JDEwJDFlbFhF" />
-                        <input type="hidden" name="return_url" value="{{ url('/donate/callback') }}" />
+                        <!-- Redirects user back safely to the GET route instead of the POST webhook -->
+                        <input type="hidden" name="return_url" value="{{ route('donate.show') }}" />
                         <input type="hidden" name="comment" value="Donation to Fragrance Of God" />
                         @if(Auth::check())
                             <input type="hidden" name="client_token" value="{{ Auth::id() }}" />
@@ -120,9 +121,10 @@
                             <label for="phone" class="form-label fw-bold">Mobile Money Phone Number</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-white">+250</span>
+                                <!-- FIXED Syntax: altered double colon to single colon -->
                                 <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{ old('phone') }}"
                                     :placeholder="method === 'mtn_rw' ? 'e.g., 78XXXXXXX' : 'e.g., 73XXXXXXX'"
-                                    ::required="method !== 'card'" minlength="9" maxlength="9">
+                                    :required="method !== 'card'" minlength="9" maxlength="9">
                             </div>
                             @error('phone') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
