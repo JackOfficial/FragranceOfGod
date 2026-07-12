@@ -85,12 +85,15 @@
                         <!-- Payment Provider Selector UI -->
 <div class="mb-4">
     <label class="form-label fw-bold d-block">Select Payment Method</label>
+    
+    <!-- Added a hidden input to send the provider subtype to Laravel -->
+    <input type="hidden" name="provider_type" :value="method">
+
     <div class="row g-2">
         <!-- MTN Option -->
         <div class="col-4">
             <label class="w-100 border rounded-3 p-3 text-center cursor-pointer d-flex flex-column align-items-center transition-all"
                 :class="method === 'mtn_rw' ? 'border-warning bg-warning-subtle text-dark fw-bold' : 'bg-white text-muted'" style="cursor: pointer;">
-                <!-- Updated: standard name and matching value -->
                 <input type="radio" name="currency" value="RWF" class="d-none" :checked="method === 'mtn_rw'" @change="method = 'mtn_rw'">
                 <span class="small">MTN MoMo</span>
             </label>
@@ -100,7 +103,6 @@
         <div class="col-4">
             <label class="w-100 border rounded-3 p-3 text-center cursor-pointer d-flex flex-column align-items-center transition-all"
                 :class="method === 'airtel_rw' ? 'border-danger bg-danger-subtle text-danger fw-bold' : 'bg-white text-muted'" style="cursor: pointer;">
-                <!-- Updated: standard name and matching value -->
                 <input type="radio" name="currency" value="RWF" class="d-none" :checked="method === 'airtel_rw'" @change="method = 'airtel_rw'">
                 <span class="small">Airtel Money</span>
             </label>
@@ -110,13 +112,11 @@
         <div class="col-4">
             <label class="w-100 border rounded-3 p-3 text-center cursor-pointer d-flex flex-column align-items-center transition-all"
                 :class="method === 'card' ? 'border-primary bg-primary-subtle text-primary fw-bold' : 'bg-white text-muted'" style="cursor: pointer;">
-                <!-- Updated: standard name and matching value -->
                 <input type="radio" name="currency" value="USD" class="d-none" :checked="method === 'card'" @change="method = 'card'">
                 <span class="small">Debit Card</span>
             </label>
         </div>
     </div>
-    @error('currency') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
 </div>
 
                         <!-- Dynamic Mobile Phone Field updated to AfriPay parameter name 'phone' -->

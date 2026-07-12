@@ -26,13 +26,14 @@ class PaymentController extends Controller
     {
         // 1. Validate inputs based on incoming Blade form names
         $request->validate([
-            'firstname'    => 'required|string|max:255',
-            'lastname'     => 'required|string|max:255',
-            'email'        => 'required|email',
-            'amount'       => 'required|numeric|min:100',
-            'currency'     => 'required|string|in:RWF,USD', // Maps to payment type from radios
-            'phone'        => 'required_unless:currency,USD|nullable|string|min:9|max:9',
-            'client_token' => 'nullable|integer', // Optional user ID for guest/auth compatibility
+            'firstname'     => 'required|string|max:255',
+            'lastname'      => 'required|string|max:255',
+            'email'         => 'required|email',
+            'amount'        => 'required|numeric|min:100',
+            'currency'      => 'required|string|in:RWF,USD', // Maps to currency type from radios
+            'provider_type' => 'required|string|in:mtn_rw,airtel_rw,card', // Captures UI Alpine state
+            'phone'         => 'required_unless:currency,USD|nullable|string|min:9|max:9',
+            'client_token'  => 'nullable|integer', // Optional user ID for guest/auth compatibility
         ]);
 
         $transactionRef = 'FOG-' . strtoupper(Str::random(10));
@@ -56,19 +57,24 @@ class PaymentController extends Controller
             'status'          => 'PENDING',
         ]);
 
-        // 3. Dispatch to Afripay with explicit payload matching your form's configuration
+        // Map selection strings to AfriPay expected channel parameters
+        // 1 = MTN MoMo, 2 = Airtel Money, 3 = Card
+        $providerType = $request->input('provider_type');
+        if ($isCard || $providerType === 'card') {
+            $paymentMethodId = '3';
+        } elseif ($providerType === 'airtel_rw') {
+            $paymentMethodId = '2';
+        } else {
+            $paymentMethodId = '1';
+        }
+
+        // 3. Dispatch to Afripay with explicit payload keys matching your Service array design
         $result = $this->afripay->initiatePayment([
-            'app_id'          => $request->input('app_id'),
-            'app_secret'      => $request->input('app_secret'),
             'amount'          => $payment->amount,
             'currency'        => $payment->currency,
-            'phone'           => $payment->phone_number,
-            'firstname'       => $payment->firstname,
-            'lastname'        => $payment->lastname,
-            'email'           => $payment->email,
             'transaction_ref' => $transactionRef,
-            'comment'         => $request->input('comment', 'Donation to Fragrance Of God'),
-            'return_url'      => $request->input('return_url'),
+            'payment_method'  => $paymentMethodId, // Fixes: Undefined array key "payment_method"
+            'phone_number'    => $payment->phone_number, // Fixes: Undefined array key "phone_number"
         ]);
 
         if (isset($result['status']) && $result['status'] === 'success') {
@@ -98,7 +104,6 @@ class PaymentController extends Controller
         Log::info('AfriPay Callback Received:', $request->all());
 
         // 1. Locate the transaction using the unique reference you passed earlier
-        // Adjust 'transaction_id' or key to match AfriPay's payload format if different
         $ref = $request->input('transaction_ref'); 
         $payment = Payment::where('transaction_ref', $ref)->first();
 
@@ -118,11 +123,8 @@ class PaymentController extends Controller
         if ($afripayStatus === 'SUCCESS' || $afripayStatus === 'SUCCESSFUL') {
             $payment->update([
                 'status' => 'SUCCESSFUL',
-                // Optional: save provider reference if provided
-                // 'provider_reference' => $request->input('external_id') 
             ]);
 
-            // Add any side effects here (e.g., dispatching a "Thank You" email)
             Log::info("Payment reference {$ref} was successfully completed.");
         } else {
             $payment->update(['status' => 'FAILED']);
