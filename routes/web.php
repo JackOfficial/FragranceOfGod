@@ -27,6 +27,8 @@ use App\Http\Controllers\StoryController;
 use App\Http\Controllers\VolunteerController;
 use App\Http\Controllers\Admin\VolunteerController as AdminVolunteerController;
 
+use App\Http\Controllers\PaymentController;
+
 // Guest Routes
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/about', [AboutController::class, 'index'])->name('about');
@@ -79,3 +81,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'home']);
 });
 
+// Display the donation form page
+Route::get('/donate', [PaymentController::class, 'showForm'])->name('donate.show');
+
+// Handle the form submission
+Route::post('/donate/process', [PaymentController::class, 'process'])->name('payment.process');
+Route::post('/afripay/callback', [PaymentController::class, 'handleCallback'])->name('afripay.callback');

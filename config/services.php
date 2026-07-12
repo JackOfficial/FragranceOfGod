@@ -41,4 +41,10 @@ return [
         'redirect'      => env('GOOGLE_REDIRECT_URI'),
     ],
 
+    'afripay' => [
+    'app_id' => env('AFRIPAY_APP_ID'),
+    'app_secret' => env('AFRIPAY_APP_SECRET'),
+    'base_url' => env('AFRIPAY_BASE_URL'),
+    ],
+
 ];
