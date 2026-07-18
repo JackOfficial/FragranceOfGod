@@ -80,9 +80,9 @@ Route::middleware('auth')->group(function () {
 
 
 Route::get('/donate', [PaymentController::class, 'showForm'])->name('donate.index');
-
 Route::post('/donate/process', [PaymentController::class, 'store'])->name('donate.process');
 Route::get('/checkout/{orderId}', [PaymentController::class, 'checkout'])->name('payment.checkout');
 Route::get('/donate/processing', [PaymentController::class, 'processing'])->name('donate.processing');
+Route::get('/payment/success', [PaymentController::class, 'processing'])->name('payment.success');
 // The webhook callback endpoint (Exclude this from CSRF protection!)
 Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
