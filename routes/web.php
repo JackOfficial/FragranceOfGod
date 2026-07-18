@@ -86,6 +86,7 @@ Route::get('/donate', [PaymentController::class, 'showForm'])->name('donate.show
 
 Route::get('/checkout/{orderId}', [PaymentController::class, 'checkout'])->name('payment.checkout');
 Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
+Route::post('/donate/process', [PaymentController::class, 'store'])->name('donate.process');
 
 // The webhook callback endpoint (Exclude this from CSRF protection!)
 Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');

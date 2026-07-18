@@ -45,7 +45,7 @@
                     <!-- Configuration Routing & Bookkeeping Payloads -->
                     <input type="hidden" name="amount" value="{{ $order->amount }}" />
                     <input type="hidden" name="currency" value="{{ $order->currency }}" />
-                    <input type="hidden" name="comment" value="Order #{{ $order->id }} - Fragrance Of God Donation" />
+                    <input type="hidden" name="comment" value="Support for {{ $order->project ? $order->project->title : ($order->event ? $order->event->title : 'General Fund') }}">
                     <input type="hidden" name="client_token" value="{{ $order->id }}" />
                     <input type="hidden" name="return_url" value="{{ config('services.afripay.return_url', 'https://fragranceofgod.org/payment/success') }}" />
                     

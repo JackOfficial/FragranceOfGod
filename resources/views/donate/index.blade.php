@@ -24,7 +24,7 @@
             </p>
         </div>
 
-        <!-- Donation Form -->
+        <!-- Donation Form Box -->
         <div class="row justify-content-center">
             <div class="col-lg-6">
                 
@@ -41,35 +41,20 @@
                     </div>
                 @endif
 
-                <div class="p-4 shadow-sm rounded bg-light">
-                    <!-- 
-                      Direct Form Action to AfriPay Hosted Checkout Gateway 
-                      as instructed by their technical email integration specifications
-                    -->
-                    <form action="https://www.afripay.africa/checkout/index.php" method="POST" id="afripayform">
-                        
-                        <!-- Secure AfriPay Credentials (Pulled cleanly from environment/config) -->
-                        <input type="hidden" name="app_id" value="{{ config('services.afripay.app_id', '531c6fb22942376266e5234d3aa92315') }}" />
-                        <input type="hidden" name="app_secret" value="{{ config('services.afripay.app_secret', 'JDJ5JDEwJDVhQXpu') }}" />
-                        
-                        <!-- Configuration and Routing Parameters -->
-                        <input type="hidden" name="return_url" value="{{ config('services.afripay.return_url', 'https://fragranceofgod.org/payment/success') }}" />
-                        <input type="hidden" name="comment" value="Donation to Fragrance Of God" />
-                        
-                        <!-- 
-                          Unique identifier payload passed into client_token field.
-                          If user is authenticated, passes user ID; otherwise defaults to a unique timestamped session tracking token.
-                        -->
-                        <input type="hidden" name="client_token" value="{{ Auth::check() ? Auth::id() : 'GUEST-'.time() }}" />
+                <!-- Alpine Component Definition wrapper -->
+                <div class="p-4 shadow-sm rounded bg-light" x-data="{ currency: 'RWF', allocation: 'general' }">
+                    <form action="{{ route('donate.process') }}" method="POST" id="donationform">
+                        @csrf
 
                         <!-- Donation Amount Input -->
                         <div class="form-group mb-4">
-                            <label Invisible for="amount" class="font-weight-bold">Donation Amount</label>
+                            <label for="amount" class="font-weight-bold">Donation Amount</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text bg-white font-weight-bold text-muted" id="currency-addon">RWF</span>
+                                    <!-- Dynamic text updates instantly based on selected currency context -->
+                                    <span class="input-group-text bg-white font-weight-bold text-muted" x-text="currency">RWF</span>
                                 </div>
-                                <input type="number" class="form-control" id="amount" name="amount" value="500" min="100" required>
+                                <input type="number" class="form-control" id="amount" name="amount" value="1000" min="100" required>
                             </div>
                             <small class="form-text text-muted">Enter the amount you wish to contribute to our mission.</small>
                         </div>
@@ -79,18 +64,61 @@
                             <label class="font-weight-bold d-block">Select Currency / Method Context</label>
                             <div class="row no-gutters">
                                 <div class="col-6 pr-1">
-                                    <label class="btn btn-outline-warning btn-block p-3 active text-dark font-weight-bold shadow-none" id="label-rwf">
-                                        <input type="radio" name="currency" value="RWF" checked class="d-none" onclick="document.getElementById('currency-addon').innerText = 'RWF';">
+                                    <!-- Dynamic class binding switches standard Bootstrap 4 active layout tokens clean -->
+                                    <label class="btn btn-block p-3 shadow-none transition-all"
+                                           :class="currency === 'RWF' ? 'btn-outline-warning active text-dark font-weight-bold' : 'btn-outline-warning text-muted'"
+                                           style="cursor: pointer;">
+                                        <input type="radio" name="currency" value="RWF" class="d-none" x-model="currency">
                                         <span>Local MoMo (RWF)</span>
                                     </label>
                                 </div>
                                 <div class="col-6 pl-1">
-                                    <label class="btn btn-outline-primary btn-block p-3 text-muted shadow-none" id="label-usd">
-                                        <input type="radio" name="currency" value="USD" class="d-none" onclick="document.getElementById('currency-addon').innerText = 'USD';">
+                                    <label class="btn btn-block p-3 shadow-none transition-all"
+                                           :class="currency === 'USD' ? 'btn-outline-primary active text-dark font-weight-bold' : 'btn-outline-primary text-muted'"
+                                           style="cursor: pointer;">
+                                        <input type="radio" name="currency" value="USD" class="d-none" x-model="currency">
                                         <span>International Card (USD)</span>
                                     </label>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- Dynamic Allocation Context Selection for Projects and Events -->
+                        <div class="form-group mb-4">
+                            <label for="allocation" class="font-weight-bold">Support a Specific Focus (Optional)</label>
+                            <select class="form-control" id="allocation" x-model="allocation">
+                                <option value="general">General NGO Fund</option>
+                                <option value="project">Support a Specific Project</option>
+                                <option value="event">Register/Support an Event</option>
+                            </select>
+                        </div>
+
+                        <!-- Dynamic Select Dropdown for Projects -->
+                        <div class="form-group mb-4" x-show="allocation === 'project'" x-transition.fade x-cloak>
+                            <label for="project_id" class="font-weight-bold">Choose Project</label>
+                            <select class="form-control" id="project_id" name="project_id" :required="allocation === 'project'">
+                                <option value="">-- Select Project --</option>
+                                @foreach($projects as $project)
+                                    <option value="{{ $project->id }}">{{ $project->title }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Dynamic Select Dropdown for Events -->
+                        <div class="form-group mb-4" x-show="allocation === 'event'" x-transition.fade x-cloak>
+                            <label for="event_id" class="font-weight-bold">Choose Event</label>
+                            <select class="form-control" id="event_id" name="event_id" :required="allocation === 'event'">
+                                <option value="">-- Select Event --</option>
+                                @foreach($events as $event)
+                                    <option value="{{ $event->id }}">{{ $event->title }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <!-- Optional Message Input -->
+                        <div class="form-group mb-4">
+                            <label for="message" class="font-weight-bold">Message (Optional)</label>
+                            <textarea class="form-control" id="message" name="message" rows="3" placeholder="Add a personal prayer request or note..."></textarea>
                         </div>
 
                         <!-- Native AfriPay Custom Image CTA Button -->
@@ -101,7 +129,7 @@
                                        alt="Pay with AfriPay" 
                                        class="img-fluid"
                                        style="max-width: 240px; cursor: pointer;"
-                                       onclick="document.getElementById('afripayform').submit(); return false;">
+                                       @click.prevent="document.getElementById('donationform').submit();">
                             </p>
                         </div>
                     </form>
@@ -162,22 +190,5 @@
         </a>
     </div>
 </section>
-
-<!-- Simple Layout Script styling helper to manage active toggle state classes safely -->
-<script>
-    document.getElementById('label-rwf').addEventListener('click', function() {
-        this.classList.add('active', 'text-dark', 'font-weight-bold');
-        this.classList.remove('text-muted');
-        document.getElementById('label-usd').classList.remove('active', 'text-dark', 'font-weight-bold');
-        document.getElementById('label-usd').classList.add('text-muted');
-    });
-
-    document.getElementById('label-usd').addEventListener('click', function() {
-        this.classList.add('active', 'text-dark', 'font-weight-bold');
-        this.classList.remove('text-muted');
-        document.getElementById('label-rwf').classList.remove('active', 'text-dark', 'font-weight-bold');
-        document.getElementById('label-rwf').classList.add('text-muted');
-    });
-</script>
 
 @endsection

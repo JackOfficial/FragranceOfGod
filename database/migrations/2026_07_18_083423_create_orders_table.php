@@ -16,6 +16,12 @@ return new class extends Migration
             
             // Optional: link authenticated users/donors
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            // Foreign keys linking to your projects and events tables
+            $table->foreignId('project_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('event_id')->nullable()->constrained()->onDelete('set null');
+    
+            // Optional: add a type indicator to quickly filter orders
+            $table->string('type')->default('general'); // general, project, event
             
             // Financial details
             $table->decimal('amount', 12, 2);

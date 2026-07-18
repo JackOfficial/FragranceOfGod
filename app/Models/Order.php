@@ -17,9 +17,12 @@ class Order extends Model
      */
     protected $fillable = [
         'user_id',
+        'project_id',
+        'event_id',
         'amount',
         'currency',
         'status',
+        'type', // 'general', 'project', 'event'
         'transaction_ref',
         'payment_method',
         'message',
@@ -41,6 +44,22 @@ class Order extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the project associated with this donation/payment.
+     */
+    public function project(): BelongsTo
+    {
+        return $this->belongsTo(Project::class);
+    }
+
+    /**
+     * Get the event associated with this donation/payment.
+     */
+    public function event(): BelongsTo
+    {
+        return $this->belongsTo(Event::class);
     }
     
     /**
