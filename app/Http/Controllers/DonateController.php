@@ -12,14 +12,26 @@ class DonateController extends Controller
      * Show the donate page.
      */
 
-    public function index()
-   {
-     // Pull only active or relevant items to keep dropdowns clean
-     $projects = Project::select('id', 'title')->latest()->get();
-     $events = Event::select('id', 'title')->latest()->get();
+  public function index(Request $request)
+{
+    // 1. Pull only active or relevant items to keep dropdowns clean
+    $projects = Project::select('id', 'title')->latest()->get();
+    $events = Event::select('id', 'title')->latest()->get();
 
-     return view('donate.index', compact('projects', 'events'));
-    }
+    // 2. Collect and sanitize query parameters from the URL
+    $selectedAllocation = $request->query('allocation', 'general'); // defaults to 'general'
+    $selectedProjectId = $request->query('project_id');
+    $selectedEventId = $request->query('event_id');
+
+    // 3. Pass everything downstream to your Blade file
+    return view('donate.index', compact(
+        'projects', 
+        'events', 
+        'selectedAllocation', 
+        'selectedProjectId', 
+        'selectedEventId'
+    ));
+}
 
     /**
      * Process the donation form submission.
@@ -61,6 +73,14 @@ class DonateController extends Controller
         // For now, just return a placeholder view
         return view('donate.payment', compact('paymentData'));
     }
+
+        public function processing()
+{
+    return view('donate.payment-processing')->with([
+        'title' => 'Payment Initiated',
+        'message' => 'Please check your phone for a push notification to authorize the transaction by entering your PIN.'
+    ]);
+}
 
     /**
      * Handle payment callback after donation.

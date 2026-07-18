@@ -13,15 +13,26 @@ use Illuminate\Support\Facades\Auth;
 class PaymentController extends Controller
 {
     /**
-     * Display the initial donation context form.
+     * Display the initial donation context form with URL tracking parameters.
      */
-    public function showForm()
+    public function showForm(Request $request)
     {
-        // Fetch active contexts to populate choice dropdowns if needed
-        $projects = Project::all();
-        $events = Event::all();
+        // 1. Keep dropdown targets efficient
+        $projects = Project::select('id', 'title')->latest()->get();
+        $events = Event::select('id', 'title')->latest()->get();
 
-        return view('donate.index', compact('projects', 'events'));
+        // 2. Capture incoming parameters for UX context matching
+        $selectedAllocation = $request->query('allocation', 'general');
+        $selectedProjectId = $request->query('project_id');
+        $selectedEventId = $request->query('event_id');
+
+        return view('donate.index', compact(
+            'projects', 
+            'events', 
+            'selectedAllocation', 
+            'selectedProjectId', 
+            'selectedEventId'
+        ));
     }
 
     /**
@@ -37,7 +48,6 @@ class PaymentController extends Controller
             'message' => 'nullable|string|max:500',
         ]);
 
-        // Determine allocation type context
         $type = 'general';
         if ($request->filled('project_id')) {
             $type = 'project';
@@ -45,7 +55,6 @@ class PaymentController extends Controller
             $type = 'event';
         }
 
-        // Initialize instance
         $order = new Order();
         $order->user_id = Auth::id();
         $order->amount = $request->input('amount');
@@ -59,7 +68,6 @@ class PaymentController extends Controller
         // Save individually on the instance level to cleanly trigger observers
         $order->save();
 
-        // Redirect directly to the hidden auto-redirect checkout step
         return redirect()->route('payment.checkout', ['orderId' => $order->id]);
     }
 
@@ -68,17 +76,19 @@ class PaymentController extends Controller
      */
     public function checkout($orderId)
     {
-        // Load relationships to render contextual comment labels if needed
         $order = Order::with(['project', 'event'])->findOrFail($orderId);
         return view('checkout', compact('order'));
     }
 
     /**
-     * Handle landing target upon successful return redirection from AfriPay.
+     * UX Fixed: Intermediate landing page while mobile money STK push processes.
      */
-    public function success()
+    public function processing()
     {
-        return view('payment-success')->with('message', 'Thank you for your support!');
+        return view('donate.payment-processing')->with([
+            'title' => 'Payment Initiated',
+            'message' => 'Please check your phone for a push notification prompt to authorize your donation.'
+        ]);
     }
 
     /**
@@ -101,25 +111,20 @@ class PaymentController extends Controller
                 return response()->json(['error' => 'Order not found'], 404);
             }
 
-            // Verify status payload signals successful transaction processing completion
-            if ($status === 'success' || $status === 'completed') { 
+            // Check if status incoming payload dictates a successful collection completion
+            if (($status === 'success' || $status === 'completed') && $order->status !== 'completed') { 
                 
-                $order->status = 'completed';
-                $order->transaction_ref = $request->input('transaction_ref');
-                $order->payment_method = $request->input('payment_method');
+                // Track fields to update
+                $updates = [
+                    'status' => 'completed',
+                    'transaction_ref' => $request->input('transaction_ref'),
+                    'payment_method' => $request->input('payment_method')
+                ];
 
-                // Explicit validation checking ensures dirty tracking specifically caught a completed status change
-                if ($order->isDirty('status') && $order->status === 'completed') {
-                    
-                    // Note: Execute any project/event custom ledger updates safely here.
+                // If avoiding recursive loop handlers is key, execute logic here before saving quietly
+                // e.g., dispatching external allocation updates safely...
 
-                    // Quietly persist updates without triggering an infinite event loop
-                    $order->updateQuietly([
-                        'status' => 'completed',
-                        'transaction_ref' => $order->transaction_ref,
-                        'payment_method' => $order->payment_method
-                    ]);
-                }
+                $order->updateQuietly($updates);
             }
 
             DB::commit();

@@ -41,8 +41,8 @@
                     </div>
                 @endif
 
-                <!-- Alpine Component Definition wrapper -->
-                <div class="p-4 shadow-sm rounded bg-light" x-data="{ currency: 'RWF', allocation: 'general' }">
+                <!-- Alpine Component Definition wrapper (Populated directly from Controller variables) -->
+                <div class="p-4 shadow-sm rounded bg-light" x-data="{ currency: 'RWF', allocation: '{{ $selectedAllocation }}' }">
                     <form action="{{ route('donate.process') }}" method="POST" x-ref="form">
                         @csrf
 
@@ -97,7 +97,9 @@
                             <select class="form-control" id="project_id" name="project_id" :required="allocation === 'project'">
                                 <option value="">-- Select Project --</option>
                                 @foreach($projects as $project)
-                                    <option value="{{ $project->id }}">{{ $project->title }}</option>
+                                    <option value="{{ $project->id }}" {{ $selectedProjectId == $project->id ? 'selected' : '' }}>
+                                        {{ $project->title }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -108,7 +110,9 @@
                             <select class="form-control" id="event_id" name="event_id" :required="allocation === 'event'">
                                 <option value="">-- Select Event --</option>
                                 @foreach($events as $event)
-                                    <option value="{{ $event->id }}">{{ $event->title }}</option>
+                                    <option value="{{ $event->id }}" {{ $selectedEventId == $event->id ? 'selected' : '' }}>
+                                        {{ $event->title }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
