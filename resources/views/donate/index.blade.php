@@ -43,7 +43,7 @@
 
                 <!-- Alpine Component Definition wrapper -->
                 <div class="p-4 shadow-sm rounded bg-light" x-data="{ currency: 'RWF', allocation: 'general' }">
-                    <form action="{{ route('donate.process') }}" method="POST" id="donationform">
+                    <form action="{{ route('donate.process') }}" method="POST" x-ref="form">
                         @csrf
 
                         <!-- Donation Amount Input -->
@@ -51,7 +51,6 @@
                             <label for="amount" class="font-weight-bold">Donation Amount</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <!-- Dynamic text updates instantly based on selected currency context -->
                                     <span class="input-group-text bg-white font-weight-bold text-muted" x-text="currency">RWF</span>
                                 </div>
                                 <input type="number" class="form-control" id="amount" name="amount" value="1000" min="100" required>
@@ -64,7 +63,6 @@
                             <label class="font-weight-bold d-block">Select Currency / Method Context</label>
                             <div class="row no-gutters">
                                 <div class="col-6 pr-1">
-                                    <!-- Dynamic class binding switches standard Bootstrap 4 active layout tokens clean -->
                                     <label class="btn btn-block p-3 shadow-none transition-all"
                                            :class="currency === 'RWF' ? 'btn-outline-warning active text-dark font-weight-bold' : 'btn-outline-warning text-muted'"
                                            style="cursor: pointer;">
@@ -83,10 +81,10 @@
                             </div>
                         </div>
 
-                        <!-- Dynamic Allocation Context Selection for Projects and Events -->
+                        <!-- Focus Target Selector -->
                         <div class="form-group mb-4">
                             <label for="allocation" class="font-weight-bold">Support a Specific Focus (Optional)</label>
-                            <select class="form-control" id="allocation" x-model="allocation">
+                            <select class="form-control" id="allocation" name="allocation" x-model="allocation">
                                 <option value="general">General NGO Fund</option>
                                 <option value="project">Support a Specific Project</option>
                                 <option value="event">Register/Support an Event</option>
@@ -129,7 +127,7 @@
                                        alt="Pay with AfriPay" 
                                        class="img-fluid"
                                        style="max-width: 240px; cursor: pointer;"
-                                       @click.prevent="document.getElementById('donationform').submit();">
+                                       @click.prevent="$refs.form.submit()">
                             </p>
                         </div>
                     </form>

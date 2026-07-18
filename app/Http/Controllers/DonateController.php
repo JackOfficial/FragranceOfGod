@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
+use App\Models\Project;
 use Illuminate\Http\Request;
 
 class DonateController extends Controller
@@ -9,9 +11,14 @@ class DonateController extends Controller
     /**
      * Show the donate page.
      */
+
     public function index()
-    {
-        return view('donate.index');
+   {
+     // Pull only active or relevant items to keep dropdowns clean
+     $projects = Project::select('id', 'title')->latest()->get();
+     $events = Event::select('id', 'title')->latest()->get();
+
+     return view('donate.index', compact('projects', 'events'));
     }
 
     /**
