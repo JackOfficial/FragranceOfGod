@@ -84,6 +84,8 @@ Route::middleware('auth')->group(function () {
 // Display the donation form page
 Route::get('/donate', [PaymentController::class, 'showForm'])->name('donate.show');
 
-// Handle the form submission
-Route::post('/donate/process', [PaymentController::class, 'process'])->name('payment.process');
-Route::post('/afripay/callback', [PaymentController::class, 'handleCallback'])->name('afripay.callback');
+Route::get('/checkout/{orderId}', [PaymentController::class, 'checkout'])->name('payment.checkout');
+Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
+
+// The webhook callback endpoint (Exclude this from CSRF protection!)
+Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');

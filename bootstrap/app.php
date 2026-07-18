@@ -19,7 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->validateCsrfTokens(except: [
-        'afripay/callback', // Exempt gateway callback path from verification rules
+        'payment/callback', // Exempt gateway callback path from verification rules
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
