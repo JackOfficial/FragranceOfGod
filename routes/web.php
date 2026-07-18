@@ -39,12 +39,9 @@ Route::get('/stories/{slug}', [StoryController::class, 'show'])->name('stories.s
 Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
 Route::get('/blogs/{slug}', [BlogController::class, 'show'])->name('blogs.show');
 Route::get('/events', [EventController::class, 'index']);
-Route::get('/events/{slug}', [EventController::class, 'show']);
+Route::get('/events/{slug}', [EventController::class, 'show'])->name('events.show');
 Route::get('/projects', [ProjectController::class, 'index']);
 Route::get('/projects/{slug}', [ProjectController::class, 'show']);
-Route::get('/donate', [DonateController::class, 'index'])->name('donate.index');
-Route::post('/donate/process', [DonateController::class, 'process'])->name('donate.process');
-Route::get('/donate/callback', [DonateController::class, 'callback'])->name('donate.callback');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
 Route::get('/volunteers', [VolunteerController::class, 'index'])->name('volunteers.index');
@@ -81,8 +78,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'home']);
 });
 
-// Display the donation form page
-Route::get('/donate', [PaymentController::class, 'showForm'])->name('donate.show');
+Route::get('/donate', [DonateController::class, 'index'])->name('donate.index');
 
 Route::get('/checkout/{orderId}', [PaymentController::class, 'checkout'])->name('payment.checkout');
 Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');

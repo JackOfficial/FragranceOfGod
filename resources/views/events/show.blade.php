@@ -35,9 +35,9 @@
                     <div class="mt-4">
                         <p class="fw-bold" style="color:#ffcc00;">Event Details:</p>
                         <ul class="list-unstyled text-muted">
-                            <li>📍 Location: {{ $event->location }}</li>
-                            <li>🗓 Date: {{ $event->event_date->format('d M, Y') }}</li>
-                            <li>⏰ Time: {{ \Carbon\Carbon::parse($event->event_time)->format('h:i A') }}</li>
+                            <li class="mb-2">📍 Location: {{ $event->location }}</li>
+                            <li class="mb-2">🗓 Date: {{ $event->event_date->format('d M, Y') }}</li>
+                            <li class="mb-2">⏰ Time: {{ \Carbon\Carbon::parse($event->event_time)->format('h:i A') }}</li>
                         </ul>
                     </div>
 
@@ -66,14 +66,16 @@
             <div class="col-lg-4">
                 <div class="p-4 shadow-sm rounded-4 bg-light">
                     <h5 class="fw-bold mb-3" style="color:#ffcc00;">Related Events</h5>
-                    <ul class="list-unstyled">
-                        @foreach ($relatedEvents ?? [] as $rel)
+                    <ul class="list-unstyled mb-0">
+                        @forelse ($relatedEvents ?? [] as $rel)
                             <li class="mb-3">
-                                <a href="/events/{{ $rel->slug }}" class="text-dark fw-bold" style="text-decoration:none;">
+                                <a href="{{ route('events.show', $rel->slug) }}" class="text-dark fw-bold" style="text-decoration:none;">
                                     {{ $rel->title }}
                                 </a>
                             </li>
-                        @endforeach
+                        @empty
+                            <li class="text-muted small py-2">No related events found at this time.</li>
+                        @endforelse
                     </ul>
                 </div>
 
@@ -81,7 +83,7 @@
                 <div class="p-4 shadow-sm rounded-4 bg-warning text-dark mt-4 text-center">
                     <h6 class="fw-bold mb-3">Join Our Next Event</h6>
                     <p class="mb-3">Be part of transforming lives and communities through faith and action.</p>
-                    <a href="/donate" class="btn btn-dark btn-lg">Support Our Work</a>
+                    <a href="/donate?allocation=event&event_id={{ $event->id }}" class="btn btn-dark btn-lg w-100 fw-bold">Support This Event</a>
                 </div>
             </div>
         </div>
@@ -93,8 +95,8 @@
     <div class="container">
         <h2 class="fw-bold">Participate & Make a Difference</h2>
         <p class="lead mt-3">Your involvement empowers communities and spreads hope worldwide.</p>
-        <a href="/donate" class="btn btn-lg" style="background-color:#ffcc00; color:#111; font-weight:600;">
-            Support Our Mission
+        <a href="/donate?allocation=event&event_id={{ $event->id }}" class="btn btn-lg" style="background-color:#ffcc00; color:#111; font-weight:600;">
+            Support This Event
         </a>
     </div>
 </section>
