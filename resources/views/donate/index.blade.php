@@ -49,55 +49,36 @@
                         amount: {{ old('amount', 5000) }},
                         get minAmount() {
                             if (this.currency === 'USD') return 5;
-                            if (this.currency === 'RWF') return 1000;
-                            return 500; // UGX
+                            if (['RWF', 'BIF', 'TZS', 'UGX', 'KSH'].includes(this.currency)) return 500;
+                            return 1;
                         },
-                        setCurrency(c) {
-                            this.currency = c;
-                            if (c === 'USD' && this.amount < 5) this.amount = 5;
-                            if (c === 'RWF' && this.amount < 1000) this.amount = 1000;
-                            if (c === 'UGX' && this.amount < 500) this.amount = 5000;
+                        onCurrencyChange() {
+                            if (this.currency === 'USD' && this.amount < 5) {
+                                this.amount = 5;
+                            } else if (['RWF', 'BIF', 'TZS', 'UGX', 'KSH'].includes(this.currency) && this.amount < 500) {
+                                this.amount = 1000;
+                            }
                         }
                      }">
                     
                     <form action="{{ route('donate.process') }}" method="POST" x-ref="form">
                         @csrf
 
-                        <!-- Currency Configuration Selection Buttons -->
+                        <!-- Currency Selection Dropdown -->
                         <div class="form-group mb-4">
-                            <label class="font-weight-bold d-block">Select Currency / Payment Method</label>
-                            <div class="row no-gutters">
-                                <!-- UGX Option (Default) -->
-                                <div class="col-4 pr-1">
-                                    <label class="btn btn-block p-3 shadow-none transition-all"
-                                           :class="currency === 'UGX' ? 'btn-outline-warning active text-dark font-weight-bold' : 'btn-outline-warning text-muted'"
-                                           style="cursor: pointer;"
-                                           @click="setCurrency('UGX')">
-                                        <input type="radio" name="currency" value="UGX" class="d-none" x-model="currency">
-                                        <span>UGX (MoMo)</span>
-                                    </label>
-                                </div>
-                                <!-- USD Option -->
-                                <div class="col-4 px-1">
-                                    <label class="btn btn-block p-3 shadow-none transition-all"
-                                           :class="currency === 'USD' ? 'btn-outline-primary active text-dark font-weight-bold' : 'btn-outline-primary text-muted'"
-                                           style="cursor: pointer;"
-                                           @click="setCurrency('USD')">
-                                        <input type="radio" name="currency" value="USD" class="d-none" x-model="currency">
-                                        <span>USD (Card)</span>
-                                    </label>
-                                </div>
-                                <!-- RWF Option -->
-                                <div class="col-4 pl-1">
-                                    <label class="btn btn-block p-3 shadow-none transition-all"
-                                           :class="currency === 'RWF' ? 'btn-outline-secondary active text-dark font-weight-bold' : 'btn-outline-secondary text-muted'"
-                                           style="cursor: pointer;"
-                                           @click="setCurrency('RWF')">
-                                        <input type="radio" name="currency" value="RWF" class="d-none" x-model="currency">
-                                        <span>RWF (MoMo)</span>
-                                    </label>
-                                </div>
-                            </div>
+                            <label for="currency" class="font-weight-bold">Select Currency / Payment Method</label>
+                            <select id="currency" 
+                                    name="currency" 
+                                    class="form-control @error('currency') is-invalid @enderror" 
+                                    x-model="currency" 
+                                    @change="onCurrencyChange()">
+                                <option value="BIF">BIF - Burundian Franc</option>
+                                <option value="RWF">RWF - Rwandan Franc</option>
+                                <option value="TZS">TZS - Tanzanian Shilling</option>
+                                <option value="UGX">UGX - Ugandan Shilling</option>
+                                <option value="KSH">KSH - Kenyan Shilling</option>
+                                <option value="USD">USD - US Dollar (Card)</option>
+                            </select>
                             @error('currency')
                                 <small class="text-danger d-block mt-1">{{ $message }}</small>
                             @enderror

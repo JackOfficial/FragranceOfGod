@@ -40,30 +40,32 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
+        // Updated currency list to match the select dropdown: BIF, RWF, TZS, UGX, KSH, USD
         $request->validate([
-            'amount' => 'required|numeric|min:100',
-            'currency' => 'required|string|in:UGX,RWF,USD,KES,TZS,NGN,EUR,GBP',
-            'project_id' => 'nullable|exists:projects,id',
-            'event_id' => 'nullable|exists:events,id',
-            'message' => 'nullable|string|max:500',
+            'amount'     => 'required|numeric|min:1',
+            'currency'   => 'required|string|in:BIF,RWF,TZS,UGX,KSH,USD',
+            'allocation' => 'required|string|in:general,project,event',
+            'project_id' => 'nullable|required_if:allocation,project|exists:projects,id',
+            'event_id'   => 'nullable|required_if:allocation,event|exists:events,id',
+            'message'    => 'nullable|string|max:500',
         ]);
 
         $type = 'general';
-        if ($request->filled('project_id')) {
+        if ($request->input('allocation') === 'project' && $request->filled('project_id')) {
             $type = 'project';
-        } elseif ($request->filled('event_id')) {
+        } elseif ($request->input('allocation') === 'event' && $request->filled('event_id')) {
             $type = 'event';
         }
 
         $order = new Order();
-        $order->user_id = Auth::id();
-        $order->amount = $request->input('amount');
-        $order->currency = $request->input('currency');
-        $order->project_id = $request->input('project_id');
-        $order->event_id = $request->input('event_id');
-        $order->type = $type;
-        $order->message = $request->input('message');
-        $order->status = 'pending';
+        $order->user_id    = Auth::id();
+        $order->amount     = $request->input('amount');
+        $order->currency   = $request->input('currency');
+        $order->project_id = ($type === 'project') ? $request->input('project_id') : null;
+        $order->event_id   = ($type === 'event') ? $request->input('event_id') : null;
+        $order->type       = $type;
+        $order->message    = $request->input('message');
+        $order->status     = 'pending';
 
         // Save individually on the instance level to cleanly trigger observers
         $order->save();
@@ -81,12 +83,12 @@ class PaymentController extends Controller
     }
 
     /**
-     * UX Fixed: Intermediate landing page while mobile money STK push processes.
+     * Intermediate landing page while mobile money STK push processes.
      */
     public function processing()
     {
         return view('donate.payment-processing')->with([
-            'title' => 'Payment Initiated',
+            'title'   => 'Payment Initiated',
             'message' => 'Please check your phone for a push notification prompt to authorize your donation.'
         ]);
     }
@@ -99,11 +101,11 @@ class PaymentController extends Controller
         Log::info('AfriPay Callback Received:', $request->all());
 
         $orderId = $request->input('client_token');
-        $status = $request->input('status'); 
+        $status  = $request->input('status'); 
 
         DB::beginTransaction();
         try {
-            // Apply strict record lock to prevent processing duplication race conditions
+            // Apply strict record lock to prevent double processing / race conditions
             $order = Order::where('id', $orderId)->lockForUpdate()->first();
 
             if (!$order) {
@@ -111,18 +113,14 @@ class PaymentController extends Controller
                 return response()->json(['error' => 'Order not found'], 404);
             }
 
-            // Check if status incoming payload dictates a successful collection completion
+            // Check if status dictates a successful transaction completion
             if (($status === 'success' || $status === 'completed') && $order->status !== 'completed') { 
                 
-                // Track fields to update
                 $updates = [
-                    'status' => 'completed',
+                    'status'          => 'completed',
                     'transaction_ref' => $request->input('transaction_ref'),
-                    'payment_method' => $request->input('payment_method')
+                    'payment_method'  => $request->input('payment_method')
                 ];
-
-                // If avoiding recursive loop handlers is key, execute logic here before saving quietly
-                // e.g., dispatching external allocation updates safely...
 
                 $order->updateQuietly($updates);
             }
@@ -133,7 +131,7 @@ class PaymentController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('AfriPay Integration Error: ' . $e->getMessage());
-            return response()->json(['error' => 'Transaction failed Processing'], 500);
+            return response()->json(['error' => 'Transaction processing failed'], 500);
         }
     }
 }
