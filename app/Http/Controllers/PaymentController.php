@@ -42,7 +42,7 @@ class PaymentController extends Controller
     {
         $request->validate([
             'amount' => 'required|numeric|min:100',
-            'currency' => 'required|string|in:RWF,USD',
+            'currency' => 'required|string|in:UGX,USD,RWF',
             'project_id' => 'nullable|exists:projects,id',
             'event_id' => 'nullable|exists:events,id',
             'message' => 'nullable|string|max:500',

@@ -41,8 +41,8 @@
                     </div>
                 @endif
 
-                <!-- Alpine Component Definition wrapper (Populated directly from Controller variables) -->
-                <div class="p-4 shadow-sm rounded bg-light" x-data="{ currency: 'RWF', allocation: '{{ $selectedAllocation }}' }">
+                <!-- Alpine Component Definition (Default currency changed to UGX) -->
+                <div class="p-4 shadow-sm rounded bg-light" x-data="{ currency: 'UGX', allocation: '{{ $selectedAllocation }}' }">
                     <form action="{{ route('donate.process') }}" method="POST" x-ref="form">
                         @csrf
 
@@ -51,31 +51,42 @@
                             <label for="amount" class="font-weight-bold">Donation Amount</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text bg-white font-weight-bold text-muted" x-text="currency">RWF</span>
+                                    <span class="input-group-text bg-white font-weight-bold text-muted" x-text="currency">UGX</span>
                                 </div>
-                                <input type="number" class="form-control" id="amount" name="amount" value="1000" min="100" required>
+                                <input type="number" class="form-control" id="amount" name="amount" value="5000" min="500" required>
                             </div>
                             <small class="form-text text-muted">Enter the amount you wish to contribute to our mission.</small>
                         </div>
 
-                        <!-- Currency Configuration Mapping Interface -->
+                        <!-- Currency Configuration Selection Buttons -->
                         <div class="form-group mb-4">
-                            <label class="font-weight-bold d-block">Select Currency / Method Context</label>
+                            <label class="font-weight-bold d-block">Select Currency / Payment Method</label>
                             <div class="row no-gutters">
-                                <div class="col-6 pr-1">
+                                <!-- UGX Option (Default) -->
+                                <div class="col-4 pr-1">
                                     <label class="btn btn-block p-3 shadow-none transition-all"
-                                           :class="currency === 'RWF' ? 'btn-outline-warning active text-dark font-weight-bold' : 'btn-outline-warning text-muted'"
+                                           :class="currency === 'UGX' ? 'btn-outline-warning active text-dark font-weight-bold' : 'btn-outline-warning text-muted'"
                                            style="cursor: pointer;">
-                                        <input type="radio" name="currency" value="RWF" class="d-none" x-model="currency">
-                                        <span>Local MoMo (RWF)</span>
+                                        <input type="radio" name="currency" value="UGX" class="d-none" x-model="currency">
+                                        <span>UGX (MoMo)</span>
                                     </label>
                                 </div>
-                                <div class="col-6 pl-1">
+                                <!-- USD Option -->
+                                <div class="col-4 px-1">
                                     <label class="btn btn-block p-3 shadow-none transition-all"
                                            :class="currency === 'USD' ? 'btn-outline-primary active text-dark font-weight-bold' : 'btn-outline-primary text-muted'"
                                            style="cursor: pointer;">
                                         <input type="radio" name="currency" value="USD" class="d-none" x-model="currency">
-                                        <span>International Card (USD)</span>
+                                        <span>USD (Card)</span>
+                                    </label>
+                                </div>
+                                <!-- RWF Option -->
+                                <div class="col-4 pl-1">
+                                    <label class="btn btn-block p-3 shadow-none transition-all"
+                                           :class="currency === 'RWF' ? 'btn-outline-secondary active text-dark font-weight-bold' : 'btn-outline-secondary text-muted'"
+                                           style="cursor: pointer;">
+                                        <input type="radio" name="currency" value="RWF" class="d-none" x-model="currency">
+                                        <span>RWF (MoMo)</span>
                                     </label>
                                 </div>
                             </div>
