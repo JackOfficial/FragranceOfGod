@@ -41,22 +41,27 @@
                     </div>
                 @endif
 
-                <!-- Alpine Component Definition (Default currency changed to UGX) -->
-                <div class="p-4 shadow-sm rounded bg-light" x-data="{ currency: 'UGX', allocation: '{{ $selectedAllocation }}' }">
+                <!-- Alpine Component Definition -->
+                <div class="p-4 shadow-sm rounded bg-light" 
+                     x-data="{ 
+                        currency: '{{ old('currency', 'UGX') }}', 
+                        allocation: '{{ old('allocation', $selectedAllocation ?? 'general') }}',
+                        amount: {{ old('amount', 5000) }},
+                        get minAmount() {
+                            if (this.currency === 'USD') return 5;
+                            if (this.currency === 'RWF') return 1000;
+                            return 500; // UGX
+                        },
+                        setCurrency(c) {
+                            this.currency = c;
+                            if (c === 'USD' && this.amount < 5) this.amount = 5;
+                            if (c === 'RWF' && this.amount < 1000) this.amount = 1000;
+                            if (c === 'UGX' && this.amount < 500) this.amount = 5000;
+                        }
+                     }">
+                    
                     <form action="{{ route('donate.process') }}" method="POST" x-ref="form">
                         @csrf
-
-                        <!-- Donation Amount Input -->
-                        <div class="form-group mb-4">
-                            <label for="amount" class="font-weight-bold">Donation Amount</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-white font-weight-bold text-muted" x-text="currency">UGX</span>
-                                </div>
-                                <input type="number" class="form-control" id="amount" name="amount" value="5000" min="500" required>
-                            </div>
-                            <small class="form-text text-muted">Enter the amount you wish to contribute to our mission.</small>
-                        </div>
 
                         <!-- Currency Configuration Selection Buttons -->
                         <div class="form-group mb-4">
@@ -66,7 +71,8 @@
                                 <div class="col-4 pr-1">
                                     <label class="btn btn-block p-3 shadow-none transition-all"
                                            :class="currency === 'UGX' ? 'btn-outline-warning active text-dark font-weight-bold' : 'btn-outline-warning text-muted'"
-                                           style="cursor: pointer;">
+                                           style="cursor: pointer;"
+                                           @click="setCurrency('UGX')">
                                         <input type="radio" name="currency" value="UGX" class="d-none" x-model="currency">
                                         <span>UGX (MoMo)</span>
                                     </label>
@@ -75,7 +81,8 @@
                                 <div class="col-4 px-1">
                                     <label class="btn btn-block p-3 shadow-none transition-all"
                                            :class="currency === 'USD' ? 'btn-outline-primary active text-dark font-weight-bold' : 'btn-outline-primary text-muted'"
-                                           style="cursor: pointer;">
+                                           style="cursor: pointer;"
+                                           @click="setCurrency('USD')">
                                         <input type="radio" name="currency" value="USD" class="d-none" x-model="currency">
                                         <span>USD (Card)</span>
                                     </label>
@@ -84,12 +91,38 @@
                                 <div class="col-4 pl-1">
                                     <label class="btn btn-block p-3 shadow-none transition-all"
                                            :class="currency === 'RWF' ? 'btn-outline-secondary active text-dark font-weight-bold' : 'btn-outline-secondary text-muted'"
-                                           style="cursor: pointer;">
+                                           style="cursor: pointer;"
+                                           @click="setCurrency('RWF')">
                                         <input type="radio" name="currency" value="RWF" class="d-none" x-model="currency">
                                         <span>RWF (MoMo)</span>
                                     </label>
                                 </div>
                             </div>
+                            @error('currency')
+                                <small class="text-danger d-block mt-1">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <!-- Donation Amount Input -->
+                        <div class="form-group mb-4">
+                            <label for="amount" class="font-weight-bold">Donation Amount</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text bg-white font-weight-bold text-muted" x-text="currency">UGX</span>
+                                </div>
+                                <input type="number" 
+                                       class="form-control @error('amount') is-invalid @enderror" 
+                                       id="amount" 
+                                       name="amount" 
+                                       x-model="amount" 
+                                       :min="minAmount" 
+                                       step="any" 
+                                       required>
+                            </div>
+                            <small class="form-text text-muted">Enter the amount you wish to contribute to our mission.</small>
+                            @error('amount')
+                                <small class="text-danger d-block mt-1">{{ $message }}</small>
+                            @enderror
                         </div>
 
                         <!-- Focus Target Selector -->
@@ -100,38 +133,60 @@
                                 <option value="project">Support a Specific Project</option>
                                 <option value="event">Register/Support an Event</option>
                             </select>
+                            @error('allocation')
+                                <small class="text-danger d-block mt-1">{{ $message }}</small>
+                            @enderror
                         </div>
 
                         <!-- Dynamic Select Dropdown for Projects -->
                         <div class="form-group mb-4" x-show="allocation === 'project'" x-transition.fade x-cloak>
                             <label for="project_id" class="font-weight-bold">Choose Project</label>
-                            <select class="form-control" id="project_id" name="project_id" :required="allocation === 'project'">
+                            <select class="form-control @error('project_id') is-invalid @enderror" 
+                                    id="project_id" 
+                                    name="project_id" 
+                                    :required="allocation === 'project'">
                                 <option value="">-- Select Project --</option>
                                 @foreach($projects as $project)
-                                    <option value="{{ $project->id }}" {{ $selectedProjectId == $project->id ? 'selected' : '' }}>
+                                    <option value="{{ $project->id }}" {{ old('project_id', $selectedProjectId ?? '') == $project->id ? 'selected' : '' }}>
                                         {{ $project->title }}
                                     </option>
                                 @endforeach
                             </select>
+                            @error('project_id')
+                                <small class="text-danger d-block mt-1">{{ $message }}</small>
+                            @enderror
                         </div>
 
                         <!-- Dynamic Select Dropdown for Events -->
                         <div class="form-group mb-4" x-show="allocation === 'event'" x-transition.fade x-cloak>
                             <label for="event_id" class="font-weight-bold">Choose Event</label>
-                            <select class="form-control" id="event_id" name="event_id" :required="allocation === 'event'">
+                            <select class="form-control @error('event_id') is-invalid @enderror" 
+                                    id="event_id" 
+                                    name="event_id" 
+                                    :required="allocation === 'event'">
                                 <option value="">-- Select Event --</option>
                                 @foreach($events as $event)
-                                    <option value="{{ $event->id }}" {{ $selectedEventId == $event->id ? 'selected' : '' }}>
+                                    <option value="{{ $event->id }}" {{ old('event_id', $selectedEventId ?? '') == $event->id ? 'selected' : '' }}>
                                         {{ $event->title }}
                                     </option>
                                 @endforeach
                             </select>
+                            @error('event_id')
+                                <small class="text-danger d-block mt-1">{{ $message }}</small>
+                            @enderror
                         </div>
 
                         <!-- Optional Message Input -->
                         <div class="form-group mb-4">
                             <label for="message" class="font-weight-bold">Message (Optional)</label>
-                            <textarea class="form-control" id="message" name="message" rows="3" placeholder="Add a personal prayer request or note..."></textarea>
+                            <textarea class="form-control @error('message') is-invalid @enderror" 
+                                      id="message" 
+                                      name="message" 
+                                      rows="3" 
+                                      placeholder="Add a personal prayer request or note...">{{ old('message') }}</textarea>
+                            @error('message')
+                                <small class="text-danger d-block mt-1">{{ $message }}</small>
+                            @enderror
                         </div>
 
                         <!-- Native AfriPay Custom Image CTA Button -->
@@ -141,8 +196,7 @@
                                        src="https://www.afripay.africa/logos/pay_with_afripay.png" 
                                        alt="Pay with AfriPay" 
                                        class="img-fluid"
-                                       style="max-width: 240px; cursor: pointer;"
-                                       @click.prevent="$refs.form.submit()">
+                                       style="max-width: 240px; cursor: pointer;">
                             </p>
                         </div>
                     </form>
